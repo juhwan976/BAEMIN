@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'my 배민',
           ),
         ],
-        selectedItemColor: Colors.greenAccent[200],
+        selectedItemColor: Colors.tealAccent,
         unselectedItemColor: Colors.grey,
         currentIndex: _selectedIndex,
         onTap: _onTaped,
