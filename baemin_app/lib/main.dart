@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'home/Home.dart';
@@ -17,7 +18,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: '배달의 민족',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryTextTheme: TextTheme(
+          headline6: TextStyle(
+            color: Colors.black,
+          ),
+        ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: '배달의 민족 Page'),
@@ -39,10 +44,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _onTaped(int index) {
     _selectedIndex = index;
-    setState((){});
+    setState(() {});
   }
 
-  List<Widget> _listWidget = <Widget> [
+  List<Widget> _listWidget = <Widget>[
     HomePage(),
     WhatEatPage(),
     ZZimPage(),
@@ -54,8 +59,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _listWidget.elementAt(_selectedIndex),
-
       bottomNavigationBar: BottomNavigationBar(
+        elevation: 0.0,
         type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -76,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.account_box),
-            label: 'my 배민',
+            label: 'my배민',
           ),
         ],
         selectedItemColor: Colors.tealAccent,
