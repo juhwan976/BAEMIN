@@ -16,18 +16,18 @@ class MyBaeMinPage extends StatefulWidget {
 }
 
 class _MyBaeMinPageState extends State<MyBaeMinPage> {
-  // 백엔드를 사용하지 않으므로 임의로 유저 클래스를 선언
+  /// 백엔드를 사용하지 않으므로 임의로 유저 클래스를 선언
   User user = new User(
     name: '이름',
     grade: 0,
   );
 
-  // 유저의 등급을 확인해서 등급별 이미지를 출력하게 할 메서드
+  /// 유저의 등급을 확인해서 등급별 이미지를 출력하게 할 메서드
   Widget _showGradeImage() {
     return Container();
   }
 
-  // 페이지의 내용을 리스트 뷰로 만드는 메서드
+  /// 페이지의 내용을 리스트 뷰로 만드는 메서드
   ListView _buildListView() {
     final double _userInfoHeight = 85;
     final double _cateHeight = 80;
@@ -38,7 +38,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
       children: <Widget>[
         Container(height: 7),
         Container(
-          // 사용자 정보 출력
+          /// 사용자 정보 출력
           height: _userInfoHeight,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -83,7 +83,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
         ),
         MyBaeMinShadowH(),
         Container(
-          // 등급 현황
+          /// 등급 현황
           height: 56,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -136,7 +136,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
         ),
         MyBaeMinShadowH(),
         Column(
-          // 메뉴 6개
+          /// 메뉴 6개
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
@@ -211,7 +211,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
           height: 10,
         ),
         Container(
-          // 일회용품 덜쓰기
+          /// 일회용품 덜쓰기
           height: 60,
           color: Colors.white,
           child: Row(
@@ -244,7 +244,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
           height: 10,
         ),
         Container(
-          // 배민페이 등록
+          /// 배민페이 등록
           height: 82,
           color: Colors.white,
           child: Row(
@@ -285,7 +285,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
         MyBaeMinTemplate(leftFontMargin: _leftFontMargin, title: '환경설정'),
         MyBaeMinTemplate(leftFontMargin: _leftFontMargin, title: '약관 및 정책'),
         Column(
-          // 현재 버전
+          /// 현재 버전
           children: <Widget>[
             MyBaeMinShadowH(),
             Container(
