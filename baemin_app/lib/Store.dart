@@ -1,14 +1,62 @@
 import 'dart:core';
 
 class Store {
-  int uniqueNum;        /// 가게 고유 번호
-  int category;         /// 가게 분
-  String name;          /// 가게 이름
-  double star;          /// 가게 별점
-  int reviewNum;        /// 리뷰 수
-  String description;   /// 대표 메뉴
-  int minPrice;         /// 최소 주문 금액
-  bool canTakeOut;      /// 포장 배너 표시 여부
-  bool canPickUp;       /// 매장 배너 표시 여부
-  bool showClean;       /// 위생정보 배너 표시 여부류
+  /// 고유 번호
+  int uniqueNum;
+
+  /// 카테고리 번호
+  int category;
+
+  /// 가게 이름
+  String name;
+
+  /// 별점
+  double star;
+
+  /// 리뷰 수
+  int reviewNum;
+
+  /// 설명
+  String description;
+
+  /// 최소 주문 금액
+  String minPrice;
+
+  /// 쿠폰
+  bool canCoupon = false;
+
+  /// 포장 가능
+  bool canTakeOut = false;
+
+  /// 방문 가능
+  bool canPickUp = false;
+
+  /// 위생정보 표시 여부
+  bool showClean = false;
+
+  Store({
+    int uniqueNum,
+    int category,
+    String name,
+    double star,
+    int reviewNum,
+    String description,
+    String minPrice,
+    bool canCoupon,
+    bool canTakeOut,
+    bool canPickUp,
+    bool showClean,
+  }) {
+    this.uniqueNum = uniqueNum;
+    this.category = category;
+    this.name = name;
+    this.star = star;
+    this.reviewNum = reviewNum;
+    this.description = description;
+    this.minPrice = minPrice;
+    this.canCoupon = canCoupon;
+    this.canTakeOut = canTakeOut;
+    this.canPickUp = canPickUp;
+    this.showClean = showClean;
+  }
 }
