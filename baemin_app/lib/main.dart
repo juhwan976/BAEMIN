@@ -18,9 +18,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: '배달의 민족',
       theme: ThemeData(
+
         primaryTextTheme: TextTheme(
+          /// 제목
           headline6: TextStyle(
             color: Colors.black,
+            fontWeight: FontWeight.bold,
           ),
         ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
