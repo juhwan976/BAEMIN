@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'home/Home.dart';
@@ -18,7 +17,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: '배달의 민족',
       theme: ThemeData(
-
         primaryTextTheme: TextTheme(
           /// 제목
           headline6: TextStyle(
