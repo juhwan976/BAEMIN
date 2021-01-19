@@ -30,6 +30,9 @@ class Store {
   String minDeliverTip;
   String maxDeliverTip;
 
+  /// 신규 매장인지
+  bool isNew = false;
+
   /// 쿠폰
   bool canCoupon = false;
 
@@ -57,6 +60,7 @@ class Store {
     String minPrice,
     String minDeliverTip,
     String maxDeliverTip,
+    bool isNew,
     bool canCoupon,
     bool canTakeOut,
     bool canPickUp,
@@ -74,6 +78,7 @@ class Store {
     this.minPrice = minPrice;
     this.minDeliverTip = minDeliverTip;
     this.maxDeliverTip = maxDeliverTip;
+    this.isNew = isNew;
     this.canCoupon = canCoupon;
     this.canTakeOut = canTakeOut;
     this.canPickUp = canPickUp;

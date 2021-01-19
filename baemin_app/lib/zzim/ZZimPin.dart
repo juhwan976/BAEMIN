@@ -19,7 +19,9 @@ class ZZimPin extends StatelessWidget {
             height: 17,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              color: (title == '쿠폰') ? Colors.orange : Colors.black,
+              color: (title == '쿠폰')
+                  ? Colors.orange
+                  : ((title == '신규') ? Colors.red : Colors.black),
             ),
           ),
           Positioned(

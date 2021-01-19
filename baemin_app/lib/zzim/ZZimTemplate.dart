@@ -158,6 +158,11 @@ class ZZimTemplate extends StatelessWidget {
                                 ),
                               ),
                               ZZimPin(
+                                /// 신규
+                                visible: _storeList.elementAt(index - 1).isNew,
+                                title: '신규',
+                              ),
+                              ZZimPin(
                                 /// 쿠폰
                                 visible:
                                     _storeList.elementAt(index - 1).canCoupon,
