@@ -46,13 +46,7 @@ class _ZZimPageState extends State<ZZimPage> {
                     ),
                     unselectedLabelColor: Colors.black12,
                     tabs: [
-                      Theme(
-                        data: ThemeData(
-                          highlightColor: Colors.transparent,
-                          splashColor: Colors.transparent,
-                        ),
-                        child: Text('찜한가게'),
-                      ),
+                      Text('찜한가게'),
                       Text('바로결제'),
                       Text('전화주문'),
                     ],

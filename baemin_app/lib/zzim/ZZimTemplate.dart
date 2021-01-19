@@ -266,28 +266,22 @@ class ZZimTemplate extends StatelessWidget {
                           Visibility(
                             /// 위생정보
                             visible: _storeList.elementAt(index - 1).showClean,
-                            child: Stack(
-                              children: <Widget>[
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(0, 6, 0, 0),
-                                  width: 43,
-                                  height: 17,
-                                  decoration: BoxDecoration(
-                                    color: Color(0x0A000000),
-                                    borderRadius: BorderRadius.circular(2),
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB(0, 6, 0, 0),
+                              width: 43,
+                              height: 17,
+                              decoration: BoxDecoration(
+                                color: Color(0x0A000000),
+                                borderRadius: BorderRadius.circular(2),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '위생정보',
+                                  style: TextStyle(
+                                    fontSize: 12,
                                   ),
                                 ),
-                                Positioned(
-                                  top: 9,
-                                  left: 4,
-                                  child: Text(
-                                    '위생정보',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
                           ),
                         ],
