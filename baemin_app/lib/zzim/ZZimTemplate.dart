@@ -4,8 +4,10 @@ import '../Store.dart';
 import 'ZZimPin.dart';
 import 'ZZimShadowH.dart';
 
-/**
+/*
  * 시간적 여유가 된다면 가로에 쓰이는 데이터들은 MediaQuery를 이용한 것으로 교체하기.
+ *
+ * 가게마다 현재 베달받을 장소에서 배달이 가능한지에 따라서 나오는 항목이 다름.
  */
 
 class ZZimTemplate extends StatelessWidget {
@@ -19,13 +21,63 @@ class ZZimTemplate extends StatelessWidget {
 
   double _calculateHeight(int index) {
     double result;
-    if (_storeList.elementAt(index - 1).showClean) {
+
+    if (_storeList.elementAt(index - 1).showClean &&
+        !_storeList.elementAt(index - 1).canDelivery) {
       result = 119;
+    } else if (!_storeList.elementAt(index - 1).showClean &&
+        _storeList.elementAt(index - 1).canDelivery) {
+      result = 119;
+    } else if (_storeList.elementAt(index - 1).showClean &&
+        _storeList.elementAt(index - 1).canDelivery) {
+      result = 139;
     } else {
       result = 99;
     }
 
     return result;
+  }
+
+  double _calculateBottomMargin(int index) {
+    if (_storeList.elementAt(index - 1).showClean) {
+      if (_storeList.elementAt(index - 1).canDelivery) {
+        return 40;
+      } else {
+        return 20;
+      }
+    } else {
+      if (_storeList.elementAt(index - 1).canDelivery) {
+        return 20;
+      } else {
+        return 0;
+      }
+    }
+  }
+
+  String _makeDeliverTipString(int index) {
+    if (_storeList.elementAt(index - 1).minDeliverTip ==
+        _storeList.elementAt(index - 1).maxDeliverTip) {
+      return '배달팁 ' + _storeList.elementAt(index - 1).minDeliverTip + '원';
+    } else {
+      return '배달팁 ' +
+          _storeList.elementAt(index - 1).minDeliverTip +
+          '원~' +
+          _storeList.elementAt(index - 1).maxDeliverTip +
+          '원';
+    }
+  }
+
+  String _makeDurationNMinPriceString(int index) {
+    if (_storeList.elementAt(index - 1).canDelivery) {
+      return _storeList.elementAt(index - 1).minDuration +
+          '~' +
+          _storeList.elementAt(index - 1).maxDuration +
+          '분, 최소주문 ' +
+          _storeList.elementAt(index - 1).minPrice +
+          '원';
+    } else {
+      return '최소주문 ' + _storeList.elementAt(index - 1).minPrice + '원';
+    }
   }
 
   @override
@@ -72,8 +124,8 @@ class ZZimTemplate extends StatelessWidget {
                     Container(
                       height: 70,
                       width: 70,
-                      margin: EdgeInsets.fromLTRB(15, 0, 0,
-                          (_storeList.elementAt(index - 1).showClean) ? 20 : 0),
+                      margin: EdgeInsets.fromLTRB(
+                          15, 0, 0, _calculateBottomMargin(index)),
                       decoration: BoxDecoration(
                         color: Colors.black,
                         borderRadius: BorderRadius.circular(25.0),
@@ -172,15 +224,42 @@ class ZZimTemplate extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Container(
-                            /// 최소 주문 금액
-                            margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                            child: Text(
-                              '최소주문 ' +
-                                  _storeList.elementAt(index - 1).minPrice +
-                                  '원',
-                              style: TextStyle(
-                                fontSize: 16,
+                          Row(
+                            children: <Widget>[
+                              Visibility(
+                                visible:
+                                    _storeList.elementAt(index - 1).canDelivery,
+                                child: Container(
+                                  margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
+                                  child: Icon(
+                                    Icons.timer,
+                                    size: 15,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                /// 소요시간 및 최소 주문 금액
+                                margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
+                                child: Text(
+                                  _makeDurationNMinPriceString(index),
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Visibility(
+                            /// 배달팁
+                            visible:
+                                _storeList.elementAt(index - 1).canDelivery,
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
+                              child: Text(
+                                _makeDeliverTipString(index),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
                           ),
@@ -194,7 +273,18 @@ class ZZimTemplate extends StatelessWidget {
                                   width: 43,
                                   height: 17,
                                   decoration: BoxDecoration(
-                                    color: Colors.black12,
+                                    color: Color(0x0A000000),
+                                    borderRadius: BorderRadius.circular(2),
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 9,
+                                  left: 4,
+                                  child: Text(
+                                    '위생정보',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                    ),
                                   ),
                                 ),
                               ],
