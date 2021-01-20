@@ -12,6 +12,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -58,6 +59,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    print('높이 : ' + MediaQuery.of(context).size.height.toString() + ' 너비 : ' + MediaQuery.of(context).size.width.toString());
+    print('상태바 높이 : ' + MediaQuery.of(context).padding.top.toString());
+    print('화면 시작높이 : ' + (MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top).toString());
+    print('textFactor : ' + MediaQuery.of(context).textScaleFactor.toString());
+
     return Scaffold(
       body: _listWidget.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(

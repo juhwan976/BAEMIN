@@ -11,22 +11,19 @@ class ZZimPin extends StatelessWidget {
   Widget build(BuildContext context) {
     return Visibility(
       visible: visible,
-      child: Stack(
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.fromLTRB(3, 12, 0, 0),
-            width: 30,
-            height: 17,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: (title == '쿠폰')
-                  ? Colors.orange
-                  : ((title == '신규') ? Colors.red : Colors.black),
-            ),
-          ),
-          Positioned(
-            top: 15,
-            left: 9.5,
+      child: Container(
+        margin: EdgeInsets.fromLTRB(3, 12, 0, 0),
+        width: 30,
+        height: 17,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: (title == '쿠폰')
+              ? Colors.orange
+              : ((title == '신규') ? Colors.red : Colors.black),
+        ),
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(1, 1, 0, 0),
             child: Text(
               title,
               style: TextStyle(
@@ -36,7 +33,7 @@ class ZZimPin extends StatelessWidget {
               ),
             ),
           ),
-        ],
+        ),
       ),
     );
   }

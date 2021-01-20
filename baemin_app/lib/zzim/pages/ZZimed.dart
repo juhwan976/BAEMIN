@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../Store.dart';
-import '../ZZimTemplate.dart';
+import '../ZZimBuildPage.dart';
 
 class ZZimed extends StatelessWidget {
   const ZZimed({
@@ -16,8 +16,8 @@ class ZZimed extends StatelessWidget {
         star: 4.9,
         reviewNum: 100,
         description: '제주흑돼지김치찌개 도시락, 우···',
-        minDuration: '30',
-        maxDuration: '30',
+        minDuration: '49',
+        maxDuration: '64',
         minPrice: '6,900',
         minDeliverTip: '0',
         maxDeliverTip: '2,000',
@@ -132,20 +132,6 @@ class ZZimed extends StatelessWidget {
       ),
     ];
 
-    if (_storeList.length == 0) {
-      return Container(
-        color: Color(0x09000000),
-        child: Center(
-          child: Text(
-            '텅'
-          ),
-        ),
-      );
-    } else {
-      return Container(
-        color: Color(0x09000000),
-        child: ZZimTemplate(storeList: _storeList),
-      );
-    }
+    return ZZimBuildPage(_storeList);
   }
 }
