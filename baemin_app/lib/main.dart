@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'home/Home.dart';
 import 'myBaeMin/MyBaeMin.dart';
@@ -46,6 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _onTaped(int index) {
     _selectedIndex = index;
+    HapticFeedback.mediumImpact();
     setState(() {});
   }
 
@@ -59,11 +63,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
-    print('높이 : ' + MediaQuery.of(context).size.height.toString() + ' 너비 : ' + MediaQuery.of(context).size.width.toString());
+    print('높이 : ' +
+        MediaQuery.of(context).size.height.toString() +
+        ' 너비 : ' +
+        MediaQuery.of(context).size.width.toString());
     print('상태바 높이 : ' + MediaQuery.of(context).padding.top.toString());
-    print('화면 시작높이 : ' + (MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top).toString());
+    print('화면 시작높이 : ' +
+        (MediaQuery.of(context).size.height -
+                MediaQuery.of(context).padding.top)
+            .toString());
     print('textFactor : ' + MediaQuery.of(context).textScaleFactor.toString());
+    print('플랫폼 : ' +
+        ((Platform.isAndroid) ? '안드로이드' : ((Platform.isIOS) ? 'iOS' : '알수없음')));
 
     return Scaffold(
       body: _listWidget.elementAt(_selectedIndex),

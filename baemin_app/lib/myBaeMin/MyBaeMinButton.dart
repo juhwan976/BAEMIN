@@ -10,28 +10,26 @@ class MyBaeMinButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
-      FlatButton(
+    return FlatButton(
+        highlightColor: Colors.transparent,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             icon,
             Container(
-              height: (MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top) * 0.00651042,
+              height: 5,
             ),
             Text(
               text,
-              textScaleFactor: 1,
               style: TextStyle(
-                fontSize: 10.66,
+                fontSize: 13,
                 color: Color(0x70000000),
                 fontWeight: FontWeight.bold,
               ),
             ),
           ],
         ),
-        onPressed: () {},
-
+        onPressed: (){},
     );
   }
 }

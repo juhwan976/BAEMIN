@@ -18,7 +18,7 @@ class MyBaeMinTemplate extends StatelessWidget {
       children: <Widget>[
         MyBaeMinShadowH(),
         Container(
-          height: (MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top) * 0.07682292,
+          height: 59,
           color: Colors.white,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -27,9 +27,8 @@ class MyBaeMinTemplate extends StatelessWidget {
                 margin: EdgeInsets.fromLTRB(_leftFontMargin, 0, 0, 0),
                 child: Text(
                   title,
-                  textScaleFactor: 1,
                   style: TextStyle(
-                    fontSize: 15.58,
+                    fontSize: 19,
                   ),
                 ),
               ),
