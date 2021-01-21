@@ -26,6 +26,7 @@ class ZZimPin extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(1, 1, 0, 0),
             child: Text(
               title,
+              textScaleFactor: 0.82,
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,

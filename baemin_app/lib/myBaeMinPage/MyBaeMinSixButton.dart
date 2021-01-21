@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class MyBaeMinButton extends StatelessWidget {
-  const MyBaeMinButton({
-    Key key, this.icon, this.text, this.function
+class MyBaeMinSixButton extends StatelessWidget {
+  const MyBaeMinSixButton({
+    Key key, @required this.icon, @required this.text, @required this.function
   }) : super(key: key);
 
   final Icon icon;

@@ -10,6 +10,7 @@ Container ZZimBuildPage(List<Store> _storeList) {
     returnWidget = Center(
       child: Text(
         '텅',
+        textScaleFactor: 0.82,
         style: TextStyle(
           fontSize: 100,
         ),

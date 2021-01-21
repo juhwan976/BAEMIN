@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 
 import '../User.dart';
 import 'MyBaeMinArrow.dart';
-import 'MyBaeMinButton.dart';
+import 'MyBaeMinArrowButton.dart';
 import 'MyBaeMinShadowH.dart';
 import 'MyBaeMinShadowV.dart';
+import 'MyBaeMinSixButton.dart';
 import 'MyBaeMinTemplate.dart';
+import 'MyBaeMinTemplateDes.dart';
 
 /*
  * 이 페이지는 글자 크기가 0.82(작음)으로 된 상태에서 만들어진 페이지 입니다.
@@ -55,45 +57,48 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
           decoration: BoxDecoration(
             color: Colors.white,
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Container(
-                    child: Icon(
-                      Icons.supervised_user_circle,
-                      size: _userInfoHeight * 0.76470588, // 65
+          child: MyBaeMinArrowButton(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Container(
+                      child: Icon(
+                        Icons.supervised_user_circle,
+                        size: _userInfoHeight * 0.76470588, // 65
+                      ),
+                      height: _userInfoHeight * 0.76470588, // 65
+                      width: _userInfoHeight * 0.76470588, // 65
+                      margin: EdgeInsets.fromLTRB(
+                          _leftMargin, 0, _thisWidth * 0.008, 0), // 3
                     ),
-                    height: _userInfoHeight * 0.76470588, // 65
-                    width: _userInfoHeight * 0.76470588, // 65
-                    margin: EdgeInsets.fromLTRB(
-                        _leftMargin, 0, _thisWidth * 0.008, 0), // 3
-                  ),
-                  Container(
-                    child: Text(
-                      '고마운분,',
-                      textScaleFactor: 0.82,
-                      style: TextStyle(
-                        fontSize: 25.0,
-                        color: Colors.black45,
+                    Container(
+                      child: Text(
+                        '고마운분,',
+                        textScaleFactor: 0.82,
+                        style: TextStyle(
+                          fontSize: 25.0,
+                          color: Colors.black45,
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    child: Text(
-                      user.name,
-                      textScaleFactor: 0.82,
-                      style: TextStyle(
-                        fontSize: 25.0,
-                        color: Colors.black,
+                    Container(
+                      child: Text(
+                        user.name,
+                        textScaleFactor: 0.82,
+                        style: TextStyle(
+                          fontSize: 25.0,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              MyBaeMinArrow(),
-            ],
+                  ],
+                ),
+                MyBaeMinArrow(),
+              ],
+            ),
+            function: () {},
           ),
         ),
         MyBaeMinShadowH(),
@@ -153,7 +158,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                 children: <Widget>[
                   Container(
                     width: MediaQuery.of(context).size.width / 3 - 1,
-                    child: MyBaeMinButton(
+                    child: MyBaeMinSixButton(
                       icon: Icon(Icons.attach_money),
                       text: '포인트',
                       function: () {},
@@ -162,7 +167,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                   MyBaeMinShadowV(),
                   Container(
                     width: MediaQuery.of(context).size.width / 3 - 1,
-                    child: MyBaeMinButton(
+                    child: MyBaeMinSixButton(
                       icon: Icon(Icons.money),
                       text: '쿠폰함',
                       function: () {},
@@ -171,7 +176,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                   MyBaeMinShadowV(),
                   Container(
                     width: MediaQuery.of(context).size.width / 3 - 1,
-                    child: MyBaeMinButton(
+                    child: MyBaeMinSixButton(
                       icon: Icon(Icons.card_giftcard),
                       text: '선물함',
                       function: () {},
@@ -189,14 +194,15 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                 children: <Widget>[
                   Container(
                     width: MediaQuery.of(context).size.width / 3 - 1,
-                    child: MyBaeMinButton(
+                    child: MyBaeMinSixButton(
                       icon: Icon(Icons.favorite),
                       text: '찜한가게',
                       function: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ZZimPage(fromAnotherPage: true),
+                            builder: (context) =>
+                                ZZimPage(fromAnotherPage: true),
                           ),
                         );
                       },
@@ -205,7 +211,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                   MyBaeMinShadowV(),
                   Container(
                     width: MediaQuery.of(context).size.width / 3 - 1,
-                    child: MyBaeMinButton(
+                    child: MyBaeMinSixButton(
                       icon: Icon(Icons.list),
                       text: '주문내역',
                       function: () {},
@@ -214,7 +220,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                   MyBaeMinShadowV(),
                   Container(
                     width: MediaQuery.of(context).size.width / 3 - 1,
-                    child: MyBaeMinButton(
+                    child: MyBaeMinSixButton(
                       icon: Icon(Icons.comment),
                       text: '리뷰관리',
                       function: () {},
@@ -233,80 +239,86 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
           /// 일회용품 덜쓰기
           height: _thisWidth * 0.16, // 60
           color: Colors.white,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.fromLTRB(
-                        _leftMargin, 0, _thisWidth * 0.02666667, 0), // 10
-                    child: Icon(
-                      Icons.wb_incandescent,
-                      size: _thisWidth * 0.16 * 0.5, // 30
-                      color: Colors.green,
+          child: MyBaeMinArrowButton(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.fromLTRB(
+                          _leftMargin, 0, _thisWidth * 0.02666667, 0), // 10
+                      child: Icon(
+                        Icons.wb_incandescent,
+                        size: _thisWidth * 0.16 * 0.5, // 30
+                        color: Colors.green,
+                      ),
                     ),
-                  ),
-                  Text(
-                    '일회용품 덜 쓰기, 함께해요!',
-                    textScaleFactor: 0.82,
-                    style: TextStyle(
-                      color: Colors.green,
-                      fontSize: 19,
+                    Text(
+                      '일회용품 덜 쓰기, 함께해요!',
+                      textScaleFactor: 0.82,
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 19,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              MyBaeMinArrow(),
-            ],
+                  ],
+                ),
+                MyBaeMinArrow(),
+              ],
+            ),
+            function: () {},
           ),
         ),
         Container(
           height: _thisWidth * 0.02666667, // 10
         ),
-        Container(
-          /// 배민페이 등록
-          height: _thisWidth * 0.21866667, // 82
-          color: Colors.white,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.fromLTRB(_leftFontMargin, 0, 0, 0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      '배민페이 등록',
-                      textScaleFactor: 0.82,
-                      style: TextStyle(
-                        fontSize: 19,
-                      ),
-                    ),
-                    Text(
-                      '배민페이로 결제하면 최대 5.5% 배민포인트가 적립됩니다!',
-                      textScaleFactor: 0.82,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0x70000000),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              MyBaeMinArrow(),
-            ],
-          ),
+        MyBaeMinTemplateDes(
+          leftFontMargin: _leftFontMargin,
+          title: '배민페이 등록',
+          description: '배민페이로 결제하면 최대 5.5% 배민포인트가 적립됩니다!',
+          function: () {},
         ),
-        MyBaeMinTemplate(leftFontMargin: _leftFontMargin, title: '가족계정 관리'),
-        MyBaeMinTemplate(leftFontMargin: _leftFontMargin, title: '선물하기'),
-        MyBaeMinTemplate(leftFontMargin: _leftFontMargin, title: '공지사항'),
-        MyBaeMinTemplate(leftFontMargin: _leftFontMargin, title: '배민커넥트 지원'),
-        MyBaeMinTemplate(leftFontMargin: _leftFontMargin, title: '이벤트'),
-        MyBaeMinTemplate(leftFontMargin: _leftFontMargin, title: '고객센터'),
-        MyBaeMinTemplate(leftFontMargin: _leftFontMargin, title: '환경설정'),
-        MyBaeMinTemplate(leftFontMargin: _leftFontMargin, title: '약관 및 정책'),
+        MyBaeMinTemplate(
+          leftFontMargin: _leftFontMargin,
+          title: '가족계정 관리',
+          function: () {},
+        ),
+        MyBaeMinTemplate(
+          leftFontMargin: _leftFontMargin,
+          title: '선물하기',
+          function: () {},
+        ),
+        MyBaeMinTemplate(
+          leftFontMargin: _leftFontMargin,
+          title: '공지사항',
+          function: () {},
+        ),
+        MyBaeMinTemplate(
+          leftFontMargin: _leftFontMargin,
+          title: '배민커넥트 지원',
+          function: () {},
+        ),
+        MyBaeMinTemplate(
+          leftFontMargin: _leftFontMargin,
+          title: '이벤트',
+          function: () {},
+        ),
+        MyBaeMinTemplate(
+          leftFontMargin: _leftFontMargin,
+          title: '고객센터',
+          function: () {},
+        ),
+        MyBaeMinTemplate(
+          leftFontMargin: _leftFontMargin,
+          title: '환경설정',
+          function: () {},
+        ),
+        MyBaeMinTemplate(
+          leftFontMargin: _leftFontMargin,
+          title: '약관 및 정책',
+          function: () {},
+        ),
         Column(
           /// 현재 버전
           children: <Widget>[

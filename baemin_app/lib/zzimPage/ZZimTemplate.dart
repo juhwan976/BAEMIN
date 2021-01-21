@@ -107,6 +107,7 @@ class ZZimTemplate extends StatelessWidget {
                       margin: EdgeInsets.fromLTRB(14, 7, 0, 0),
                       child: Text(
                         '총 ${_storeList.length}개',
+                        textScaleFactor: 0.82,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
@@ -141,6 +142,7 @@ class ZZimTemplate extends StatelessWidget {
                         child: Center(
                           child: Text(
                             '이미지',
+                            textScaleFactor: 0.82,
                             style: TextStyle(
                               color: Colors.white,
                             ),
@@ -160,6 +162,7 @@ class ZZimTemplate extends StatelessWidget {
                                   margin: EdgeInsets.fromLTRB(0, 0, 3, 0),
                                   child: Text(
                                     _storeList.elementAt(index - 1).name,
+                                    textScaleFactor: 0.82,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 19),
@@ -212,6 +215,7 @@ class ZZimTemplate extends StatelessWidget {
                                         .elementAt(index - 1)
                                         .star
                                         .toString(),
+                                    textScaleFactor: 0.82,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16,
@@ -222,6 +226,7 @@ class ZZimTemplate extends StatelessWidget {
                                   /// 매장 리뷰 수
                                   child: Text(
                                     '(${_storeList.elementAt(index - 1).reviewNum}+)',
+                                    textScaleFactor: 0.82,
                                     style: TextStyle(
                                       fontSize: 16,
                                     ),
@@ -234,6 +239,7 @@ class ZZimTemplate extends StatelessWidget {
                                         _storeList
                                             .elementAt(index - 1)
                                             .description,
+                                    textScaleFactor: 0.82,
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.black45,
@@ -261,6 +267,7 @@ class ZZimTemplate extends StatelessWidget {
                                   margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
                                   child: Text(
                                     _makeDurationNMinPriceString(index),
+                                    textScaleFactor: 0.82,
                                     style: TextStyle(
                                       fontSize: 16,
                                     ),
@@ -277,6 +284,7 @@ class ZZimTemplate extends StatelessWidget {
                                 margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
                                 child: Text(
                                   _makeDeliverTipString(index),
+                                  textScaleFactor: 0.82,
                                   style: TextStyle(
                                     fontSize: 16,
                                   ),
@@ -299,6 +307,7 @@ class ZZimTemplate extends StatelessWidget {
                                 child: Center(
                                   child: Text(
                                     '위생정보',
+                                    textScaleFactor: 0.82,
                                     style: TextStyle(
                                       fontSize: 12,
                                     ),

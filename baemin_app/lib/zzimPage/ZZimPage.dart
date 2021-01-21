@@ -66,9 +66,9 @@ class _ZZimPageState extends State<ZZimPage> {
                     ),
                     unselectedLabelColor: Colors.black12,
                     tabs: [
-                      Text('찜한가게'),
-                      Text('바로결제'),
-                      Text('전화주문'),
+                      Text('찜한가게', textScaleFactor: 0.82),
+                      Text('바로결제', textScaleFactor: 0.82),
+                      Text('전화주문', textScaleFactor: 0.82),
                     ],
                   ),
                   Container(
@@ -79,7 +79,7 @@ class _ZZimPageState extends State<ZZimPage> {
               ),
             ),
           ),
-          title: Text('찜한가게'),
+          title: Text('찜한가게', textScaleFactor: 0.82),
         ),
         body: TabBarView(
           children: <Widget>[
