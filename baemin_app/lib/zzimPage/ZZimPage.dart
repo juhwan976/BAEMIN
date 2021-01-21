@@ -5,19 +5,39 @@ import 'pages/Rightnow.dart';
 import 'pages/ZZimed.dart';
 
 class ZZimPage extends StatefulWidget {
-  ZZimPage({Key key}) : super(key: key);
+  ZZimPage({Key key, @required this.fromAnotherPage}) : super(key: key);
+
+  final bool fromAnotherPage;
 
   @override
   _ZZimPageState createState() => _ZZimPageState();
 }
 
 class _ZZimPageState extends State<ZZimPage> {
+
+  Widget _buildLeading(bool fromAnotherPage) {
+    if(fromAnotherPage) {
+      return FlatButton(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        child: Icon(Icons.arrow_back_rounded),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      );
+    }
+    else {
+      return Container();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         appBar: AppBar(
+          leading: _buildLeading(widget.fromAnotherPage),
           backgroundColor: Colors.white,
           toolbarHeight: 84.0,
           elevation: 0.0,

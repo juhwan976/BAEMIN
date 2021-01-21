@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:baemin_app/zzimPage/ZZimPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -39,7 +40,8 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
   /// 페이지의 내용을 리스트 뷰로 만드는 메서드
   ListView _buildListView(
       double _thisHeight, double _thisWidth, double _thisTextScaleFactor) {
-    final double _userInfoHeight = _thisWidth * 0.22666667; // 85, _thisWidth * 0.22666667
+    final double _userInfoHeight =
+        _thisWidth * 0.22666667; // 85, _thisWidth * 0.22666667
     final double _cateHeight = _thisWidth * 0.21333333; // 80
     final double _leftMargin = _thisWidth * 0.02666667; // 10
     final double _leftFontMargin = _leftMargin + _thisWidth * 0.008; // 3
@@ -65,7 +67,8 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                     ),
                     height: _userInfoHeight * 0.76470588, // 65
                     width: _userInfoHeight * 0.76470588, // 65
-                    margin: EdgeInsets.fromLTRB(_leftMargin, 0, _thisWidth * 0.008, 0), // 3
+                    margin: EdgeInsets.fromLTRB(
+                        _leftMargin, 0, _thisWidth * 0.008, 0), // 3
                   ),
                   Container(
                     child: Text(
@@ -111,9 +114,13 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
               ),
               Container(
                 /// 등급별 혜택 버튼
-                width: _thisWidth * 0.21333333, // 80
-                height: _thisWidth * 0.06933333, // 26
-                margin: EdgeInsets.fromLTRB(0, 0, _thisWidth * 0.14933333 * 0.30357143, 0), // 17
+                width: _thisWidth * 0.21333333,
+                // 80
+                height: _thisWidth * 0.06933333,
+                // 26
+                margin: EdgeInsets.fromLTRB(
+                    0, 0, _thisWidth * 0.14933333 * 0.30357143, 0),
+                // 17
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: Color(0x09000000),
@@ -149,6 +156,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                     child: MyBaeMinButton(
                       icon: Icon(Icons.attach_money),
                       text: '포인트',
+                      function: () {},
                     ),
                   ),
                   MyBaeMinShadowV(),
@@ -157,6 +165,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                     child: MyBaeMinButton(
                       icon: Icon(Icons.money),
                       text: '쿠폰함',
+                      function: () {},
                     ),
                   ),
                   MyBaeMinShadowV(),
@@ -165,6 +174,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                     child: MyBaeMinButton(
                       icon: Icon(Icons.card_giftcard),
                       text: '선물함',
+                      function: () {},
                     ),
                   ),
                 ],
@@ -182,6 +192,14 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                     child: MyBaeMinButton(
                       icon: Icon(Icons.favorite),
                       text: '찜한가게',
+                      function: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ZZimPage(fromAnotherPage: true),
+                          ),
+                        );
+                      },
                     ),
                   ),
                   MyBaeMinShadowV(),
@@ -190,6 +208,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                     child: MyBaeMinButton(
                       icon: Icon(Icons.list),
                       text: '주문내역',
+                      function: () {},
                     ),
                   ),
                   MyBaeMinShadowV(),
@@ -198,6 +217,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                     child: MyBaeMinButton(
                       icon: Icon(Icons.comment),
                       text: '리뷰관리',
+                      function: () {},
                     ),
                   ),
                 ],
@@ -219,7 +239,8 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
               Row(
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.fromLTRB(_leftMargin, 0, _thisWidth * 0.02666667, 0), // 10
+                    margin: EdgeInsets.fromLTRB(
+                        _leftMargin, 0, _thisWidth * 0.02666667, 0), // 10
                     child: Icon(
                       Icons.wb_incandescent,
                       size: _thisWidth * 0.16 * 0.5, // 30
@@ -352,7 +373,9 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
           ),
           preferredSize: Size.fromHeight(1.0),
         ),
-        toolbarHeight: (Platform.isAndroid)?_thisHeight * 0.088: _thisHeight * 0.058, // 46
+        toolbarHeight:
+            (Platform.isAndroid) ? _thisHeight * 0.088 : _thisHeight * 0.058,
+        // 46
         elevation: 0.0,
         backgroundColor: Colors.white,
         title: Center(

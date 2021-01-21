@@ -1,3 +1,4 @@
+import 'package:baemin_app/storeDetailPage/StoreDetailPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -58,7 +59,9 @@ class ZZimTemplate extends StatelessWidget {
   String _makeDeliverTipString(int index) {
     if (_storeList.elementAt(index - 1).minDeliverTip ==
         _storeList.elementAt(index - 1).maxDeliverTip) {
-      return '배달팁 ' + _storeList.elementAt(index - 1).minDeliverTip + '원';
+      return '배달팁 ' +
+          _storeList.elementAt(index - 1).minDeliverTip +
+          '원';
     } else {
       return '배달팁 ' +
           _storeList.elementAt(index - 1).minDeliverTip +
@@ -115,31 +118,15 @@ class ZZimTemplate extends StatelessWidget {
             ],
           );
         } else {
-          return FlatButton(
-            padding: EdgeInsets.zero,
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text('Test'),
-                    actions: [
-                      FlatButton(
-                        child: Text('닫기'),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
-            child: Column(
-              children: [
-                Container(
-                  height: _calculateHeight(index),
-                  color: Colors.white,
+          return Column(
+            children: [
+              Container(
+                height: _calculateHeight(index),
+                color: Colors.white,
+                child: FlatButton(
+                  padding: EdgeInsets.zero,
+                  highlightColor: Colors.transparent,
+                  splashColor: Color(0x0D000000),
                   child: Row(
                     children: <Widget>[
                       Container(
@@ -180,14 +167,16 @@ class ZZimTemplate extends StatelessWidget {
                                 ),
                                 ZZimPin(
                                   /// 신규
-                                  visible:
-                                      _storeList.elementAt(index - 1).isNew,
+                                  visible: _storeList
+                                      .elementAt(index - 1)
+                                      .isNew,
                                   title: '신규',
                                 ),
                                 ZZimPin(
                                   /// 쿠폰
-                                  visible:
-                                      _storeList.elementAt(index - 1).canCoupon,
+                                  visible: _storeList
+                                      .elementAt(index - 1)
+                                      .canCoupon,
                                   title: '쿠폰',
                                 ),
                                 ZZimPin(
@@ -199,8 +188,9 @@ class ZZimTemplate extends StatelessWidget {
                                 ),
                                 ZZimPin(
                                   /// 매장
-                                  visible:
-                                      _storeList.elementAt(index - 1).canPickUp,
+                                  visible: _storeList
+                                      .elementAt(index - 1)
+                                      .canPickUp,
                                   title: '매장',
                                 ),
                               ],
@@ -280,8 +270,9 @@ class ZZimTemplate extends StatelessWidget {
                             ),
                             Visibility(
                               /// 배달팁
-                              visible:
-                                  _storeList.elementAt(index - 1).canDelivery,
+                              visible: _storeList
+                                  .elementAt(index - 1)
+                                  .canDelivery,
                               child: Container(
                                 margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
                                 child: Text(
@@ -294,8 +285,9 @@ class ZZimTemplate extends StatelessWidget {
                             ),
                             Visibility(
                               /// 위생정보
-                              visible:
-                                  _storeList.elementAt(index - 1).showClean,
+                              visible: _storeList
+                                  .elementAt(index - 1)
+                                  .showClean,
                               child: Container(
                                 margin: EdgeInsets.fromLTRB(0, 6, 0, 0),
                                 width: 43,
@@ -319,15 +311,25 @@ class ZZimTemplate extends StatelessWidget {
                       ),
                     ],
                   ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => StoreDetailPage(
+                          store: _storeList.elementAt(index - 1),
+                        ),
+                      ),
+                    );
+                  },
                 ),
-                (index == _storeList.length)
-                    ? Container(
-                        height: 1.0,
-                        color: Colors.black12,
-                      )
-                    : ZZimShadowH(),
-              ],
-            ),
+              ),
+              (index == _storeList.length)
+                  ? Container(
+                height: 1.0,
+                color: Colors.black12,
+              )
+                  : ZZimShadowH(),
+            ],
           );
         }
       },

@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'home/Home.dart';
-import 'myBaeMin/MyBaeMin.dart';
-import 'orderList/OrderList.dart';
-import 'whatEat/WhatEat.dart';
-import 'zzim/ZZim.dart';
+import 'homePage/HomePage.dart';
+import 'myBaeMinPage/MyBaeMinPage.dart';
+import 'orderListPage/OrderListPage.dart';
+import 'whatEatPage/WhatEatPage.dart';
+import 'zzimPage/ZZimPage.dart';
 
 void main() {
   runApp(MyApp());
@@ -56,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Widget> _listWidget = <Widget>[
     HomePage(),
     WhatEatPage(),
-    ZZimPage(),
+    ZZimPage(fromAnotherPage: false),
     OrderListPage(),
     MyBaeMinPage(),
   ];
@@ -77,7 +77,10 @@ class _MyHomePageState extends State<MyHomePage> {
         ((Platform.isAndroid) ? '안드로이드' : ((Platform.isIOS) ? 'iOS' : '알수없음')));
 
     return Scaffold(
-      body: _listWidget.elementAt(_selectedIndex),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _listWidget,
+      ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           border: Border(

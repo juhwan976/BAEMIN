@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 class MyBaeMinButton extends StatelessWidget {
   const MyBaeMinButton({
-    Key key, this.icon, this.text,
+    Key key, this.icon, this.text, this.function
   }) : super(key: key);
 
   final Icon icon;
   final String text;
+  final Function function;
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +16,7 @@ class MyBaeMinButton extends StatelessWidget {
 
     return FlatButton(
         highlightColor: Colors.transparent,
+        splashColor: Color(0x0D000000),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -33,7 +35,7 @@ class MyBaeMinButton extends StatelessWidget {
             ),
           ],
         ),
-        onPressed: (){},
+        onPressed: function,
     );
   }
 }
