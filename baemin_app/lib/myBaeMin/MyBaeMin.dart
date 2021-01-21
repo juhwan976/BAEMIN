@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -35,18 +37,17 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
   }
 
   /// 페이지의 내용을 리스트 뷰로 만드는 메서드
-  ListView _buildListView(double _thisHeight, double _thisWidth,
-      double _thisTextScaleFactor) {
-    final double _userInfoHeight = 85;
-    final double _cateHeight = 80;
-    final double _leftMargin = 10;
-    final double _leftFontMargin = _leftMargin + 3;
+  ListView _buildListView(
+      double _thisHeight, double _thisWidth, double _thisTextScaleFactor) {
+    final double _userInfoHeight = _thisWidth * 0.22666667; // 85, _thisWidth * 0.22666667
+    final double _cateHeight = _thisWidth * 0.21333333; // 80
+    final double _leftMargin = _thisWidth * 0.02666667; // 10
+    final double _leftFontMargin = _leftMargin + _thisWidth * 0.008; // 3
 
     return ListView(
       children: <Widget>[
-        Container(height: 7),
+        Container(height: _thisWidth * 0.01866667), // 7
         Container(
-
           /// 사용자 정보 출력
           height: _userInfoHeight,
           decoration: BoxDecoration(
@@ -60,15 +61,16 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                   Container(
                     child: Icon(
                       Icons.supervised_user_circle,
-                      size: 65,
+                      size: _userInfoHeight * 0.76470588, // 65
                     ),
-                    height: 65,
-                    width: 65,
-                    margin: EdgeInsets.fromLTRB(_leftMargin, 0, 3, 0),
+                    height: _userInfoHeight * 0.76470588, // 65
+                    width: _userInfoHeight * 0.76470588, // 65
+                    margin: EdgeInsets.fromLTRB(_leftMargin, 0, _thisWidth * 0.008, 0), // 3
                   ),
                   Container(
                     child: Text(
                       '고마운분,',
+                      textScaleFactor: 0.82,
                       style: TextStyle(
                         fontSize: 25.0,
                         color: Colors.black45,
@@ -78,6 +80,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                   Container(
                     child: Text(
                       user.name,
+                      textScaleFactor: 0.82,
                       style: TextStyle(
                         fontSize: 25.0,
                         color: Colors.black,
@@ -92,9 +95,8 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
         ),
         MyBaeMinShadowH(),
         Container(
-
           /// 등급 현황
-          height: 56,
+          height: _thisWidth * 0.14933333, // 56
           decoration: BoxDecoration(
             color: Colors.white,
           ),
@@ -102,15 +104,16 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Container(
-                width: 200,
+                width: _thisWidth * 0.53333333, // 200
                 color: Colors.black12,
                 margin: EdgeInsets.fromLTRB(_leftMargin, 0, 0, 0),
                 child: _showGradeImage(),
               ),
               Container(
-                width: 80,
-                height: 26,
-                margin: EdgeInsets.fromLTRB(0,0,17,0),
+                /// 등급별 혜택 버튼
+                width: _thisWidth * 0.21333333, // 80
+                height: _thisWidth * 0.06933333, // 26
+                margin: EdgeInsets.fromLTRB(0, 0, _thisWidth * 0.14933333 * 0.30357143, 0), // 17
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: Color(0x09000000),
@@ -119,6 +122,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                   padding: EdgeInsets.zero,
                   child: Text(
                     '등급별 혜택',
+                    textScaleFactor: 0.82,
                     style: TextStyle(
                       color: Colors.black,
                     ),
@@ -131,7 +135,6 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
         ),
         MyBaeMinShadowH(),
         Column(
-
           /// 메뉴 6개
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -142,10 +145,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width / 3 - 1,
+                    width: MediaQuery.of(context).size.width / 3 - 1,
                     child: MyBaeMinButton(
                       icon: Icon(Icons.attach_money),
                       text: '포인트',
@@ -153,10 +153,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                   ),
                   MyBaeMinShadowV(),
                   Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width / 3 - 1,
+                    width: MediaQuery.of(context).size.width / 3 - 1,
                     child: MyBaeMinButton(
                       icon: Icon(Icons.money),
                       text: '쿠폰함',
@@ -164,10 +161,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                   ),
                   MyBaeMinShadowV(),
                   Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width / 3 - 1,
+                    width: MediaQuery.of(context).size.width / 3 - 1,
                     child: MyBaeMinButton(
                       icon: Icon(Icons.card_giftcard),
                       text: '선물함',
@@ -184,10 +178,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width / 3 - 1,
+                    width: MediaQuery.of(context).size.width / 3 - 1,
                     child: MyBaeMinButton(
                       icon: Icon(Icons.favorite),
                       text: '찜한가게',
@@ -195,10 +186,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                   ),
                   MyBaeMinShadowV(),
                   Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width / 3 - 1,
+                    width: MediaQuery.of(context).size.width / 3 - 1,
                     child: MyBaeMinButton(
                       icon: Icon(Icons.list),
                       text: '주문내역',
@@ -206,10 +194,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                   ),
                   MyBaeMinShadowV(),
                   Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width / 3 - 1,
+                    width: MediaQuery.of(context).size.width / 3 - 1,
                     child: MyBaeMinButton(
                       icon: Icon(Icons.comment),
                       text: '리뷰관리',
@@ -222,12 +207,11 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
           ],
         ),
         Container(
-          height: 10,
+          height: _thisWidth * 0.02666667, // 10
         ),
         Container(
-
           /// 일회용품 덜쓰기
-          height: 60,
+          height: _thisWidth * 0.16, // 60
           color: Colors.white,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -235,15 +219,16 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
               Row(
                 children: <Widget>[
                   Container(
-                    margin: EdgeInsets.fromLTRB(_leftMargin, 0, 10, 0),
+                    margin: EdgeInsets.fromLTRB(_leftMargin, 0, _thisWidth * 0.02666667, 0), // 10
                     child: Icon(
                       Icons.wb_incandescent,
-                      size: 30,
+                      size: _thisWidth * 0.16 * 0.5, // 30
                       color: Colors.green,
                     ),
                   ),
                   Text(
                     '일회용품 덜 쓰기, 함께해요!',
+                    textScaleFactor: 0.82,
                     style: TextStyle(
                       color: Colors.green,
                       fontSize: 19,
@@ -256,12 +241,11 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
           ),
         ),
         Container(
-          height: 10,
+          height: _thisWidth * 0.02666667, // 10
         ),
         Container(
-
           /// 배민페이 등록
-          height: 82,
+          height: _thisWidth * 0.21866667, // 82
           color: Colors.white,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -274,12 +258,14 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                   children: <Widget>[
                     Text(
                       '배민페이 등록',
+                      textScaleFactor: 0.82,
                       style: TextStyle(
                         fontSize: 19,
                       ),
                     ),
                     Text(
                       '배민페이로 결제하면 최대 5.5% 배민포인트가 적립됩니다!',
+                      textScaleFactor: 0.82,
                       style: TextStyle(
                         fontSize: 16,
                         color: Color(0x70000000),
@@ -301,12 +287,11 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
         MyBaeMinTemplate(leftFontMargin: _leftFontMargin, title: '환경설정'),
         MyBaeMinTemplate(leftFontMargin: _leftFontMargin, title: '약관 및 정책'),
         Column(
-
           /// 현재 버전
           children: <Widget>[
             MyBaeMinShadowH(),
             Container(
-              height: 59,
+              height: _thisWidth * 0.15733333, // 59
               color: Colors.white,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -315,6 +300,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                     margin: EdgeInsets.fromLTRB(_leftFontMargin, 0, 0, 0),
                     child: Text(
                       '현재 버전 10.19.1',
+                      textScaleFactor: 0.82,
                       style: TextStyle(
                         fontSize: 19,
                       ),
@@ -330,12 +316,13 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
           color: Color(0x09000000),
         ),
         Container(
-          height: 59,
+          height: _thisWidth * 0.15733333, // 59
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
                 'Copyright Woowa Brothers in Song-pa, All Rights Reserved.',
+                textScaleFactor: 0.82,
                 style: TextStyle(
                   fontSize: 12,
                   color: Color(0x70000000),
@@ -351,20 +338,9 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
   @override
   Widget build(BuildContext context) {
     final double _thisHeight =
-        MediaQuery
-            .of(context)
-            .size
-            .height - MediaQuery
-            .of(context)
-            .padding
-            .top;
-    final double _thisWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
-    final double _thisTextScaleFactor = MediaQuery
-        .of(context)
-        .textScaleFactor;
+        MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
+    final double _thisWidth = MediaQuery.of(context).size.width;
+    final double _thisTextScaleFactor = MediaQuery.of(context).textScaleFactor;
 
     return Scaffold(
       appBar: AppBar(
@@ -376,12 +352,13 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
           ),
           preferredSize: Size.fromHeight(1.0),
         ),
-        toolbarHeight: 46.0,
+        toolbarHeight: (Platform.isAndroid)?_thisHeight * 0.088: _thisHeight * 0.058, // 46
         elevation: 0.0,
         backgroundColor: Colors.white,
         title: Center(
           child: Text(
             'My배민',
+            textScaleFactor: 0.82,
             style: TextStyle(
               fontSize: 20,
             ),

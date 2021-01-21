@@ -10,6 +10,9 @@ class MyBaeMinButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _thisWidth = MediaQuery.of(context).size.width;
+    final _thisTextScaleFactor = MediaQuery.of(context).textScaleFactor;
+
     return FlatButton(
         highlightColor: Colors.transparent,
         child: Column(
@@ -17,10 +20,11 @@ class MyBaeMinButton extends StatelessWidget {
           children: <Widget>[
             icon,
             Container(
-              height: 5,
+              height: _thisWidth * 0.01333333, // 5
             ),
             Text(
               text,
+              textScaleFactor: 0.82,
               style: TextStyle(
                 fontSize: 13,
                 color: Color(0x70000000),

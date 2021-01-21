@@ -78,35 +78,44 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       body: _listWidget.elementAt(_selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 0.0,
-        type: BottomNavigationBarType.fixed,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: '홈',
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              color: Colors.black12,
+            ),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.tv),
-            label: '뭐먹지',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: '찜한가게',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: '주문내역',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_box),
-            label: 'my배민',
-          ),
-        ],
-        selectedItemColor: Colors.tealAccent,
-        unselectedItemColor: Colors.grey,
-        currentIndex: _selectedIndex,
-        onTap: _onTaped,
+        ),
+        child: BottomNavigationBar(
+          elevation: 0.0,
+          type: BottomNavigationBarType.fixed,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: '홈',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.tv),
+              label: '뭐먹지',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite),
+              label: '찜한가게',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.list),
+              label: '주문내역',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_box),
+              label: 'my배민',
+            ),
+          ],
+          selectedItemColor: Colors.tealAccent,
+          unselectedItemColor: Colors.grey,
+          currentIndex: _selectedIndex,
+          onTap: _onTaped,
+        ),
       ),
     );
   }
