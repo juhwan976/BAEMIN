@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'MyBaeMinArrow.dart';
-import 'MyBaeMinArrowButton.dart';
+import 'MyBaeMinButton.dart';
 import 'MyBaeMinShadowH.dart';
 
 class MyBaeMinTemplate extends StatelessWidget {
@@ -28,7 +28,7 @@ class MyBaeMinTemplate extends StatelessWidget {
         Container(
           height: _thisWidth * 0.15733333, // 59
           color: Colors.white,
-          child: MyBaeMinArrowButton(
+          child: MyBaeMinButton(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[

@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 
 import '../User.dart';
 import 'MyBaeMinArrow.dart';
-import 'MyBaeMinArrowButton.dart';
+import 'MyBaeMinButton.dart';
 import 'MyBaeMinShadowH.dart';
 import 'MyBaeMinShadowV.dart';
-import 'MyBaeMinSixButton.dart';
+import 'MyBaeMinSixButtons.dart';
 import 'MyBaeMinTemplate.dart';
 import 'MyBaeMinTemplateDes.dart';
 
@@ -57,7 +57,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
           decoration: BoxDecoration(
             color: Colors.white,
           ),
-          child: MyBaeMinArrowButton(
+          child: MyBaeMinButton(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -158,7 +158,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                 children: <Widget>[
                   Container(
                     width: MediaQuery.of(context).size.width / 3 - 1,
-                    child: MyBaeMinSixButton(
+                    child: MyBaeMinSixButtons(
                       icon: Icon(Icons.attach_money),
                       text: '포인트',
                       function: () {},
@@ -167,7 +167,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                   MyBaeMinShadowV(),
                   Container(
                     width: MediaQuery.of(context).size.width / 3 - 1,
-                    child: MyBaeMinSixButton(
+                    child: MyBaeMinSixButtons(
                       icon: Icon(Icons.money),
                       text: '쿠폰함',
                       function: () {},
@@ -176,7 +176,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                   MyBaeMinShadowV(),
                   Container(
                     width: MediaQuery.of(context).size.width / 3 - 1,
-                    child: MyBaeMinSixButton(
+                    child: MyBaeMinSixButtons(
                       icon: Icon(Icons.card_giftcard),
                       text: '선물함',
                       function: () {},
@@ -194,7 +194,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                 children: <Widget>[
                   Container(
                     width: MediaQuery.of(context).size.width / 3 - 1,
-                    child: MyBaeMinSixButton(
+                    child: MyBaeMinSixButtons(
                       icon: Icon(Icons.favorite),
                       text: '찜한가게',
                       function: () {
@@ -211,7 +211,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                   MyBaeMinShadowV(),
                   Container(
                     width: MediaQuery.of(context).size.width / 3 - 1,
-                    child: MyBaeMinSixButton(
+                    child: MyBaeMinSixButtons(
                       icon: Icon(Icons.list),
                       text: '주문내역',
                       function: () {},
@@ -220,7 +220,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                   MyBaeMinShadowV(),
                   Container(
                     width: MediaQuery.of(context).size.width / 3 - 1,
-                    child: MyBaeMinSixButton(
+                    child: MyBaeMinSixButtons(
                       icon: Icon(Icons.comment),
                       text: '리뷰관리',
                       function: () {},
@@ -239,7 +239,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
           /// 일회용품 덜쓰기
           height: _thisWidth * 0.16, // 60
           color: Colors.white,
-          child: MyBaeMinArrowButton(
+          child: MyBaeMinButton(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[

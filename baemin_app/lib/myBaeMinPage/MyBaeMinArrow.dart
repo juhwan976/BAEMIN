@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/*
+ * 화살표 아이콘을 빌드하는 위젯
+ */
 class MyBaeMinArrow extends StatelessWidget {
   const MyBaeMinArrow({
     Key key,

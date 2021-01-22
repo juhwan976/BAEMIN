@@ -5,7 +5,10 @@ import 'pages/Rightnow.dart';
 import 'pages/ZZimed.dart';
 
 class ZZimPage extends StatefulWidget {
-  ZZimPage({Key key, @required this.fromAnotherPage}) : super(key: key);
+  ZZimPage({
+    Key key,
+    @required this.fromAnotherPage,
+  }) : super(key: key);
 
   final bool fromAnotherPage;
 
@@ -16,7 +19,7 @@ class ZZimPage extends StatefulWidget {
 class _ZZimPageState extends State<ZZimPage> {
 
   Widget _buildLeading(bool fromAnotherPage) {
-    if(fromAnotherPage) {
+    if (fromAnotherPage) {
       return FlatButton(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
@@ -25,8 +28,7 @@ class _ZZimPageState extends State<ZZimPage> {
           Navigator.pop(context);
         },
       );
-    }
-    else {
+    } else {
       return Container();
     }
   }
@@ -50,7 +52,7 @@ class _ZZimPageState extends State<ZZimPage> {
                 splashColor: Colors.transparent,
               ),
               child: Column(
-                children: <Widget> [
+                children: <Widget>[
                   TabBar(
                     indicatorSize: TabBarIndicatorSize.label,
                     indicatorColor: Colors.black,

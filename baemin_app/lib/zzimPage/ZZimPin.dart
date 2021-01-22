@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 class ZZimPin extends StatelessWidget {
-  const ZZimPin({Key key, @required this.visible, @required this.title})
-      : super(key: key);
+  const ZZimPin({
+    Key key,
+    @required this.visible,
+    @required this.title,
+  }) : super(key: key);
 
   final bool visible;
   final String title;
