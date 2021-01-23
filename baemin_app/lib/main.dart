@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: '배달의 민족 Page'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

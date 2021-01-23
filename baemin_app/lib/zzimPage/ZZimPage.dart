@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'pages/Call.dart';
@@ -17,13 +18,13 @@ class ZZimPage extends StatefulWidget {
 }
 
 class _ZZimPageState extends State<ZZimPage> {
-
   Widget _buildLeading(bool fromAnotherPage) {
     if (fromAnotherPage) {
-      return FlatButton(
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        child: Icon(Icons.arrow_back_rounded),
+      return CupertinoButton(
+        child: Icon(
+          Icons.arrow_back_rounded,
+          color: Colors.black,
+        ),
         onPressed: () {
           Navigator.pop(context);
         },
