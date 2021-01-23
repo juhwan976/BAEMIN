@@ -57,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
     HomePage(),
     WhatEatPage(),
     ZZimPage(fromAnotherPage: false),
-    OrderListPage(),
+    OrderListPage(fromAnotherPage: false),
     MyBaeMinPage(),
   ];
 

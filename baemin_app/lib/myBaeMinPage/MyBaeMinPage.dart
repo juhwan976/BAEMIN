@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:baemin_app/orderListPage/OrderListPage.dart';
 import 'package:baemin_app/zzimPage/ZZimPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -214,7 +215,15 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                     child: MyBaeMinSixButtons(
                       icon: Icon(Icons.list),
                       text: '주문내역',
-                      function: () {},
+                      function: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                OrderListPage(fromAnotherPage: true),
+                          ),
+                        );
+                      },
                     ),
                   ),
                   MyBaeMinShadowV(),
