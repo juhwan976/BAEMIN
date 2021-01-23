@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OrderListPage extends StatefulWidget {
@@ -13,21 +14,20 @@ class OrderListPage extends StatefulWidget {
 }
 
 class _OrderListPageState extends State<OrderListPage> {
-
   Widget _buildLeading() {
-    if(widget.fromAnotherPage) {
+    if (widget.fromAnotherPage) {
       return Container(
-        child: FlatButton(
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-          child: Icon(Icons.arrow_back_rounded, color: Colors.black,),
+        child: CupertinoButton(
+          child: Icon(
+            Icons.arrow_back_rounded,
+            color: Colors.black,
+          ),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
       );
-    }
-    else {
+    } else {
       return Container();
     }
   }
