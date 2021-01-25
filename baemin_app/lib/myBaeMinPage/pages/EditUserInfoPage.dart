@@ -63,6 +63,13 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
         title: Text('내 정보 수정'),
         leading: _buildLeading(),
         actions: _buildActions(),
+        bottom: PreferredSize(
+          preferredSize: null,
+          child: Container(
+            height: 0.5,
+            color: Colors.black12,
+          ),
+        ),
       ),
       body: Center(
         child: Text('widget.user.name : ${widget.user.name}'),

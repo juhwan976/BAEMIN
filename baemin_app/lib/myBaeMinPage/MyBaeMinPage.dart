@@ -397,11 +397,11 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
       appBar: AppBar(
         brightness: Brightness.light,
         bottom: PreferredSize(
+          preferredSize: null,
           child: Container(
-            height: 1.0,
+            height: 0.5,
             color: Colors.black12,
           ),
-          preferredSize: Size.fromHeight(1.0),
         ),
         toolbarHeight:
             (Platform.isAndroid) ? _thisHeight * 0.088 : _thisHeight * 0.058,
