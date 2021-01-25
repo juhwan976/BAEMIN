@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../Store.dart';
@@ -15,10 +16,7 @@ class StoreDetailPage extends StatefulWidget {
 class _StoreDetailPageState extends State<StoreDetailPage> {
   Widget _buildLeading() {
     return Container(
-      child: FlatButton(
-        padding: EdgeInsets.zero,
-        highlightColor: Colors.transparent,
-        splashColor: Colors.transparent,
+      child: CupertinoButton(
         child: Icon(
           Icons.arrow_back_rounded,
           color: Colors.black,
@@ -31,9 +29,9 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
   }
 
   List<Widget> _buildAction() {
-    List<Widget> widgetList = new List<Widget>();
+    List<Widget> _widgetList = new List<Widget>();
 
-    widgetList.add(Container(
+    _widgetList.add(Container(
       child: FlatButton(
         padding: EdgeInsets.zero,
         highlightColor: Colors.transparent,
@@ -46,7 +44,7 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
       ),
     ));
 
-    return widgetList;
+    return _widgetList;
   }
 
   @override

@@ -13,6 +13,7 @@ import 'MyBaeMinShadowV.dart';
 import 'MyBaeMinSixButtons.dart';
 import 'MyBaeMinTemplate.dart';
 import 'MyBaeMinTemplateDes.dart';
+import 'pages/EditUserInfoPage.dart';
 
 /*
  * 이 페이지는 글자 크기가 0.82(작음)으로 된 상태에서 만들어진 페이지 입니다.
@@ -99,7 +100,15 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                 MyBaeMinArrow(),
               ],
             ),
-            function: () {},
+            function: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      EditUserInfoPage(user: user),
+                ),
+              );
+            },
           ),
         ),
         MyBaeMinShadowH(),
