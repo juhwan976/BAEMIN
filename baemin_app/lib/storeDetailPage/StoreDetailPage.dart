@@ -31,18 +31,20 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
   List<Widget> _buildAction() {
     List<Widget> _widgetList = new List<Widget>();
 
-    _widgetList.add(Container(
-      child: FlatButton(
-        padding: EdgeInsets.zero,
-        highlightColor: Colors.transparent,
-        splashColor: Colors.transparent,
-        child: Icon(
-          Icons.search,
-          color: Colors.black,
+    _widgetList.add(
+      Container(
+        child: FlatButton(
+          padding: EdgeInsets.zero,
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          child: Icon(
+            Icons.search,
+            color: Colors.black,
+          ),
+          onPressed: () {},
         ),
-        onPressed: () {},
       ),
-    ));
+    );
 
     return _widgetList;
   }

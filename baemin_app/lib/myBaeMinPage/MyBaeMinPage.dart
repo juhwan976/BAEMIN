@@ -100,14 +100,22 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                 MyBaeMinArrow(),
               ],
             ),
-            function: () {
-              Navigator.push(
+            function: () async {
+              final result = await Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
                       EditUserInfoPage(user: user),
                 ),
               );
+
+              if(result == null) {
+                /* do nothing */
+              }
+              else {
+                user.name = result;
+                setState(() {});
+              }
             },
           ),
         ),
