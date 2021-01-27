@@ -34,7 +34,7 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
     _widgetList.add(
       Container(
         child: FlatButton(
-          padding: EdgeInsets.zero,
+          padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
           highlightColor: Colors.transparent,
           splashColor: Colors.transparent,
           child: Icon(

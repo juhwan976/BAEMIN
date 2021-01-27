@@ -25,6 +25,7 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
             child: Column(
               children: <Widget>[
                 Container(
+                  /// 프로필 사진 변경
                   height: 65,
                   width: 65,
                   margin: EdgeInsets.fromLTRB(0, 9, 0, 0),
@@ -63,6 +64,7 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
                   ),
                 ),
                 Container(
+                  /// 사용자 이름 변경
                   margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
                   width: 250,
                   height: 35,
@@ -108,8 +110,13 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
                     ),
                   ),
                 ),
+
               ],
             ),
+          ),
+          Container(
+            height: 10,
+            color: Color(0x09000000),
           ),
         ],
       ),
@@ -133,24 +140,26 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
   List<Widget> _buildActions(TextEditingController _nameController) {
     List<Widget> _listWidget = new List<Widget>();
 
-    _listWidget.add(Container(
-      child: FlatButton(
-        highlightColor: Colors.transparent,
-        splashColor: Colors.transparent,
-        padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
-        child: Text(
-          '저장',
-          textScaleFactor: 0.82,
-          style: TextStyle(
-            fontSize: 21,
-            fontWeight: FontWeight.normal,
+    _listWidget.add(
+      Container(
+        child: FlatButton(
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
+          child: Text(
+            '저장',
+            textScaleFactor: 0.82,
+            style: TextStyle(
+              fontSize: 21,
+              fontWeight: FontWeight.normal,
+            ),
           ),
+          onPressed: () {
+            Navigator.pop(context, _nameController.text);
+          },
         ),
-        onPressed: () {
-          Navigator.pop(context, _nameController.text);
-        },
       ),
-    ));
+    );
 
     return _listWidget;
   }
