@@ -41,6 +41,7 @@ class _OrderListPageState extends State<OrderListPage> {
         elevation: 0.0,
         toolbarHeight: 46,
         leading: _buildLeading(),
+        centerTitle: true,
         title: Text('주문내역'),
       ),
       body: Center(

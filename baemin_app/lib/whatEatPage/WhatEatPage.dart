@@ -14,6 +14,7 @@ class _WhatEatPageState extends State<WhatEatPage> {
       appBar: AppBar(
         toolbarHeight: 44,
         elevation: 0.0,
+        centerTitle: true,
         title: Text('뭐먹지'),
       ),
       body: Center(

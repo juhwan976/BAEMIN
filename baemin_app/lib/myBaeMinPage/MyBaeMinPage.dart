@@ -416,14 +416,13 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
         // 46
         elevation: 0.0,
         backgroundColor: Colors.white,
-        title: Center(
-          child: Text(
+        centerTitle: true,
+        title: Text(
             'My배민',
             textScaleFactor: 0.82,
             style: TextStyle(
               fontSize: 20,
             ),
-          ),
         ),
       ),
       body: Container(

@@ -82,6 +82,7 @@ class _ZZimPageState extends State<ZZimPage> {
               ),
             ),
           ),
+          centerTitle: true,
           title: Text('찜한가게', textScaleFactor: 0.82),
         ),
         body: TabBarView(
