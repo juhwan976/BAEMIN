@@ -132,6 +132,6 @@ class ZZimed extends StatelessWidget {
       ),
     ];
 
-    return ZZimBuildPage(_storeList);
+    return ZZimBuildPage(_storeList, '찜한가게');
   }
 }

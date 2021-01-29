@@ -66,11 +66,8 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                 Row(
                   children: <Widget>[
                     Container(
-                      child: Icon(
-                        Icons.supervised_user_circle,
-                        size: _userInfoHeight * 0.76470588, // 65
-                      ),
-                      height: _userInfoHeight * 0.76470588, // 65
+                      child: Image.asset('assets/MyBaemin/img_my_baemin_default_profile.png'),
+                      height: _userInfoHeight * 0.6, // 51
                       width: _userInfoHeight * 0.76470588, // 65
                       margin: EdgeInsets.fromLTRB(
                           _leftMargin, 0, _thisWidth * 0.008, 0), // 3
@@ -177,7 +174,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                   Container(
                     width: MediaQuery.of(context).size.width / 3 - 1,
                     child: MyBaeMinSixButtons(
-                      icon: Icon(Icons.attach_money),
+                      directory: 'assets/MyBaemin/mybaemin_point.png',
                       text: '포인트',
                       function: () {},
                     ),
@@ -186,7 +183,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                   Container(
                     width: MediaQuery.of(context).size.width / 3 - 1,
                     child: MyBaeMinSixButtons(
-                      icon: Icon(Icons.money),
+                      directory: 'assets/MyBaemin/mybaemin_coupon.png',
                       text: '쿠폰함',
                       function: () {},
                     ),
@@ -195,7 +192,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                   Container(
                     width: MediaQuery.of(context).size.width / 3 - 1,
                     child: MyBaeMinSixButtons(
-                      icon: Icon(Icons.card_giftcard),
+                      directory: 'assets/MyBaemin/icon_42_mybaemin_gift.png',
                       text: '선물함',
                       function: () {},
                     ),
@@ -213,7 +210,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                   Container(
                     width: MediaQuery.of(context).size.width / 3 - 1,
                     child: MyBaeMinSixButtons(
-                      icon: Icon(Icons.favorite),
+                      directory: 'assets/MyBaemin/icon_42_mybaemin_favorite.png',
                       text: '찜한가게',
                       function: () {
                         Navigator.push(
@@ -230,7 +227,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                   Container(
                     width: MediaQuery.of(context).size.width / 3 - 1,
                     child: MyBaeMinSixButtons(
-                      icon: Icon(Icons.list),
+                      directory: 'assets/MyBaemin/mybaemin_history.png',
                       text: '주문내역',
                       function: () {
                         Navigator.push(
@@ -247,7 +244,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                   Container(
                     width: MediaQuery.of(context).size.width / 3 - 1,
                     child: MyBaeMinSixButtons(
-                      icon: Icon(Icons.comment),
+                      directory: 'assets/MyBaemin/mybaemin_review.png',
                       text: '리뷰관리',
                       function: () {},
                     ),
@@ -272,13 +269,11 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                 Row(
                   children: <Widget>[
                     Container(
+                      height: _thisWidth * 0.10666667, // 40
+                      width: _thisWidth * 0.10666667, // 40
                       margin: EdgeInsets.fromLTRB(
-                          _leftMargin, 0, _thisWidth * 0.02666667, 0), // 10
-                      child: Icon(
-                        Icons.wb_incandescent,
-                        size: _thisWidth * 0.16 * 0.5, // 30
-                        color: Colors.green,
-                      ),
+                          _leftMargin, 0, 0, 0), // 10
+                      child: Image.asset('assets/MyBaemin/deco_campaign_tape_right.png'),
                     ),
                     Text(
                       '일회용품 덜 쓰기, 함께해요!',

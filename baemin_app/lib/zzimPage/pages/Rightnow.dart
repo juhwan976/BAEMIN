@@ -12,6 +12,6 @@ class Rightnow extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Store> _storeList = new List<Store>();
 
-    return ZZimBuildPage(_storeList);
+    return ZZimBuildPage(_storeList, '바로결제');
   }
 }

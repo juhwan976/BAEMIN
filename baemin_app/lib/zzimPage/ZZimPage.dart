@@ -20,16 +20,21 @@ class ZZimPage extends StatefulWidget {
 }
 
 class _ZZimPageState extends State<ZZimPage> {
-  Widget _buildLeading(bool fromAnotherPage) {
-    if (fromAnotherPage) {
-      return CupertinoButton(
-        child: Icon(
-          Icons.arrow_back_rounded,
-          color: Colors.black,
-        ),
-        onPressed: () {
-          Navigator.pop(context);
-        },
+
+  Widget _buildLeading() {
+    if (widget.fromAnotherPage) {
+      return Container(
+        alignment: Alignment.centerLeft,
+        child: CupertinoButton(
+          child: Icon(
+            Icons.arrow_back_rounded,
+            color: Colors.black,
+            size: 24,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        )
       );
     } else {
       return Container();
@@ -44,7 +49,7 @@ class _ZZimPageState extends State<ZZimPage> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          leading: _buildLeading(widget.fromAnotherPage),
+          leading: _buildLeading(),
           backgroundColor: Colors.white,
           toolbarHeight: (Platform.isIOS)?_thisHeight * 0.109375: 100, // 84, 안드로이드일 경우 높이는 임시
           elevation: 0.0,
@@ -87,7 +92,7 @@ class _ZZimPageState extends State<ZZimPage> {
             ),
           ),
           centerTitle: true,
-          title: Text('찜한가게', textScaleFactor: 0.82),
+          title: Text('찜한가게'),
         ),
         body: TabBarView(
           children: <Widget>[

@@ -38,7 +38,7 @@ class _WhatEatPageState extends State<WhatEatPage>
   Random _random = new Random();
   Timer rotater;
   int _currentIndex = 0;
-  bool _visibleIcon = false;
+  bool _visibleIcon = true;
 
   double _calculateHeight(List<double> _heights) {
     double resultLeft = _heights.elementAt(0);
