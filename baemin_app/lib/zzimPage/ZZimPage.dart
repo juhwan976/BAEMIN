@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -36,13 +38,15 @@ class _ZZimPageState extends State<ZZimPage> {
 
   @override
   Widget build(BuildContext context) {
+    double _thisHeight = MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         appBar: AppBar(
           leading: _buildLeading(widget.fromAnotherPage),
           backgroundColor: Colors.white,
-          toolbarHeight: 84.0,
+          toolbarHeight: (Platform.isIOS)?_thisHeight * 0.109375: 100, // 84, 안드로이드일 경우 높이는 임시
           elevation: 0.0,
           brightness: Brightness.light,
           bottom: PreferredSize(
