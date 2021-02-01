@@ -407,8 +407,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
           ),
         ),
         toolbarHeight:
-            (Platform.isAndroid) ? _thisHeight * 0.088 : _thisHeight * 0.058,
-        // 46
+            (Platform.isAndroid) ? _thisHeight * 0.088 : _thisHeight * 0.058, // 46
         elevation: 0.0,
         backgroundColor: Colors.white,
         centerTitle: true,

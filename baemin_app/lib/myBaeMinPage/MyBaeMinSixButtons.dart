@@ -15,8 +15,6 @@ class MyBaeMinSixButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _thisWidth = MediaQuery.of(context).size.width;
-    final _thisTextScaleFactor = MediaQuery.of(context).textScaleFactor;
 
     return MyBaeMinButton(
       child: Column(
@@ -26,11 +24,6 @@ class MyBaeMinSixButtons extends StatelessWidget {
             height: 40,
             child: Image.asset(directory),
           ),
-          /*
-          Container(
-            height: _thisWidth * 0.01333333, // 5
-          ),
-           */
           Text(
             text,
             textScaleFactor: 0.82,

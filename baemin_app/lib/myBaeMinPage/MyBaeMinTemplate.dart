@@ -20,7 +20,6 @@ class MyBaeMinTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _thisWidth = MediaQuery.of(context).size.width;
-    final _thisTextScaleFactor = MediaQuery.of(context).textScaleFactor;
 
     return Column(
       children: <Widget>[

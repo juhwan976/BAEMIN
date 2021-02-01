@@ -13,8 +13,10 @@ Container ZZimBuildPage(List<Store> _storeList, String title) {
           height: 320,
           child: Column(
             children: <Widget>[
-              Image.asset('assets/ZZim/favorite.png',
-                  width: 375 * 0.63),
+              Image.asset(
+                'assets/ZZim/favorite.png',
+                width: 375 * 0.63,
+              ),
               Container(
                 height: 41,
               ),
@@ -25,11 +27,13 @@ Container ZZimBuildPage(List<Store> _storeList, String title) {
                   color: Colors.black38,
                 ),
               ),
-              Text('찜 해보세요',
+              Text(
+                '찜 해보세요',
                 style: TextStyle(
-                fontSize: 18,
-                color: Colors.black38,
-              ),),
+                  fontSize: 18,
+                  color: Colors.black38,
+                ),
+              ),
             ],
           ),
         ),
@@ -40,8 +44,10 @@ Container ZZimBuildPage(List<Store> _storeList, String title) {
           height: 300,
           child: Column(
             children: <Widget>[
-              Image.asset('assets/ZZim/image_no_item_tung.png',
-                  width: 375 * 0.63),
+              Image.asset(
+                'assets/ZZim/image_no_item_tung.png',
+                width: 375 * 0.63,
+              ),
               Container(
                 height: 41,
               ),
@@ -62,8 +68,10 @@ Container ZZimBuildPage(List<Store> _storeList, String title) {
           height: 300,
           child: Column(
             children: <Widget>[
-              Image.asset('assets/ZZim/image_no_item_tung.png',
-                  width: 375 * 0.63),
+              Image.asset(
+                'assets/ZZim/image_no_item_tung.png',
+                width: 375 * 0.63,
+              ),
               Container(
                 height: 41,
               ),
