@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'MyBaeMinArrow.dart';
 import 'MyBaeMinButton.dart';
-import 'MyBaeMinShadowH.dart';
 
 class MyBaeMinTemplate extends StatelessWidget {
   const MyBaeMinTemplate({
@@ -21,33 +20,28 @@ class MyBaeMinTemplate extends StatelessWidget {
   Widget build(BuildContext context) {
     final _thisWidth = MediaQuery.of(context).size.width;
 
-    return Column(
-      children: <Widget>[
-        MyBaeMinShadowH(),
-        Container(
-          height: _thisWidth * 0.15733333, // 59
-          color: Colors.white,
-          child: MyBaeMinButton(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.fromLTRB(_leftFontMargin, 0, 0, 0),
-                  child: Text(
-                    title,
-                    textScaleFactor: 0.82,
-                    style: TextStyle(
-                      fontSize: 19,
-                    ),
-                  ),
+    return Container(
+      height: _thisWidth * 0.15733333, // 59
+      color: Colors.white,
+      child: MyBaeMinButton(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.fromLTRB(_leftFontMargin, 0, 0, 0),
+              child: Text(
+                title,
+                textScaleFactor: 0.82,
+                style: TextStyle(
+                  fontSize: 19,
                 ),
-                MyBaeMinArrow(),
-              ],
+              ),
             ),
-            function: function,
-          ),
+            MyBaeMinArrow(),
+          ],
         ),
-      ],
+        function: function,
+      ),
     );
   }
 }

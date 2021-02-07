@@ -42,6 +42,9 @@ class MyBaeMinTemplateDes extends StatelessWidget {
                       fontSize: 19,
                     ),
                   ),
+                  Container(
+                    height: _thisWidth * 0.008, // 3
+                  ),
                   Text(
                     description,
                     textScaleFactor: 0.82,

@@ -7,7 +7,7 @@ import 'NavigationIcon.dart';
 import 'homePage/HomePage.dart';
 import 'myBaeMinPage/MyBaeMinPage.dart';
 import 'orderListPage/OrderListPage.dart';
-import 'whatEatPage/WhatEatPage.dart';
+import 'searchPage/SearchPage.dart';
 import 'zzimPage/ZZimPage.dart';
 
 void main() {
@@ -15,8 +15,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -57,7 +55,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Widget> _listWidget = <Widget>[
     HomePage(),
-    WhatEatPage(),
+    //WhatEatPage(),
+    SearchPage(),
     ZZimPage(fromAnotherPage: false),
     OrderListPage(fromAnotherPage: false),
     MyBaeMinPage(),
@@ -84,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: _listWidget,
       ),
       bottomNavigationBar: Container(
-        height: 85,
+        height: (Platform.isIOS) ? 85 : 55,
         decoration: BoxDecoration(
           border: Border(
             top: BorderSide(
@@ -113,6 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 label: '',
               ),
+              /*
               BottomNavigationBarItem(
                 icon: NavigationIcon(
                   selectedIndex: _selectedIndex,
@@ -125,14 +125,26 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 label: '',
               ),
+              */
+              BottomNavigationBarItem(
+                icon: NavigationIcon(
+                  selectedIndex: _selectedIndex,
+                  compareIndex: 1,
+                  normalIcon: 'assets/Navigation/icon_30_tabbar_search.png',
+                  selectedIcon:
+                      'assets/Navigation/icon_30_tabbar_search_select.png',
+                  title: '검색',
+                ),
+                label: '',
+              ),
               BottomNavigationBarItem(
                 icon: NavigationIcon(
                   selectedIndex: _selectedIndex,
                   compareIndex: 2,
                   normalIcon:
-                  'assets/Navigation/ic_main_navigation_favorite_normal.png',
+                      'assets/Navigation/ic_main_navigation_favorite_normal.png',
                   selectedIcon:
-                  'assets/Navigation/ic_main_navigation_favorite_selected.png',
+                      'assets/Navigation/ic_main_navigation_favorite_selected.png',
                   title: '찜한가게',
                 ),
                 label: '',
@@ -142,9 +154,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   selectedIndex: _selectedIndex,
                   compareIndex: 3,
                   normalIcon:
-                  'assets/Navigation/ic_main_navigation_order_history_normal.png',
+                      'assets/Navigation/ic_main_navigation_order_history_normal.png',
                   selectedIcon:
-                  'assets/Navigation/ic_main_navigation_order_history_selected.png',
+                      'assets/Navigation/ic_main_navigation_order_history_selected.png',
                   title: '주문내역',
                 ),
                 label: '',
@@ -154,9 +166,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   selectedIndex: _selectedIndex,
                   compareIndex: 4,
                   normalIcon:
-                  'assets/Navigation/ic_main_navigation_my_baemin_normal.png',
+                      'assets/Navigation/ic_main_navigation_my_baemin_normal.png',
                   selectedIcon:
-                  'assets/Navigation/ic_main_navigation_my_baemin_selected.png',
+                      'assets/Navigation/ic_main_navigation_my_baemin_selected.png',
                   title: 'my배민',
                 ),
                 label: '',
@@ -164,7 +176,8 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
             selectedItemColor: Colors.transparent,
             unselectedItemColor: Colors.transparent,
-            selectedFontSize: 0.0, // 패딩 없애려고 사용
+            selectedFontSize: 0.0,
+            // 패딩 없애려고 사용
             currentIndex: _selectedIndex,
             onTap: _onTaped,
           ),

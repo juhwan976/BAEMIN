@@ -50,6 +50,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  date_format:
+    dependency: "direct main"
+    description:
+      name: date_format
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.9"
   fake_async:
     dependency: transitive
     description:
@@ -81,6 +88,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1+1"
+  keyboard_actions:
+    dependency: "direct main"
+    description:
+      path: "packages/flutter_keyboard_actions-master"
+      relative: true
+    source: path
+    version: "3.3.1+1"
   matcher:
     dependency: transitive
     description:

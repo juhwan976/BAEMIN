@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class NavigationIcon extends StatelessWidget {
@@ -26,7 +28,7 @@ class NavigationIcon extends StatelessWidget {
           height: 30,
         ),
         Container(
-          margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
+          margin: EdgeInsets.fromLTRB(0, (Platform.isIOS) ? 5 : 0, 0, 0), // 5
           child: Text(
             title,
             textScaleFactor: 0.82,

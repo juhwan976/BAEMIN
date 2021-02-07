@@ -66,7 +66,8 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                 Row(
                   children: <Widget>[
                     Container(
-                      child: Image.asset('assets/MyBaemin/img_my_baemin_default_profile.png'),
+                      child: Image.asset(
+                          'assets/MyBaemin/img_my_baemin_default_profile.png'),
                       height: _userInfoHeight * 0.6, // 51
                       width: _userInfoHeight * 0.76470588, // 65
                       margin: EdgeInsets.fromLTRB(
@@ -101,15 +102,13 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
               final result = await Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>
-                      EditUserInfoPage(user: user),
+                  builder: (context) => EditUserInfoPage(user: user),
                 ),
               );
 
-              if(result == null) {
+              if (result == null) {
                 /* do nothing */
-              }
-              else {
+              } else {
                 user.name = result;
                 setState(() {});
               }
@@ -210,7 +209,8 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                   Container(
                     width: MediaQuery.of(context).size.width / 3 - 1,
                     child: MyBaeMinSixButtons(
-                      directory: 'assets/MyBaemin/icon_42_mybaemin_favorite.png',
+                      directory:
+                          'assets/MyBaemin/icon_42_mybaemin_favorite.png',
                       text: '찜한가게',
                       function: () {
                         Navigator.push(
@@ -271,9 +271,9 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                     Container(
                       height: _thisWidth * 0.10666667, // 40
                       width: _thisWidth * 0.10666667, // 40
-                      margin: EdgeInsets.fromLTRB(
-                          _leftMargin, 0, 0, 0), // 10
-                      child: Image.asset('assets/MyBaemin/deco_campaign_tape_right.png'),
+                      margin: EdgeInsets.fromLTRB(_leftMargin, 0, 0, 0), // 10
+                      child: Image.asset(
+                          'assets/MyBaemin/deco_campaign_tape_right.png'),
                     ),
                     Text(
                       '일회용품 덜 쓰기, 함께해요!',
@@ -300,77 +300,82 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
           description: '배민페이로 결제하면 최대 5.5% 배민포인트가 적립됩니다!',
           function: () {},
         ),
-        MyBaeMinTemplate(
+        MyBaeMinShadowH(),
+        MyBaeMinTemplateDes(
           leftFontMargin: _leftFontMargin,
           title: '가족계정 관리',
+          description: '결제수단을 공유해 우리 가족의 끼니를 챙겨주세요.',
           function: () {},
         ),
+        MyBaeMinShadowH(),
         MyBaeMinTemplate(
           leftFontMargin: _leftFontMargin,
           title: '선물하기',
           function: () {},
         ),
+        MyBaeMinShadowH(),
         MyBaeMinTemplate(
           leftFontMargin: _leftFontMargin,
           title: '공지사항',
           function: () {},
         ),
+        MyBaeMinShadowH(),
         MyBaeMinTemplate(
           leftFontMargin: _leftFontMargin,
           title: '배민커넥트 지원',
           function: () {},
         ),
+        MyBaeMinShadowH(),
         MyBaeMinTemplate(
           leftFontMargin: _leftFontMargin,
           title: '이벤트',
           function: () {},
         ),
+        MyBaeMinShadowH(),
         MyBaeMinTemplate(
           leftFontMargin: _leftFontMargin,
           title: '고객센터',
           function: () {},
         ),
+        MyBaeMinShadowH(),
         MyBaeMinTemplate(
           leftFontMargin: _leftFontMargin,
           title: '환경설정',
           function: () {},
         ),
+        MyBaeMinShadowH(),
         MyBaeMinTemplate(
           leftFontMargin: _leftFontMargin,
           title: '약관 및 정책',
           function: () {},
         ),
-        Column(
+        MyBaeMinShadowH(),
+        Container(
           /// 현재 버전
-          children: <Widget>[
-            MyBaeMinShadowH(),
-            Container(
-              height: _thisWidth * 0.15733333, // 59
-              color: Colors.white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.fromLTRB(_leftFontMargin, 0, 0, 0),
-                    child: Text(
-                      '현재 버전 10.19.1',
-                      textScaleFactor: 0.82,
-                      style: TextStyle(
-                        fontSize: 19,
-                      ),
-                    ),
+          height: _thisWidth * 0.15733333, // 59
+          color: Colors.white,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.fromLTRB(_leftFontMargin, 0, 0, 0),
+                child: Text(
+                  (Platform.isIOS) ? '현재 버전 10.21.0' : '현재 버전 10.21.1',
+                  textScaleFactor: 0.82,
+                  style: TextStyle(
+                    fontSize: 19,
                   ),
-                ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         Container(
           height: 1,
           color: Color(0x09000000),
         ),
         Container(
-          height: _thisWidth * 0.15733333, // 59
+          height: _thisWidth * 0.14133333, // 53
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -407,16 +412,17 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
           ),
         ),
         toolbarHeight:
-            (Platform.isAndroid) ? _thisHeight * 0.088 : _thisHeight * 0.058, // 46
+            (Platform.isAndroid) ? _thisHeight * 0.088 : _thisHeight * 0.058,
+        // 46
         elevation: 0.0,
         backgroundColor: Colors.white,
         centerTitle: true,
         title: Text(
-            'My배민',
-            textScaleFactor: 0.82,
-            style: TextStyle(
-              fontSize: 20,
-            ),
+          'My배민',
+          textScaleFactor: 0.82,
+          style: TextStyle(
+            fontSize: 20,
+          ),
         ),
       ),
       body: Container(
