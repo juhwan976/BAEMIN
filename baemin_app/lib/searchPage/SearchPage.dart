@@ -140,6 +140,7 @@ class _SearchPageState extends State<SearchPage> {
                     '취소',
                     style: TextStyle(
                       fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -286,6 +287,7 @@ class _SearchPageState extends State<SearchPage> {
                                   textScaleFactor: 0.82,
                                   style: TextStyle(
                                     color: Colors.black,
+                                    fontSize: 17,
                                   ),
                                 ),
                                 onPressed: () {
@@ -303,60 +305,79 @@ class _SearchPageState extends State<SearchPage> {
                         ),
                         Container(
                           /// 검색기록
-                          height: 20,
+                          height: 50,
+                          padding: EdgeInsets.fromLTRB(0, 13, 0, 5),
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: _searchHistory.length + 2,
                             itemBuilder: (BuildContext context, int index) {
-                              if (index == 0 ||
-                                  index == _searchHistory.length + 1) {
+                              if (index == 0) {
                                 return Container(
                                   width: 20,
                                 );
-                              } else {
+                              } else if(index == _searchHistory.length + 1){
                                 return Container(
-                                  width: (_searchHistory
-                                              .elementAt(
-                                                  _searchHistory.length - index)
-                                              .length *
-                                          11.0) +
-                                      30,
-                                  decoration: BoxDecoration(
-                                    color: Color.fromARGB(255, 239, 250, 250),
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Container(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                          _searchHistory.elementAt(
-                                              _searchHistory.length - index),
-                                          style: TextStyle(fontSize: 15.0),
-                                        ),
+                                  width: 15,
+                                );
+                              }
+                              else {
+                                print(_searchHistory.elementAt(_searchHistory.length - index).length);
+                                return Row(
+                                  children: <Widget>[
+                                    Container(
+                                      width: (_searchHistory
+                                          .elementAt(
+                                          _searchHistory.length - index)
+                                          .length *
+                                          12.0) +
+                                          40,
+                                      decoration: BoxDecoration(
+                                        color: Color.fromARGB(255, 239, 250, 250),
+                                        borderRadius: BorderRadius.circular(25),
                                       ),
-                                      Container(
-                                        width: 15,
-                                        child: CupertinoButton(
-                                          padding: EdgeInsets.zero,
-                                          child: Icon(
-                                            Icons.clear,
-                                            size: 15,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Container(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              _searchHistory.elementAt(
+                                                  _searchHistory.length - index),
+                                              textScaleFactor: 0.82,
+                                              style: TextStyle(
+                                                fontSize: 17,
+                                                color: Color.fromARGB(
+                                                    255, 42, 193, 188),
+                                              ),
+                                            ),
                                           ),
-                                          onPressed: () {
-                                            _searchHistory.removeAt(
-                                                _searchHistory.length -
-                                                    index);
-                                            if(_searchHistory.isEmpty) {
-                                              _visibleHistory = false;
-                                            }
-                                            setState(() {});
-                                          },
-                                        ),
+                                          Container(
+                                            width: 15,
+                                            child: CupertinoButton(
+                                              padding: EdgeInsets.zero,
+                                              child: Icon(
+                                                Icons.clear,
+                                                size: 15,
+                                                color: Color.fromARGB(
+                                                    255, 42, 193, 188),
+                                              ),
+                                              onPressed: () {
+                                                _searchHistory.removeAt(
+                                                    _searchHistory.length - index);
+                                                if (_searchHistory.isEmpty) {
+                                                  _visibleHistory = false;
+                                                }
+                                                setState(() {});
+                                              },
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                    Container(
+                                      width: 5,
+                                    ),
+                                  ],
                                 );
                               }
                             },
