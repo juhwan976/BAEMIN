@@ -302,6 +302,7 @@ class _SearchPageState extends State<SearchPage> {
                           ],
                         ),
                         Container(
+                          /// 검색기록
                           height: 20,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
@@ -319,18 +320,42 @@ class _SearchPageState extends State<SearchPage> {
                                                   _searchHistory.length - index)
                                               .length *
                                           11.0) +
-                                      20,
+                                      30,
                                   decoration: BoxDecoration(
                                     color: Color.fromARGB(255, 239, 250, 250),
                                     borderRadius: BorderRadius.circular(25),
                                   ),
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      _searchHistory.elementAt(
-                                          _searchHistory.length - index),
-                                      style: TextStyle(fontSize: 15.0),
-                                    ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Container(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          _searchHistory.elementAt(
+                                              _searchHistory.length - index),
+                                          style: TextStyle(fontSize: 15.0),
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 15,
+                                        child: CupertinoButton(
+                                          padding: EdgeInsets.zero,
+                                          child: Icon(
+                                            Icons.clear,
+                                            size: 15,
+                                          ),
+                                          onPressed: () {
+                                            _searchHistory.removeAt(
+                                                _searchHistory.length -
+                                                    index);
+                                            if(_searchHistory.isEmpty) {
+                                              _visibleHistory = false;
+                                            }
+                                            setState(() {});
+                                          },
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 );
                               }
