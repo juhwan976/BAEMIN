@@ -13,8 +13,11 @@ import 'SearchPageTitle.dart';
 /// *****************************************************************
 /// 버그있음.
 /// 검색기록이 보이는 상태에서 아래로 끝까지 갔다가 올라오면 검색기록이 보이지 않는다.
-/// Stream이 null일 경우를 정해주어서 발생한다.
+/// 화면이 새로 빌드 되는듯
 /// 일단은 수동으로 setState((){}) 를 사용하는 쪽으로 변경했다.
+///
+/// 검색한 문자열의 길이가 0 일때 검색버튼이 비활성화 되는 기능 필요
+/// 임시로 문자열의 길이가 0 일때 검색기록에 안남도록 해야할듯
 /// *****************************************************************
 
 class SearchPage extends StatefulWidget {
@@ -27,8 +30,10 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   StreamController<bool> _cancelButtonStreamController =
       new StreamController.broadcast();
+  /*
   StreamController<bool> _searchHistoryStreamController =
       new StreamController.broadcast();
+   */
   FocusNode _searchFocusNode = new FocusNode();
 
   bool _visibleHistory = false;
@@ -577,7 +582,7 @@ class _SearchPageState extends State<SearchPage> {
     super.dispose();
 
     _cancelButtonStreamController.close();
-    _searchHistoryStreamController.close();
+    //_searchHistoryStreamController.close();
   }
 
   @override
