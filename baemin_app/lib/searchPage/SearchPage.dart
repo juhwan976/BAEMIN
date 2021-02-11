@@ -30,6 +30,7 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   StreamController<bool> _cancelButtonStreamController =
       new StreamController.broadcast();
+
   /*
   StreamController<bool> _searchHistoryStreamController =
       new StreamController.broadcast();
@@ -37,6 +38,7 @@ class _SearchPageState extends State<SearchPage> {
   FocusNode _searchFocusNode = new FocusNode();
 
   bool _visibleHistory = false;
+  bool _searchResult = false;
 
   List<String> _searchHistory = new List<String>();
   List<Ranking> _rankingList = [
@@ -133,7 +135,7 @@ class _SearchPageState extends State<SearchPage> {
           focusNode: _searchFocusNode,
           displayArrows: false,
           toolbarButtons: [
-            (node) {
+            (FocusNode node) {
               return Container(
                 margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
                 child: CupertinoButton(
@@ -170,6 +172,25 @@ class _SearchPageState extends State<SearchPage> {
       height: 40,
       child: Row(
         children: <Widget>[
+          Visibility(
+            visible: _searchResult,
+            child: Container(
+              child: CupertinoButton(
+                padding: EdgeInsets.zero,
+                child: Icon(
+                  Icons.arrow_back_rounded,
+                  color: Colors.black,
+                ),
+                onPressed: () {
+                  setState(
+                    () {
+                      _searchResult = false;
+                    },
+                  );
+                },
+              ),
+            ),
+          ),
           Expanded(
             child: TextField(
               textInputAction: TextInputAction.search,
@@ -200,11 +221,13 @@ class _SearchPageState extends State<SearchPage> {
               onSubmitted: (String string) {
                 print('Submitted : ' + string);
                 _searchHistory.add(string);
-                _searchController.clear();
+                //_searchController.clear();
                 //_searchHistoryStreamController.add(true);
+                /// 검색결과 화면을 빌드하는데, 검색창에 검색한 항목이 들어가야함.
                 setState(
                   () {
                     _visibleHistory = true;
+                    _searchResult = true;
                   },
                 );
                 _cancelButtonStreamController.add(false);
@@ -238,6 +261,14 @@ class _SearchPageState extends State<SearchPage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildResultPage() {
+    return Center(
+      child: Text(
+        '결과화면',
       ),
     );
   }
@@ -320,40 +351,56 @@ class _SearchPageState extends State<SearchPage> {
                                 return Container(
                                   width: 20,
                                 );
-                              } else if(index == _searchHistory.length + 1){
+                              } else if (index == _searchHistory.length + 1) {
                                 return Container(
                                   width: 15,
                                 );
-                              }
-                              else {
-                                print(_searchHistory.elementAt(_searchHistory.length - index).length);
+                              } else {
+                                print(_searchHistory
+                                    .elementAt(_searchHistory.length - index)
+                                    .length);
                                 return Row(
                                   children: <Widget>[
                                     Container(
                                       width: (_searchHistory
-                                          .elementAt(
-                                          _searchHistory.length - index)
-                                          .length *
-                                          12.0) +
+                                                  .elementAt(
+                                                      _searchHistory.length -
+                                                          index)
+                                                  .length *
+                                              12.0) +
                                           40,
                                       decoration: BoxDecoration(
-                                        color: Color.fromARGB(255, 239, 250, 250),
+                                        color:
+                                            Color.fromARGB(255, 239, 250, 250),
                                         borderRadius: BorderRadius.circular(25),
                                       ),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: <Widget>[
                                           Container(
                                             alignment: Alignment.center,
-                                            child: Text(
-                                              _searchHistory.elementAt(
-                                                  _searchHistory.length - index),
-                                              textScaleFactor: 0.82,
-                                              style: TextStyle(
-                                                fontSize: 17,
-                                                color: Color.fromARGB(
-                                                    255, 42, 193, 188),
+                                            child: CupertinoButton(
+                                              padding: EdgeInsets.zero,
+                                              child: Text(
+                                                _searchHistory.elementAt(
+                                                    _searchHistory.length -
+                                                        index),
+                                                textScaleFactor: 0.82,
+                                                style: TextStyle(
+                                                  fontSize: 17,
+                                                  color: Color.fromARGB(
+                                                      255, 42, 193, 188),
+                                                ),
                                               ),
+                                              onPressed: () {
+                                                setState(
+                                                  () {
+                                                    _searchResult = true;
+                                                    /// 검색결과로 이어지는 기능 추가 필요
+                                                  },
+                                                );
+                                              },
                                             ),
                                           ),
                                           Container(
@@ -368,7 +415,8 @@ class _SearchPageState extends State<SearchPage> {
                                               ),
                                               onPressed: () {
                                                 _searchHistory.removeAt(
-                                                    _searchHistory.length - index);
+                                                    _searchHistory.length -
+                                                        index);
                                                 if (_searchHistory.isEmpty) {
                                                   _visibleHistory = false;
                                                 }
@@ -597,7 +645,7 @@ class _SearchPageState extends State<SearchPage> {
           elevation: 0.0,
           title: _buildSearchBar(),
         ),
-        body: _buildPage(),
+        body: (_searchResult) ? _buildResultPage() : _buildPage(),
       ),
     );
   }

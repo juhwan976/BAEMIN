@@ -12,6 +12,7 @@ class SearchPageRankingName extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       name,
+      textScaleFactor: 0.82,
       style: TextStyle(
         fontSize: 19,
       ),
