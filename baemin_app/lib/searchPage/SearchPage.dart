@@ -31,6 +31,8 @@ class _SearchPageState extends State<SearchPage> {
   StreamController<bool> _cancelButtonStreamController =
       new StreamController.broadcast();
 
+  TextEditingController _searchController = new TextEditingController();
+
   /*
   StreamController<bool> _searchHistoryStreamController =
       new StreamController.broadcast();
@@ -165,9 +167,7 @@ class _SearchPageState extends State<SearchPage> {
     return formatDate(_now, [mm, '.', dd, ' ', HH, ':00 기준']);
   }
 
-  Widget _buildSearchBar() {
-    TextEditingController _searchController = new TextEditingController();
-
+  Widget _buildTitle() {
     return Container(
       height: 40,
       child: Row(
@@ -176,7 +176,7 @@ class _SearchPageState extends State<SearchPage> {
             visible: _searchResult,
             child: Container(
               child: CupertinoButton(
-                padding: EdgeInsets.zero,
+                padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
                 child: Icon(
                   Icons.arrow_back_rounded,
                   color: Colors.black,
@@ -185,6 +185,8 @@ class _SearchPageState extends State<SearchPage> {
                   setState(
                     () {
                       _searchResult = false;
+                      _searchController.clear();
+                      _cancelButtonStreamController.sink.add(false);
                     },
                   );
                 },
@@ -209,28 +211,31 @@ class _SearchPageState extends State<SearchPage> {
                   fontSize: 20,
                 ),
                 border: InputBorder.none,
-                contentPadding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                contentPadding: EdgeInsets.fromLTRB(0, 0, 20, 10),
               ),
               onChanged: (String string) {
                 if (string.length == 0) {
-                  _cancelButtonStreamController.add(false);
+                  _cancelButtonStreamController.sink.add(false);
                 } else {
-                  _cancelButtonStreamController.add(true);
+                  _cancelButtonStreamController.sink.add(true);
                 }
               },
               onSubmitted: (String string) {
                 print('Submitted : ' + string);
-                _searchHistory.add(string);
-                //_searchController.clear();
-                //_searchHistoryStreamController.add(true);
-                /// 검색결과 화면을 빌드하는데, 검색창에 검색한 항목이 들어가야함.
-                setState(
-                  () {
-                    _visibleHistory = true;
-                    _searchResult = true;
-                  },
-                );
-                _cancelButtonStreamController.add(false);
+                if (string.length == 0) {
+                  /* do nothing */
+                } else {
+                  _searchHistory.add(string);
+                  //_searchController.clear();
+                  //_searchHistoryStreamController.add(true);
+                  /// 검색결과 화면을 빌드하는데, 검색창에 검색한 항목이 들어가야함.
+                  setState(
+                    () {
+                      _visibleHistory = true;
+                      _searchResult = true;
+                    },
+                  );
+                }
               },
             ),
           ),
@@ -253,7 +258,8 @@ class _SearchPageState extends State<SearchPage> {
                     color: Colors.black26,
                     onPressed: () {
                       _searchController.clear();
-                      _cancelButtonStreamController.add(false);
+                      _cancelButtonStreamController.sink.add(false);
+                      FocusScope.of(context).requestFocus(_searchFocusNode);
                     },
                   );
                 }
@@ -347,6 +353,8 @@ class _SearchPageState extends State<SearchPage> {
                             scrollDirection: Axis.horizontal,
                             itemCount: _searchHistory.length + 2,
                             itemBuilder: (BuildContext context, int index) {
+                              int _lifoIndex = _searchHistory.length - index;
+
                               if (index == 0) {
                                 return Container(
                                   width: 20,
@@ -357,15 +365,13 @@ class _SearchPageState extends State<SearchPage> {
                                 );
                               } else {
                                 print(_searchHistory
-                                    .elementAt(_searchHistory.length - index)
+                                    .elementAt(_lifoIndex)
                                     .length);
                                 return Row(
                                   children: <Widget>[
                                     Container(
                                       width: (_searchHistory
-                                                  .elementAt(
-                                                      _searchHistory.length -
-                                                          index)
+                                                  .elementAt(_lifoIndex)
                                                   .length *
                                               12.0) +
                                           40,
@@ -379,13 +385,13 @@ class _SearchPageState extends State<SearchPage> {
                                             MainAxisAlignment.center,
                                         children: <Widget>[
                                           Container(
-                                            alignment: Alignment.center,
+                                            //alignment: Alignment.center,
                                             child: CupertinoButton(
                                               padding: EdgeInsets.zero,
+                                              minSize: 0,
                                               child: Text(
-                                                _searchHistory.elementAt(
-                                                    _searchHistory.length -
-                                                        index),
+                                                _searchHistory
+                                                    .elementAt(_lifoIndex),
                                                 textScaleFactor: 0.82,
                                                 style: TextStyle(
                                                   fontSize: 17,
@@ -397,7 +403,14 @@ class _SearchPageState extends State<SearchPage> {
                                                 setState(
                                                   () {
                                                     _searchResult = true;
-                                                    /// 검색결과로 이어지는 기능 추가 필요
+                                                    _searchController.text =
+                                                        _searchHistory
+                                                            .elementAt(
+                                                                _lifoIndex);
+                                                    _searchHistory
+                                                        .removeAt(_lifoIndex);
+                                                    _searchHistory.add(
+                                                        _searchController.text);
                                                   },
                                                 );
                                               },
@@ -414,9 +427,8 @@ class _SearchPageState extends State<SearchPage> {
                                                     255, 42, 193, 188),
                                               ),
                                               onPressed: () {
-                                                _searchHistory.removeAt(
-                                                    _searchHistory.length -
-                                                        index);
+                                                _searchHistory
+                                                    .removeAt(_lifoIndex);
                                                 if (_searchHistory.isEmpty) {
                                                   _visibleHistory = false;
                                                 }
@@ -643,7 +655,7 @@ class _SearchPageState extends State<SearchPage> {
           backgroundColor: Colors.white,
           toolbarHeight: 46,
           elevation: 0.0,
-          title: _buildSearchBar(),
+          title: _buildTitle(),
         ),
         body: (_searchResult) ? _buildResultPage() : _buildPage(),
       ),

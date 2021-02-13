@@ -110,7 +110,6 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
@@ -123,45 +122,57 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
     );
   }
 
-  Widget _buildLeading() {
+  Widget _buildTitle(TextEditingController _nameController) {
     return Container(
-      child: CupertinoButton(
-        child: Icon(
-          Icons.arrow_back_rounded,
-          color: Colors.black,
-        ),
-        onPressed: () {
-          Navigator.pop(context, null);
-        },
-      ),
-    );
-  }
-
-  List<Widget> _buildActions(TextEditingController _nameController) {
-    List<Widget> _listWidget = new List<Widget>();
-
-    _listWidget.add(
-      Container(
-        child: FlatButton(
-          highlightColor: Colors.transparent,
-          splashColor: Colors.transparent,
-          padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
-          child: Text(
-            '저장',
-            textScaleFactor: 0.82,
-            style: TextStyle(
-              fontSize: 21,
-              fontWeight: FontWeight.normal,
+      child: Row(
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.fromLTRB(0, 0, 45, 0),
+            child: CupertinoButton(
+              padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+              child: Icon(
+                Icons.arrow_back_rounded,
+                color: Colors.black,
+                size: 24,
+              ),
+              onPressed: () {
+                Navigator.pop(context, null);
+              },
             ),
           ),
-          onPressed: () {
-            Navigator.pop(context, _nameController.text);
-          },
-        ),
+          Expanded(
+            child: Container(
+              alignment: Alignment.topCenter,
+              child: Text(
+                '내 정보 수정',
+                textScaleFactor: 0.82,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          Container(
+            child: FlatButton(
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
+              padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
+              child: Text(
+                '저장',
+                textScaleFactor: 0.82,
+                style: TextStyle(
+                  fontSize: 21,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+              onPressed: () {
+                Navigator.pop(context, _nameController.text);
+              },
+            ),
+          ),
+        ],
       ),
     );
-
-    return _listWidget;
   }
 
   @override
@@ -175,9 +186,9 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
         backgroundColor: Colors.white,
         brightness: Brightness.light,
         toolbarHeight: 46,
-        title: Text('내 정보 수정'),
-        leading: _buildLeading(),
-        actions: _buildActions(_nameController),
+        title: _buildTitle(_nameController),
+        leading: null,
+        automaticallyImplyLeading: false,
         bottom: PreferredSize(
           preferredSize: null,
           child: Container(

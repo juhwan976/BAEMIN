@@ -20,38 +20,72 @@ class ZZimPage extends StatefulWidget {
 }
 
 class _ZZimPageState extends State<ZZimPage> {
-
-  Widget _buildLeading() {
-    if (widget.fromAnotherPage) {
-      return Container(
-        alignment: Alignment.centerLeft,
-        child: CupertinoButton(
-          child: Icon(
-            Icons.arrow_back_rounded,
-            color: Colors.black,
-            size: 24,
+  Widget _buildTitle() {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Visibility(
+            visible: widget.fromAnotherPage,
+            child: Container(
+              child: CupertinoButton(
+                padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                child: Icon(
+                  Icons.arrow_back_rounded,
+                  color: Colors.black,
+                  size: 24,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
           ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        )
-      );
-    } else {
-      return Container();
-    }
+          Expanded(
+            child: Container(
+              alignment: Alignment.topCenter,
+              child: Text(
+                '찜한가게',
+                textScaleFactor: 0.82,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          Visibility(
+            visible: widget.fromAnotherPage,
+            child: CupertinoButton(
+              padding: EdgeInsets.zero,
+              child: Icon(
+                Icons.arrow_back_rounded,
+                color: Colors.transparent,
+                size: 24,
+              ),
+              onPressed: null,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    double _thisHeight = MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
+    double _thisHeight =
+        MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
 
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          leading: _buildLeading(),
+          leading: null,
+          automaticallyImplyLeading: false,
+          centerTitle: false,
+          title: _buildTitle(),
           backgroundColor: Colors.white,
-          toolbarHeight: (Platform.isIOS)?_thisHeight * 0.109375: 100, // 84, 안드로이드일 경우 높이는 임시
+          toolbarHeight: (Platform.isIOS) ? _thisHeight * 0.109375 : 100,
+          // 84, 안드로이드일 경우 높이는 임시
           elevation: 0.0,
           brightness: Brightness.light,
           bottom: PreferredSize(
@@ -91,8 +125,6 @@ class _ZZimPageState extends State<ZZimPage> {
               ),
             ),
           ),
-          centerTitle: true,
-          title: Text('찜한가게'),
         ),
         body: TabBarView(
           children: <Widget>[
