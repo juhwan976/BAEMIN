@@ -28,11 +28,12 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  final double _toolbarHeight = 46;
+
   StreamController<bool> _cancelButtonStreamController =
       new StreamController.broadcast();
 
   TextEditingController _searchController = new TextEditingController();
-
   /*
   StreamController<bool> _searchHistoryStreamController =
       new StreamController.broadcast();
@@ -137,13 +138,13 @@ class _SearchPageState extends State<SearchPage> {
           focusNode: _searchFocusNode,
           displayArrows: false,
           toolbarButtons: [
-            (FocusNode node) {
+            (FocusNode focusNode) {
               return Container(
                 margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
                 child: CupertinoButton(
                   padding: EdgeInsets.zero,
                   onPressed: () {
-                    node.unfocus();
+                    focusNode.unfocus();
                   },
                   child: Text(
                     '취소',
@@ -168,6 +169,7 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   Widget _buildTitle() {
+
     return Container(
       height: 40,
       child: Row(
@@ -228,7 +230,6 @@ class _SearchPageState extends State<SearchPage> {
                   _searchHistory.add(string);
                   //_searchController.clear();
                   //_searchHistoryStreamController.add(true);
-                  /// 검색결과 화면을 빌드하는데, 검색창에 검색한 항목이 들어가야함.
                   setState(
                     () {
                       _visibleHistory = true;
@@ -286,7 +287,7 @@ class _SearchPageState extends State<SearchPage> {
       color: Colors.white,
       child: KeyboardActions(
         config: _buildConfig(context),
-        tapOutsideToDismiss: false,
+        tapOutsideToDismiss: true,
         child: ListView(
           children: <Widget>[
             Visibility(
@@ -403,6 +404,7 @@ class _SearchPageState extends State<SearchPage> {
                                                 setState(
                                                   () {
                                                     _searchResult = true;
+                                                    _cancelButtonStreamController.sink.add(true);
                                                     _searchController.text =
                                                         _searchHistory
                                                             .elementAt(
@@ -637,6 +639,12 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+  }
+
+  @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
@@ -653,7 +661,7 @@ class _SearchPageState extends State<SearchPage> {
         appBar: AppBar(
           brightness: Brightness.light,
           backgroundColor: Colors.white,
-          toolbarHeight: 46,
+          toolbarHeight: _toolbarHeight,
           elevation: 0.0,
           title: _buildTitle(),
         ),
