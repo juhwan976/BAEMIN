@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:date_format/date_format.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,11 +30,17 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final double _toolbarHeight = 46;
+  final double _keyboardActionHeight = 45.25;
+  final double _leftMargin = 15;
+
+  OverlayEntry _searchSuggestOverlayEntry;
+  OverlayState _overlay;
 
   StreamController<bool> _cancelButtonStreamController =
       new StreamController.broadcast();
 
   TextEditingController _searchController = new TextEditingController();
+
   /*
   StreamController<bool> _searchHistoryStreamController =
       new StreamController.broadcast();
@@ -42,6 +49,7 @@ class _SearchPageState extends State<SearchPage> {
 
   bool _visibleHistory = false;
   bool _searchResult = false;
+  bool _visibleOverlay = false;
 
   List<String> _searchHistory = new List<String>();
   List<Ranking> _rankingList = [
@@ -127,6 +135,91 @@ class _SearchPageState extends State<SearchPage> {
     ),
   ];
 
+  OverlayEntry _createSearchSuggestOverlayEntry() {
+    final _deviceHeight = MediaQuery.of(context).size.height;
+    final _deviceRealHeight =
+        _deviceHeight - MediaQuery.of(context).padding.top - _toolbarHeight;
+    final _deviceWidth = MediaQuery.of(context).size.width;
+    final double _contentHeight = 50.0;
+
+    Random _random = new Random();
+    int _nextNum = 1 + _random.nextInt(9); // 1 ~ 10 사이의 숫자
+
+    return OverlayEntry(
+        maintainState: true,
+        builder: (BuildContext context) {
+          return Positioned(
+            bottom: MediaQuery.of(context).viewInsets.bottom +
+                _keyboardActionHeight,
+            width: _deviceWidth,
+            height: _deviceRealHeight -
+                MediaQuery.of(context).viewInsets.bottom -
+                _keyboardActionHeight,
+            child: Stack(
+              children: <Widget>[
+                Opacity(
+                  opacity: 0.5,
+                  child: Container(
+                    color: Colors.black,
+                  ),
+                ),
+                Positioned(
+                  height: (_contentHeight * _nextNum >
+                          _deviceRealHeight -
+                              MediaQuery.of(context).viewInsets.bottom -
+                              _keyboardActionHeight)
+                      ? _deviceRealHeight -
+                          MediaQuery.of(context).viewInsets.bottom -
+                          _keyboardActionHeight
+                      : _contentHeight * _nextNum,
+                  width: _deviceWidth,
+                  child: Material(
+                    child: Scaffold(
+                      resizeToAvoidBottomPadding: false,
+                      body: Container(
+                        child: ListView.builder(
+                          padding: EdgeInsets.zero,
+                          itemCount: _nextNum,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                              height: _contentHeight,
+                              alignment: Alignment.centerLeft,
+                              child: FlatButton(
+                                padding: EdgeInsets.fromLTRB(_leftMargin, 0, 0, 0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(
+                                      child: Icon(
+                                        Icons.search,
+                                        size: 20,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Text(
+                                        ' 인덱스 ${index + 1}',
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                onPressed: () {},
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
   KeyboardActionsConfig _buildConfig(BuildContext context) {
     return KeyboardActionsConfig(
       keyboardActionsPlatform: KeyboardActionsPlatform.IOS,
@@ -145,6 +238,12 @@ class _SearchPageState extends State<SearchPage> {
                   padding: EdgeInsets.zero,
                   onPressed: () {
                     focusNode.unfocus();
+                    setState(
+                      () {
+                        _visibleOverlay = false;
+                        _searchSuggestOverlayEntry.remove();
+                      },
+                    );
                   },
                   child: Text(
                     '취소',
@@ -169,7 +268,6 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   Widget _buildTitle() {
-
     return Container(
       height: 40,
       child: Row(
@@ -189,6 +287,7 @@ class _SearchPageState extends State<SearchPage> {
                       _searchResult = false;
                       _searchController.clear();
                       _cancelButtonStreamController.sink.add(false);
+                      _searchFocusNode.unfocus();
                     },
                   );
                 },
@@ -220,6 +319,27 @@ class _SearchPageState extends State<SearchPage> {
                   _cancelButtonStreamController.sink.add(false);
                 } else {
                   _cancelButtonStreamController.sink.add(true);
+
+                  if (_visibleOverlay) {
+                    _searchSuggestOverlayEntry.remove();
+                    _searchSuggestOverlayEntry =
+                        _createSearchSuggestOverlayEntry();
+                    setState(
+                      () {
+                        _overlay.insert(_searchSuggestOverlayEntry);
+                      },
+                    );
+                  } else {
+                    _visibleOverlay = true;
+                    _searchSuggestOverlayEntry =
+                        _createSearchSuggestOverlayEntry();
+                    setState(
+                      () {
+                        _overlay.insert(_searchSuggestOverlayEntry);
+                        _overlay.setState(() {});
+                      },
+                    );
+                  }
                 }
               },
               onSubmitted: (String string) {
@@ -234,6 +354,8 @@ class _SearchPageState extends State<SearchPage> {
                     () {
                       _visibleHistory = true;
                       _searchResult = true;
+                      _visibleOverlay = false;
+                      _searchSuggestOverlayEntry.remove();
                     },
                   );
                 }
@@ -260,6 +382,14 @@ class _SearchPageState extends State<SearchPage> {
                     onPressed: () {
                       _searchController.clear();
                       _cancelButtonStreamController.sink.add(false);
+
+                      setState(
+                        () {
+                          _visibleOverlay = false;
+                          _searchSuggestOverlayEntry.remove();
+                        },
+                      );
+
                       FocusScope.of(context).requestFocus(_searchFocusNode);
                     },
                   );
@@ -273,21 +403,25 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   Widget _buildResultPage() {
-    return Center(
-      child: Text(
-        '결과화면',
+    return Container(
+      child: KeyboardActions(
+        config: _buildConfig(context),
+        tapOutsideToDismiss: false,
+        child: Center(
+          child: Text(
+            '${_searchHistory.last} 의 결과화면',
+          ),
+        ),
       ),
     );
   }
 
   Widget _buildPage() {
-    double _leftMargin = 15;
-
     return Container(
       color: Colors.white,
       child: KeyboardActions(
         config: _buildConfig(context),
-        tapOutsideToDismiss: true,
+        tapOutsideToDismiss: false,
         child: ListView(
           children: <Widget>[
             Visibility(
@@ -404,7 +538,9 @@ class _SearchPageState extends State<SearchPage> {
                                                 setState(
                                                   () {
                                                     _searchResult = true;
-                                                    _cancelButtonStreamController.sink.add(true);
+                                                    _cancelButtonStreamController
+                                                        .sink
+                                                        .add(true);
                                                     _searchController.text =
                                                         _searchHistory
                                                             .elementAt(
@@ -642,6 +778,7 @@ class _SearchPageState extends State<SearchPage> {
   void initState() {
     super.initState();
 
+    _overlay = Overlay.of(context);
   }
 
   @override

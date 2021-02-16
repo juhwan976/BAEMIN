@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:keyboard_actions/external/keyboard_avoider/bottom_area_avoider.dart';
@@ -283,6 +284,11 @@ class KeyboardActionstate extends State<KeyboardActions>
           ? _currentAction.footerBuilder(context)
           : null;
       final queryData = MediaQuery.of(context);
+
+      if(_currentFooter != null) {
+        log(_currentFooter.preferredSize.height.toString());
+      }
+
       return Positioned(
         bottom: queryData.viewInsets.bottom,
         left: 0,
