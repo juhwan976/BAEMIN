@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 
 import '../Ranking.dart';
@@ -11,7 +12,7 @@ import 'SearchPageRankHigh.dart';
 import 'SearchPageRankLow.dart';
 import 'SearchPageTitle.dart';
 
-/// *****************************************************************
+/// ****************************************************************************
 /// 버그있음.
 /// 검색기록이 보이는 상태에서 아래로 끝까지 갔다가 올라오면 검색기록이 보이지 않는다.
 /// 화면이 새로 빌드 되는듯
@@ -19,7 +20,10 @@ import 'SearchPageTitle.dart';
 ///
 /// 검색한 문자열의 길이가 0 일때 검색버튼이 비활성화 되는 기능 필요
 /// 임시로 문자열의 길이가 0 일때 검색기록에 안남도록 해야할듯
-/// *****************************************************************
+///
+/// 오버레이에서 Scaffold 를 사용하면 상태바를 자동적으로 인식해서 그걸 없애기 위해
+/// 앱바 자체를 오버레이로 구현하는 것을 고려중.
+/// ****************************************************************************
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key key}) : super(key: key);
@@ -29,29 +33,31 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  final double _toolbarHeight = 46;
-  final double _keyboardActionHeight = 45.25;
-  final double _leftMargin = 15;
+  final double _toolbarHeight = 46; // 앱바 높이
+  final double _keyboardActionHeight = 45.25; // 키보드 액션 높이
+  final double _leftMargin = 15; // 페이지 왼쪽 마진
 
-  OverlayEntry _searchSuggestOverlayEntry;
-  OverlayState _overlay;
+  bool _searchResult = false; // 검색결과창을 보여 줄 것인지 판별하는 변수
 
   StreamController<bool> _cancelButtonStreamController =
-      new StreamController.broadcast();
+      new StreamController.broadcast(); // 검색창에 전체 지우기 버튼 상태 stream
 
-  TextEditingController _searchController = new TextEditingController();
+  TextEditingController _searchController =
+      new TextEditingController(); // 검색창 text controller
 
-  /*
-  StreamController<bool> _searchHistoryStreamController =
-      new StreamController.broadcast();
-   */
   FocusNode _searchFocusNode = new FocusNode();
 
-  bool _visibleHistory = false;
-  bool _searchResult = false;
-  bool _visibleOverlay = false;
+  List<String> _searchHistory = new List<String>(); // 검색기록들을 저장 할 리스트
+  bool _visibleHistory = false; // 검색기록 보일 것인지 판별하는 변수
 
-  List<String> _searchHistory = new List<String>();
+  ///*********************** 오버레이 관련 변수 *************************************
+
+  OverlayEntry _overlayEntry;
+  OverlayState _overlayState;
+  bool _visibleOverlay = false; // 오버레이를 보일 것인지 판별하는 변수
+
+  ///*********************** 데이터 **********************************************
+
   List<Ranking> _rankingList = [
     Ranking(
       name: '배스킨라빈스',
@@ -135,91 +141,133 @@ class _SearchPageState extends State<SearchPage> {
     ),
   ];
 
-  OverlayEntry _createSearchSuggestOverlayEntry() {
+  ///*********************** 오버레이 관련 함수 *************************************
+
+  /// 오버레이 초기 설정 메서드
+  void _initSearchSuggestOverlay(BuildContext context) {
+    _overlayState = Overlay.of(context);
+  }
+
+  /// 오버레이를 보이게 하는 메서드
+  void _showSearchSuggestOverlay() {
+    _visibleOverlay = true;
+
+    _overlayEntry = _buildSearchSuggestOverlayEntry();
+
+    _overlayState.insert(_overlayEntry);
+  }
+
+  /// 오버레이를 숨기는 메서드
+  void _removeSearchSuggestOverlay() {
+    _visibleOverlay = false;
+
+    _overlayEntry.remove();
+  }
+
+  /// 오버레이를 빌드하는 메서드
+  OverlayEntry _buildSearchSuggestOverlayEntry() {
     final _deviceHeight = MediaQuery.of(context).size.height;
     final _deviceRealHeight =
         _deviceHeight - MediaQuery.of(context).padding.top - _toolbarHeight;
     final _deviceWidth = MediaQuery.of(context).size.width;
-    final double _contentHeight = 50.0;
+    final double _contentHeight = 50; // 50
 
     Random _random = new Random();
-    int _nextNum = 1 + _random.nextInt(9); // 1 ~ 10 사이의 숫자
+    int _nextNum = 1 + _random.nextInt(14); // 1 ~ 15 사이의 숫자
 
     return OverlayEntry(
-        maintainState: true,
-        builder: (BuildContext context) {
-          return Positioned(
-            bottom: MediaQuery.of(context).viewInsets.bottom +
-                _keyboardActionHeight,
-            width: _deviceWidth,
-            height: _deviceRealHeight -
-                MediaQuery.of(context).viewInsets.bottom -
-                _keyboardActionHeight,
-            child: Stack(
-              children: <Widget>[
-                Opacity(
-                  opacity: 0.5,
-                  child: Container(
-                    color: Colors.black,
-                  ),
+      maintainState: true,
+      builder: (BuildContext context) {
+        SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+        return Positioned(
+          bottom:
+              MediaQuery.of(context).viewInsets.bottom + _keyboardActionHeight,
+          width: _deviceWidth,
+          height: _deviceRealHeight -
+              MediaQuery.of(context).viewInsets.bottom -
+              _keyboardActionHeight,
+          child: Stack(
+            children: <Widget>[
+              Opacity(
+                opacity: 0.5,
+                child: Container(
+                  color: Colors.black,
                 ),
-                Positioned(
-                  height: (_contentHeight * _nextNum >
-                          _deviceRealHeight -
-                              MediaQuery.of(context).viewInsets.bottom -
-                              _keyboardActionHeight)
-                      ? _deviceRealHeight -
-                          MediaQuery.of(context).viewInsets.bottom -
-                          _keyboardActionHeight
-                      : _contentHeight * _nextNum,
-                  width: _deviceWidth,
-                  child: Material(
-                    child: Scaffold(
-                      resizeToAvoidBottomPadding: false,
-                      body: Container(
-                        child: ListView.builder(
-                          padding: EdgeInsets.zero,
-                          itemCount: _nextNum,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Container(
+              ),
+              Positioned(
+                height: (_contentHeight * _nextNum >
+                        _deviceRealHeight -
+                            MediaQuery.of(context).viewInsets.bottom -
+                            _keyboardActionHeight)
+                    ? _deviceRealHeight -
+                        MediaQuery.of(context).viewInsets.bottom -
+                        _keyboardActionHeight
+                    : _contentHeight * _nextNum,
+                width: _deviceWidth,
+                child: Material(
+                  child: Scaffold(
+                    resizeToAvoidBottomPadding: false,
+                    body: Container(
+                      child: ListView.builder(
+                        controller: null,
+                        padding: EdgeInsets.zero,
+                        itemCount: _nextNum,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            height: _contentHeight,
+                            alignment: Alignment.centerLeft,
+                            child: FlatButton(
+                              padding: EdgeInsets.fromLTRB(_leftMargin, 0, 0, 0),
                               height: _contentHeight,
-                              alignment: Alignment.centerLeft,
-                              child: FlatButton(
-                                padding: EdgeInsets.fromLTRB(_leftMargin, 0, 0, 0),
-                                child: Row(
-                                  children: <Widget>[
-                                    Container(
-                                      child: Icon(
-                                        Icons.search,
-                                        size: 20,
-                                        color: Colors.grey,
+                              child: Row(
+                                children: <Widget>[
+                                  Container(
+                                    child: Icon(
+                                      Icons.search,
+                                      size: 20,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Text(
+                                      ' 인덱스 ${index + 1}',
+                                      style: TextStyle(
+                                        fontSize: 20,
                                       ),
                                     ),
-                                    Container(
-                                      child: Text(
-                                        ' 인덱스 ${index + 1}',
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                onPressed: () {},
+                                  ),
+                                ],
                               ),
-                            );
-                          },
-                        ),
+                              onPressed: () {
+                                _searchHistory.add('인덱스 ${index + 1}');
+                                _searchFocusNode.unfocus();
+                                _searchController.text = '인덱스 ${index + 1}';
+                                setState(
+                                      () {
+                                    _visibleHistory = true;
+                                    _searchResult = true;
+                                    _removeSearchSuggestOverlay();
+                                  },
+                                );
+                              },
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ),
                 ),
-              ],
-            ),
-          );
-        });
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
+  ///*********************** 키보드액션 관련 함수 ***********************************
+
+  /// 키보드 액션을 설정하는 메서드
   KeyboardActionsConfig _buildConfig(BuildContext context) {
     return KeyboardActionsConfig(
       keyboardActionsPlatform: KeyboardActionsPlatform.IOS,
@@ -240,8 +288,7 @@ class _SearchPageState extends State<SearchPage> {
                     focusNode.unfocus();
                     setState(
                       () {
-                        _visibleOverlay = false;
-                        _searchSuggestOverlayEntry.remove();
+                        _removeSearchSuggestOverlay();
                       },
                     );
                   },
@@ -261,12 +308,16 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
+  ///*********************** 페이지 빌드 관련 함수 **********************************
+
+  /// 현재 시간을 기준으로 분이 00인 시간을 반환하는 메서드
   String _returnTime() {
     DateTime _now = DateTime.now();
 
     return formatDate(_now, [mm, '.', dd, ' ', HH, ':00 기준']);
   }
 
+  /// 앱바 빌드 메서드
   Widget _buildTitle() {
     return Container(
       height: 40,
@@ -321,22 +372,16 @@ class _SearchPageState extends State<SearchPage> {
                   _cancelButtonStreamController.sink.add(true);
 
                   if (_visibleOverlay) {
-                    _searchSuggestOverlayEntry.remove();
-                    _searchSuggestOverlayEntry =
-                        _createSearchSuggestOverlayEntry();
                     setState(
                       () {
-                        _overlay.insert(_searchSuggestOverlayEntry);
+                        _removeSearchSuggestOverlay();
+                        _showSearchSuggestOverlay();
                       },
                     );
                   } else {
-                    _visibleOverlay = true;
-                    _searchSuggestOverlayEntry =
-                        _createSearchSuggestOverlayEntry();
                     setState(
                       () {
-                        _overlay.insert(_searchSuggestOverlayEntry);
-                        _overlay.setState(() {});
+                        _showSearchSuggestOverlay();
                       },
                     );
                   }
@@ -348,14 +393,11 @@ class _SearchPageState extends State<SearchPage> {
                   /* do nothing */
                 } else {
                   _searchHistory.add(string);
-                  //_searchController.clear();
-                  //_searchHistoryStreamController.add(true);
                   setState(
                     () {
                       _visibleHistory = true;
                       _searchResult = true;
-                      _visibleOverlay = false;
-                      _searchSuggestOverlayEntry.remove();
+                      _removeSearchSuggestOverlay();
                     },
                   );
                 }
@@ -385,8 +427,7 @@ class _SearchPageState extends State<SearchPage> {
 
                       setState(
                         () {
-                          _visibleOverlay = false;
-                          _searchSuggestOverlayEntry.remove();
+                          _removeSearchSuggestOverlay();
                         },
                       );
 
@@ -402,6 +443,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
+  /// 결과 페이지 빌드 메서드
   Widget _buildResultPage() {
     return Container(
       child: KeyboardActions(
@@ -416,6 +458,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
+  /// 일반 페이지 빌드 메서드
   Widget _buildPage() {
     return Container(
       color: Colors.white,
@@ -423,10 +466,11 @@ class _SearchPageState extends State<SearchPage> {
         config: _buildConfig(context),
         tapOutsideToDismiss: false,
         child: ListView(
+          controller: PrimaryScrollController.of(context),
           children: <Widget>[
             Visibility(
               /// 검색기록
-              visible: _visibleHistory, //snapshot.data ?? true,
+              visible: _visibleHistory,
               child: Column(
                 children: <Widget>[
                   Container(
@@ -596,86 +640,6 @@ class _SearchPageState extends State<SearchPage> {
                 ],
               ),
             ),
-            /*
-            StreamBuilder(
-              stream: _searchHistoryStreamController.stream,
-              builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                return Visibility(
-                  /// 검색기록
-                  visible: snapshot.data ?? true,
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        height: 10,
-                        color: Color.fromARGB(255, 245, 245, 245),
-                      ),
-                      Container(
-                        color: Colors.white,
-                        height: 107,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Container(
-                              height: 20,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                SearchPageTitle(
-                                  title: '최근 검색어',
-                                  leftMargin: _leftMargin,
-                                ),
-                                Container(
-                                  height: 25,
-                                  width: 70,
-                                  margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: Color(0x09000000),
-                                  ),
-                                  child: CupertinoButton(
-                                    padding: EdgeInsets.zero,
-                                    child: Text(
-                                      '전체삭제',
-                                      textScaleFactor: 0.82,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      _searchHistory.clear();
-                                      _searchHistoryStreamController.add(false);
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Container(
-                              height: 20,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: _searchHistory.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Container(
-                                    child:
-                                        Text(_searchHistory.elementAt(index)),
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        height: 1,
-                        color: Color(0x1F000000),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-             */
             Stack(
               /// 실시간 랭킹 제목
               children: <Widget>[
@@ -778,7 +742,7 @@ class _SearchPageState extends State<SearchPage> {
   void initState() {
     super.initState();
 
-    _overlay = Overlay.of(context);
+    _initSearchSuggestOverlay(context);
   }
 
   @override
@@ -798,8 +762,8 @@ class _SearchPageState extends State<SearchPage> {
         appBar: AppBar(
           brightness: Brightness.light,
           backgroundColor: Colors.white,
-          toolbarHeight: _toolbarHeight,
           elevation: 0.0,
+          toolbarHeight: _toolbarHeight,
           title: _buildTitle(),
         ),
         body: (_searchResult) ? _buildResultPage() : _buildPage(),

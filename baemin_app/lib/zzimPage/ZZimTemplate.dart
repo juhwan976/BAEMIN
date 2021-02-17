@@ -59,9 +59,7 @@ class ZZimTemplate extends StatelessWidget {
   String _makeDeliverTipString(int index) {
     if (_storeList.elementAt(index - 1).minDeliverTip ==
         _storeList.elementAt(index - 1).maxDeliverTip) {
-      return '배달팁 ' +
-          _storeList.elementAt(index - 1).minDeliverTip +
-          '원';
+      return '배달팁 ' + _storeList.elementAt(index - 1).minDeliverTip + '원';
     } else {
       return '배달팁 ' +
           _storeList.elementAt(index - 1).minDeliverTip +
@@ -87,6 +85,7 @@ class ZZimTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      controller: PrimaryScrollController.of(context),
       itemCount: _storeList.length + 1,
       itemBuilder: (BuildContext context, int index) {
         if (index == 0) {
@@ -170,9 +169,8 @@ class ZZimTemplate extends StatelessWidget {
                                 ),
                                 ZZimPin(
                                   /// 신규
-                                  visible: _storeList
-                                      .elementAt(index - 1)
-                                      .isNew,
+                                  visible:
+                                  _storeList.elementAt(index - 1).isNew,
                                   title: '신규',
                                 ),
                                 ZZimPin(
@@ -277,9 +275,8 @@ class ZZimTemplate extends StatelessWidget {
                             ),
                             Visibility(
                               /// 배달팁
-                              visible: _storeList
-                                  .elementAt(index - 1)
-                                  .canDelivery,
+                              visible:
+                              _storeList.elementAt(index - 1).canDelivery,
                               child: Container(
                                 margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
                                 child: Text(
@@ -293,9 +290,8 @@ class ZZimTemplate extends StatelessWidget {
                             ),
                             Visibility(
                               /// 위생정보
-                              visible: _storeList
-                                  .elementAt(index - 1)
-                                  .showClean,
+                              visible:
+                              _storeList.elementAt(index - 1).showClean,
                               child: Container(
                                 margin: EdgeInsets.fromLTRB(0, 6, 0, 0),
                                 width: 43,

@@ -41,9 +41,9 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
     return Container();
   }
 
-  /// 페이지의 내용을 리스트 뷰로 만드는 메서드
-  ListView _buildListView(
-      double _thisHeight, double _thisWidth, double _thisTextScaleFactor) {
+  /// 페이지의 내용을 빌드하는 메서드
+  Widget _buildPage(
+      double _thisHeight, double _thisWidth) {
     final double _userInfoHeight =
         _thisWidth * 0.22666667; // 85, _thisWidth * 0.22666667
     final double _cateHeight = _thisWidth * 0.21333333; // 80
@@ -51,6 +51,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
     final double _leftFontMargin = _leftMargin + _thisWidth * 0.008; // 3
 
     return ListView(
+      controller: PrimaryScrollController.of(context),
       children: <Widget>[
         Container(height: _thisWidth * 0.01866667), // 7
         Container(
@@ -399,7 +400,6 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
     final double _thisHeight =
         MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
     final double _thisWidth = MediaQuery.of(context).size.width;
-    final double _thisTextScaleFactor = MediaQuery.of(context).textScaleFactor;
 
     return Scaffold(
       appBar: AppBar(
@@ -427,7 +427,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
       ),
       body: Container(
         color: Color(0x09000000),
-        child: _buildListView(_thisHeight, _thisWidth, _thisTextScaleFactor),
+        child: _buildPage(_thisHeight, _thisWidth),
       ),
     );
   }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../Store.dart';
 import 'ZZimTemplate.dart';
 
-Container ZZimBuildPage(List<Store> _storeList, String title) {
+Widget ZZimBuildPage(List<Store> _storeList, String title) {
   Widget returnWidget;
 
   if (_storeList.isEmpty) {

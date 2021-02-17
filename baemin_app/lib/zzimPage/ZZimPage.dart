@@ -72,7 +72,7 @@ class _ZZimPageState extends State<ZZimPage> {
 
   @override
   Widget build(BuildContext context) {
-    double _thisHeight =
+    double _deviceRealHeight =
         MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
 
     return DefaultTabController(
@@ -84,7 +84,7 @@ class _ZZimPageState extends State<ZZimPage> {
           centerTitle: false,
           title: _buildTitle(),
           backgroundColor: Colors.white,
-          toolbarHeight: (Platform.isIOS) ? _thisHeight * 0.109375 : 100,
+          toolbarHeight: (Platform.isIOS) ? _deviceRealHeight* 0.109375 : 100,
           // 84, 안드로이드일 경우 높이는 임시
           elevation: 0.0,
           brightness: Brightness.light,
