@@ -17,6 +17,7 @@ class SearchPageRankHigh extends StatelessWidget {
   final int info;
   final double height;
 
+  /// 랭킹 사진의 디렉토리명을 반환하는 메서드
   String _returnRankPicDirectory() {
     String _rank;
 
@@ -37,6 +38,7 @@ class SearchPageRankHigh extends StatelessWidget {
     return 'assets/Search/deco_number_' + _rank + '.png';
   }
 
+  /// 상태 사진의 디렉토리명을 반환하는 메서드
   String _returnInfoDirectory() {
     String _info;
 

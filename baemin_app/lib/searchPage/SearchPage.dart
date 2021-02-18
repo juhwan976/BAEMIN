@@ -20,9 +20,6 @@ import 'SearchPageTitle.dart';
 ///
 /// 검색한 문자열의 길이가 0 일때 검색버튼이 비활성화 되는 기능 필요
 /// 임시로 문자열의 길이가 0 일때 검색기록에 안남도록 해야할듯
-///
-/// 오버레이에서 Scaffold 를 사용하면 상태바를 자동적으로 인식해서 그걸 없애기 위해
-/// 앱바 자체를 오버레이로 구현하는 것을 고려중.
 /// ****************************************************************************
 
 class SearchPage extends StatefulWidget {
@@ -178,7 +175,6 @@ class _SearchPageState extends State<SearchPage> {
     return OverlayEntry(
       maintainState: true,
       builder: (BuildContext context) {
-        SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
         return Positioned(
           bottom:
               MediaQuery.of(context).viewInsets.bottom + _keyboardActionHeight,
@@ -205,57 +201,59 @@ class _SearchPageState extends State<SearchPage> {
                     : _contentHeight * _nextNum,
                 width: _deviceWidth,
                 child: Material(
-                  child: Scaffold(
-                    resizeToAvoidBottomPadding: false,
-                    body: Container(
-                      child: ListView.builder(
-                        controller: null,
-                        padding: EdgeInsets.zero,
-                        itemCount: _nextNum,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
+                  child: Container(
+                    child: ListView.builder(
+                      padding: EdgeInsets.zero,
+                      itemCount: _nextNum,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          height: _contentHeight,
+                          alignment: Alignment.centerLeft,
+                          child: FlatButton(
+                            padding: EdgeInsets.fromLTRB(_leftMargin, 0, 0, 0),
                             height: _contentHeight,
-                            alignment: Alignment.centerLeft,
-                            child: FlatButton(
-                              padding: EdgeInsets.fromLTRB(_leftMargin, 0, 0, 0),
-                              height: _contentHeight,
-                              child: Row(
-                                children: <Widget>[
-                                  Container(
-                                    child: Icon(
-                                      Icons.search,
-                                      size: 20,
-                                      color: Colors.grey,
+                            child: Row(
+                              children: <Widget>[
+                                Container(
+                                  child: Icon(
+                                    Icons.search,
+                                    size: 20,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                Container(
+                                  child: Text(
+                                    ' 인덱스 ${index + 1}',
+                                    style: TextStyle(
+                                      fontSize: 20,
                                     ),
                                   ),
-                                  Container(
-                                    child: Text(
-                                      ' 인덱스 ${index + 1}',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              onPressed: () {
-                                _searchHistory.add('인덱스 ${index + 1}');
-                                _searchFocusNode.unfocus();
-                                _searchController.text = '인덱스 ${index + 1}';
-                                setState(
-                                      () {
-                                    _visibleHistory = true;
-                                    _searchResult = true;
-                                    _removeSearchSuggestOverlay();
-                                  },
-                                );
-                              },
+                                ),
+                              ],
                             ),
-                          );
-                        },
-                      ),
+                            onPressed: () {
+                              _searchHistory.add('인덱스 ${index + 1}');
+                              _searchFocusNode.unfocus();
+                              _searchController.text = '인덱스 ${index + 1}';
+                              setState(
+                                    () {
+                                  _visibleHistory = true;
+                                  _searchResult = true;
+                                  _removeSearchSuggestOverlay();
+                                },
+                              );
+                            },
+                          ),
+                        );
+                      },
                     ),
                   ),
+                  /*Scaffold(
+                    resizeToAvoidBottomPadding: false,
+                    extendBodyBehindAppBar: true,
+                    extendBody: true,
+                    body:
+                  ),*/
                 ),
               ),
             ],

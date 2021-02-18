@@ -15,6 +15,7 @@ class SearchPageRankLow extends StatelessWidget {
   final String name;
   final int info;
 
+  /// 상태 사진의 디렉토리명을 반환하는 메서드
   String _returnInfoDirectory() {
     String _info;
 
