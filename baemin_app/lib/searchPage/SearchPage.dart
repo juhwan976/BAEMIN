@@ -34,10 +34,8 @@ class _SearchPageState extends State<SearchPage> {
   final double _keyboardActionHeight = 45.25; // 키보드 액션 높이
   final double _leftMargin = 15; // 페이지 왼쪽 마진
 
-  bool _searchResult = false; // 검색결과창을 보여 줄 것인지 판별하는 변수
-
   StreamController<bool> _cancelButtonStreamController =
-      new StreamController.broadcast(); // 검색창에 전체 지우기 버튼 상태 stream
+      new StreamController.broadcast(); // 검색창에 전체 지우기 버튼 stream
 
   TextEditingController _searchController =
       new TextEditingController(); // 검색창 text controller
@@ -46,6 +44,7 @@ class _SearchPageState extends State<SearchPage> {
 
   List<String> _searchHistory = new List<String>(); // 검색기록들을 저장 할 리스트
   bool _visibleHistory = false; // 검색기록 보일 것인지 판별하는 변수
+  bool _searchResult = false; // 검색결과창을 보여 줄 것인지 판별하는 변수
 
   ///*********************** 오버레이 관련 변수 *************************************
 

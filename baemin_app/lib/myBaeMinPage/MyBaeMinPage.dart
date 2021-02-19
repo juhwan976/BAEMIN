@@ -15,13 +15,6 @@ import 'MyBaeMinTemplate.dart';
 import 'MyBaeMinTemplateDes.dart';
 import 'pages/EditUserInfoPage.dart';
 
-/*
- * 이 페이지는 글자 크기가 0.82(작음)으로 된 상태에서 만들어진 페이지 입니다.
- * 글자크기를 1.0(보통)으로 할 경우 깨지는 현상이 발생.
- * 이를 해결하기위해서 글자크기를 고정시키는 방법을 생각 중.
- * 실제로 배민앱의 경우 사용자가 어떤 글자크기를 사용하냐에 상관없이 같은 크기의 글자를 출력함.
- */
-
 class MyBaeMinPage extends StatefulWidget {
   MyBaeMinPage({Key key}) : super(key: key);
 
@@ -51,7 +44,6 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
     final double _leftFontMargin = _leftMargin + _thisWidth * 0.008; // 3
 
     return ListView(
-      controller: PrimaryScrollController.of(context),
       children: <Widget>[
         Container(height: _thisWidth * 0.01866667), // 7
         Container(
@@ -211,7 +203,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                     width: MediaQuery.of(context).size.width / 3 - 1,
                     child: MyBaeMinSixButtons(
                       directory:
-                          'assets/MyBaemin/icon_42_mybaemin_favorite.png',
+                      'assets/MyBaemin/icon_42_mybaemin_favorite.png',
                       text: '찜한가게',
                       function: () {
                         Navigator.push(
@@ -401,33 +393,36 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
         MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
     final double _thisWidth = MediaQuery.of(context).size.width;
 
-    return Scaffold(
-      appBar: AppBar(
-        brightness: Brightness.light,
-        bottom: PreferredSize(
-          preferredSize: null,
-          child: Container(
-            height: 0.5,
-            color: Colors.black12,
+
+    return Material(
+      child: Scaffold(
+        appBar: AppBar(
+          brightness: Brightness.light,
+          bottom: PreferredSize(
+            preferredSize: null,
+            child: Container(
+              height: 0.5,
+              color: Colors.black12,
+            ),
+          ),
+          toolbarHeight:
+          (Platform.isAndroid) ? _thisHeight * 0.088 : _thisHeight * 0.058,
+          // 46
+          elevation: 0.0,
+          backgroundColor: Colors.white,
+          centerTitle: true,
+          title: Text(
+            'My배민',
+            textScaleFactor: 0.82,
+            style: TextStyle(
+              fontSize: 20,
+            ),
           ),
         ),
-        toolbarHeight:
-            (Platform.isAndroid) ? _thisHeight * 0.088 : _thisHeight * 0.058,
-        // 46
-        elevation: 0.0,
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        title: Text(
-          'My배민',
-          textScaleFactor: 0.82,
-          style: TextStyle(
-            fontSize: 20,
-          ),
+        body: Container(
+          color: Color(0x09000000),
+          child: _buildPage(_thisHeight, _thisWidth)
         ),
-      ),
-      body: Container(
-        color: Color(0x09000000),
-        child: _buildPage(_thisHeight, _thisWidth),
       ),
     );
   }
