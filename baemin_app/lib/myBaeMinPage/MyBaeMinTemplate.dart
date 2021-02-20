@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'MyBaeMinArrow.dart';
@@ -21,7 +23,7 @@ class MyBaeMinTemplate extends StatelessWidget {
     final _thisWidth = MediaQuery.of(context).size.width;
 
     return Container(
-      height: _thisWidth * 0.15733333, // 59
+      height: (Platform.isIOS) ? _thisWidth * 0.15733333 : 59, // 59
       color: Colors.white,
       child: MyBaeMinButton(
         child: Row(

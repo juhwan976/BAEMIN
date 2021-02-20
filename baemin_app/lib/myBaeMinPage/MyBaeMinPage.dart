@@ -29,23 +29,37 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
     grade: 0,
   );
 
+  /// 유저 등급에 따라서 표시되는 구문을 다르게 하는 메서드
+  String _returnGradeString() {
+    switch (user.grade) {
+      case 0:
+        return '고마운분,';
+        break;
+      default:
+        return '고마운분,';
+        break;
+    }
+  }
+
   /// 유저의 등급을 확인해서 등급별 이미지를 출력하게 할 메서드
   Widget _showGradeImage() {
     return Container();
   }
 
   /// 페이지의 내용을 빌드하는 메서드
-  Widget _buildPage(
-      double _thisHeight, double _thisWidth) {
-    final double _userInfoHeight =
-        _thisWidth * 0.22666667; // 85, _thisWidth * 0.22666667
-    final double _cateHeight = _thisWidth * 0.21333333; // 80
+  Widget _buildPage(double _thisHeight, double _thisWidth) {
+    final double _userInfoHeight = (Platform.isIOS)
+        ? _thisWidth * 0.22666667
+        : 85; // 85, _thisWidth * 0.22666667
+    final double _cateHeight = (Platform.isIOS)
+        ? _thisWidth * 0.21333333
+        : 80; // 80
     final double _leftMargin = _thisWidth * 0.02666667; // 10
     final double _leftFontMargin = _leftMargin + _thisWidth * 0.008; // 3
 
     return ListView(
       children: <Widget>[
-        Container(height: _thisWidth * 0.01866667), // 7
+        Container(height: (Platform.isIOS) ? _thisWidth * 0.01866667 : 10), // 7
         Container(
           /// 사용자 정보 출력
           height: _userInfoHeight,
@@ -68,7 +82,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                     ),
                     Container(
                       child: Text(
-                        '고마운분,',
+                        _returnGradeString(),
                         textScaleFactor: 0.82,
                         style: TextStyle(
                           fontSize: 25.0,
@@ -111,7 +125,9 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
         MyBaeMinShadowH(),
         Container(
           /// 등급 현황
-          height: _thisWidth * 0.14933333, // 56
+          height: (Platform.isIOS)
+              ? _thisWidth * 0.14933333
+              : 69, // 56
           decoration: BoxDecoration(
             color: Colors.white,
           ),
@@ -203,7 +219,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                     width: MediaQuery.of(context).size.width / 3 - 1,
                     child: MyBaeMinSixButtons(
                       directory:
-                      'assets/MyBaemin/icon_42_mybaemin_favorite.png',
+                          'assets/MyBaemin/icon_42_mybaemin_favorite.png',
                       text: '찜한가게',
                       function: () {
                         Navigator.push(
@@ -249,7 +265,9 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
           ],
         ),
         Container(
-          height: _thisWidth * 0.02666667, // 10
+          height: (Platform.isIOS)
+              ? _thisWidth * 0.02666667
+              : 8, // 10
         ),
         Container(
           /// 일회용품 덜쓰기
@@ -285,7 +303,9 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
           ),
         ),
         Container(
-          height: _thisWidth * 0.02666667, // 10
+          height: (Platform.isIOS)
+              ? _thisWidth * 0.02666667
+              : 8, // 10
         ),
         MyBaeMinTemplateDes(
           leftFontMargin: _leftFontMargin,
@@ -345,7 +365,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
         MyBaeMinShadowH(),
         Container(
           /// 현재 버전
-          height: _thisWidth * 0.15733333, // 59
+          height: (Platform.isIOS) ? _thisWidth * 0.15733333 : 59, // 59
           color: Colors.white,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -368,7 +388,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
           color: Color(0x09000000),
         ),
         Container(
-          height: _thisWidth * 0.14133333, // 53
+          height: (Platform.isIOS) ? _thisWidth * 0.14133333 : 53, // 53
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -393,7 +413,6 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
         MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
     final double _thisWidth = MediaQuery.of(context).size.width;
 
-
     return Material(
       child: Scaffold(
         appBar: AppBar(
@@ -405,8 +424,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
               color: Colors.black12,
             ),
           ),
-          toolbarHeight:
-          (Platform.isAndroid) ? _thisHeight * 0.088 : _thisHeight * 0.058,
+          toolbarHeight: (Platform.isIOS) ? _thisHeight * 0.058 : 53,
           // 46
           elevation: 0.0,
           backgroundColor: Colors.white,
@@ -420,9 +438,8 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
           ),
         ),
         body: Container(
-          color: Color(0x09000000),
-          child: _buildPage(_thisHeight, _thisWidth)
-        ),
+            color: Color(0x09000000),
+            child: _buildPage(_thisHeight, _thisWidth)),
       ),
     );
   }
