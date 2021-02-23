@@ -126,12 +126,18 @@ class _ZZimPageState extends State<ZZimPage> {
             ),
           ),
         ),
-        body: TabBarView(
-          children: <Widget>[
-            ZZimed(),
-            Rightnow(),
-            Call(),
-          ],
+        body: NotificationListener<OverscrollIndicatorNotification>(
+          onNotification: (OverscrollIndicatorNotification overScroll) {
+            overScroll.disallowGlow();
+            return;
+          },
+          child: TabBarView(
+            children: <Widget>[
+              ZZimed(),
+              Rightnow(),
+              Call(),
+            ],
+          ),
         ),
       ),
     );

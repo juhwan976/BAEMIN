@@ -57,353 +57,359 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
     final double _leftMargin = _thisWidth * 0.02666667; // 10
     final double _leftFontMargin = _leftMargin + _thisWidth * 0.008; // 3
 
-    return ListView(
-      children: <Widget>[
-        Container(height: (Platform.isIOS) ? _thisWidth * 0.01866667 : 10), // 7
-        Container(
-          /// 사용자 정보 출력
-          height: _userInfoHeight,
-          decoration: BoxDecoration(
-            color: Colors.white,
-          ),
-          child: MyBaeMinButton(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Container(
-                      child: Image.asset(
-                          'assets/MyBaemin/img_my_baemin_default_profile.png'),
-                      height: _userInfoHeight * 0.6, // 51
-                      width: _userInfoHeight * 0.76470588, // 65
-                      margin: EdgeInsets.fromLTRB(
-                          _leftMargin, 0, _thisWidth * 0.008, 0), // 3
-                    ),
-                    Container(
-                      child: Text(
-                        _returnGradeString(),
-                        textScaleFactor: 0.82,
-                        style: TextStyle(
-                          fontSize: 25.0,
-                          color: Colors.black45,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      child: Text(
-                        user.name,
-                        textScaleFactor: 0.82,
-                        style: TextStyle(
-                          fontSize: 25.0,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                MyBaeMinArrow(),
-              ],
+    return NotificationListener<OverscrollIndicatorNotification> (
+      onNotification: (OverscrollIndicatorNotification overScroll) {
+        overScroll.disallowGlow();
+        return;
+      },
+      child: ListView(
+        children: <Widget>[
+          Container(height: (Platform.isIOS) ? _thisWidth * 0.01866667 : 10), // 7
+          Container(
+            /// 사용자 정보 출력
+            height: _userInfoHeight,
+            decoration: BoxDecoration(
+              color: Colors.white,
             ),
-            function: () async {
-              final result = await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => EditUserInfoPage(user: user),
-                ),
-              );
+            child: MyBaeMinButton(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        child: Image.asset(
+                            'assets/MyBaemin/img_my_baemin_default_profile.png'),
+                        height: _userInfoHeight * 0.6, // 51
+                        width: _userInfoHeight * 0.76470588, // 65
+                        margin: EdgeInsets.fromLTRB(
+                            _leftMargin, 0, _thisWidth * 0.008, 0), // 3
+                      ),
+                      Container(
+                        child: Text(
+                          _returnGradeString(),
+                          textScaleFactor: 0.82,
+                          style: TextStyle(
+                            fontSize: 25.0,
+                            color: Colors.black45,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        child: Text(
+                          user.name,
+                          textScaleFactor: 0.82,
+                          style: TextStyle(
+                            fontSize: 25.0,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  MyBaeMinArrow(),
+                ],
+              ),
+              function: () async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditUserInfoPage(user: user),
+                  ),
+                );
 
-              if (result == null) {
-                /* do nothing */
-              } else {
-                user.name = result;
-                setState(() {});
-              }
-            },
-          ),
-        ),
-        MyBaeMinShadowH(),
-        Container(
-          /// 등급 현황
-          height: (Platform.isIOS)
-              ? _thisWidth * 0.14933333
-              : 69, // 56
-          decoration: BoxDecoration(
-            color: Colors.white,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Container(
-                width: _thisWidth * 0.53333333, // 200
-                color: Colors.black12,
-                margin: EdgeInsets.fromLTRB(_leftMargin, 0, 0, 0),
-                child: _showGradeImage(),
-              ),
-              Container(
-                /// 등급별 혜택 버튼
-                width: _thisWidth * 0.21333333,
-                // 80
-                height: _thisWidth * 0.06933333,
-                // 26
-                margin: EdgeInsets.fromLTRB(
-                    0, 0, _thisWidth * 0.14933333 * 0.30357143, 0),
-                // 17
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Color(0x09000000),
-                ),
-                child: CupertinoButton(
-                  padding: EdgeInsets.zero,
-                  child: Text(
-                    '등급별 혜택',
-                    textScaleFactor: 0.82,
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                  ),
-                  onPressed: () {},
-                ),
-              ),
-            ],
-          ),
-        ),
-        MyBaeMinShadowH(),
-        Column(
-          /// 메뉴 6개
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              height: _cateHeight,
-              color: Colors.white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    width: MediaQuery.of(context).size.width / 3 - 1,
-                    child: MyBaeMinSixButtons(
-                      directory: 'assets/MyBaemin/mybaemin_point.png',
-                      text: '포인트',
-                      function: () {},
-                    ),
-                  ),
-                  MyBaeMinShadowV(),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 3 - 1,
-                    child: MyBaeMinSixButtons(
-                      directory: 'assets/MyBaemin/mybaemin_coupon.png',
-                      text: '쿠폰함',
-                      function: () {},
-                    ),
-                  ),
-                  MyBaeMinShadowV(),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 3 - 1,
-                    child: MyBaeMinSixButtons(
-                      directory: 'assets/MyBaemin/icon_42_mybaemin_gift.png',
-                      text: '선물함',
-                      function: () {},
-                    ),
-                  ),
-                ],
-              ),
+                if (result == null) {
+                  /* do nothing */
+                } else {
+                  user.name = result;
+                  setState(() {});
+                }
+              },
             ),
-            MyBaeMinShadowH(),
-            Container(
-              height: _cateHeight,
+          ),
+          MyBaeMinShadowH(),
+          Container(
+            /// 등급 현황
+            height: (Platform.isIOS)
+                ? _thisWidth * 0.14933333
+                : 69, // 56
+            decoration: BoxDecoration(
               color: Colors.white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    width: MediaQuery.of(context).size.width / 3 - 1,
-                    child: MyBaeMinSixButtons(
-                      directory:
-                          'assets/MyBaemin/icon_42_mybaemin_favorite.png',
-                      text: '찜한가게',
-                      function: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                ZZimPage(fromAnotherPage: true),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  MyBaeMinShadowV(),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 3 - 1,
-                    child: MyBaeMinSixButtons(
-                      directory: 'assets/MyBaemin/mybaemin_history.png',
-                      text: '주문내역',
-                      function: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                OrderListPage(fromAnotherPage: true),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  MyBaeMinShadowV(),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 3 - 1,
-                    child: MyBaeMinSixButtons(
-                      directory: 'assets/MyBaemin/mybaemin_review.png',
-                      text: '리뷰관리',
-                      function: () {},
-                    ),
-                  ),
-                ],
-              ),
             ),
-            MyBaeMinShadowH(),
-          ],
-        ),
-        Container(
-          height: (Platform.isIOS)
-              ? _thisWidth * 0.02666667
-              : 8, // 10
-        ),
-        Container(
-          /// 일회용품 덜쓰기
-          height: _thisWidth * 0.16, // 60
-          color: Colors.white,
-          child: MyBaeMinButton(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Container(
-                      height: _thisWidth * 0.10666667, // 40
-                      width: _thisWidth * 0.10666667, // 40
-                      margin: EdgeInsets.fromLTRB(_leftMargin, 0, 0, 0), // 10
-                      child: Image.asset(
-                          'assets/MyBaemin/deco_campaign_tape_right.png'),
-                    ),
-                    Text(
-                      '일회용품 덜 쓰기, 함께해요!',
+                Container(
+                  width: _thisWidth * 0.53333333, // 200
+                  color: Colors.black12,
+                  margin: EdgeInsets.fromLTRB(_leftMargin, 0, 0, 0),
+                  child: _showGradeImage(),
+                ),
+                Container(
+                  /// 등급별 혜택 버튼
+                  width: _thisWidth * 0.21333333,
+                  // 80
+                  height: _thisWidth * 0.06933333,
+                  // 26
+                  margin: EdgeInsets.fromLTRB(
+                      0, 0, _thisWidth * 0.14933333 * 0.30357143, 0),
+                  // 17
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Color(0x09000000),
+                  ),
+                  child: CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    child: Text(
+                      '등급별 혜택',
                       textScaleFactor: 0.82,
                       style: TextStyle(
-                        color: Colors.green,
-                        fontSize: 19,
+                        color: Colors.black,
+                      ),
+                    ),
+                    onPressed: () {},
+                  ),
+                ),
+              ],
+            ),
+          ),
+          MyBaeMinShadowH(),
+          Column(
+            /// 메뉴 6개
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                height: _cateHeight,
+                color: Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      width: MediaQuery.of(context).size.width / 3 - 1,
+                      child: MyBaeMinSixButtons(
+                        directory: 'assets/MyBaemin/mybaemin_point.png',
+                        text: '포인트',
+                        function: () {},
+                      ),
+                    ),
+                    MyBaeMinShadowV(),
+                    Container(
+                      width: MediaQuery.of(context).size.width / 3 - 1,
+                      child: MyBaeMinSixButtons(
+                        directory: 'assets/MyBaemin/mybaemin_coupon.png',
+                        text: '쿠폰함',
+                        function: () {},
+                      ),
+                    ),
+                    MyBaeMinShadowV(),
+                    Container(
+                      width: MediaQuery.of(context).size.width / 3 - 1,
+                      child: MyBaeMinSixButtons(
+                        directory: 'assets/MyBaemin/icon_42_mybaemin_gift.png',
+                        text: '선물함',
+                        function: () {},
                       ),
                     ),
                   ],
                 ),
-                MyBaeMinArrow(),
-              ],
+              ),
+              MyBaeMinShadowH(),
+              Container(
+                height: _cateHeight,
+                color: Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      width: MediaQuery.of(context).size.width / 3 - 1,
+                      child: MyBaeMinSixButtons(
+                        directory:
+                        'assets/MyBaemin/icon_42_mybaemin_favorite.png',
+                        text: '찜한가게',
+                        function: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  ZZimPage(fromAnotherPage: true),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    MyBaeMinShadowV(),
+                    Container(
+                      width: MediaQuery.of(context).size.width / 3 - 1,
+                      child: MyBaeMinSixButtons(
+                        directory: 'assets/MyBaemin/mybaemin_history.png',
+                        text: '주문내역',
+                        function: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  OrderListPage(fromAnotherPage: true),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    MyBaeMinShadowV(),
+                    Container(
+                      width: MediaQuery.of(context).size.width / 3 - 1,
+                      child: MyBaeMinSixButtons(
+                        directory: 'assets/MyBaemin/mybaemin_review.png',
+                        text: '리뷰관리',
+                        function: () {},
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              MyBaeMinShadowH(),
+            ],
+          ),
+          Container(
+            height: (Platform.isIOS)
+                ? _thisWidth * 0.02666667
+                : 8, // 10
+          ),
+          Container(
+            /// 일회용품 덜쓰기
+            height: _thisWidth * 0.16, // 60
+            color: Colors.white,
+            child: MyBaeMinButton(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        height: _thisWidth * 0.10666667, // 40
+                        width: _thisWidth * 0.10666667, // 40
+                        margin: EdgeInsets.fromLTRB(_leftMargin, 0, 0, 0), // 10
+                        child: Image.asset(
+                            'assets/MyBaemin/deco_campaign_tape_right.png'),
+                      ),
+                      Text(
+                        '일회용품 덜 쓰기, 함께해요!',
+                        textScaleFactor: 0.82,
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontSize: 19,
+                        ),
+                      ),
+                    ],
+                  ),
+                  MyBaeMinArrow(),
+                ],
+              ),
+              function: () {},
             ),
+          ),
+          Container(
+            height: (Platform.isIOS)
+                ? _thisWidth * 0.02666667
+                : 8, // 10
+          ),
+          MyBaeMinTemplateDes(
+            leftFontMargin: _leftFontMargin,
+            title: '배민페이 등록',
+            description: '배민페이로 결제하면 최대 5.5% 배민포인트가 적립됩니다!',
             function: () {},
           ),
-        ),
-        Container(
-          height: (Platform.isIOS)
-              ? _thisWidth * 0.02666667
-              : 8, // 10
-        ),
-        MyBaeMinTemplateDes(
-          leftFontMargin: _leftFontMargin,
-          title: '배민페이 등록',
-          description: '배민페이로 결제하면 최대 5.5% 배민포인트가 적립됩니다!',
-          function: () {},
-        ),
-        MyBaeMinShadowH(),
-        MyBaeMinTemplateDes(
-          leftFontMargin: _leftFontMargin,
-          title: '가족계정 관리',
-          description: '결제수단을 공유해 우리 가족의 끼니를 챙겨주세요.',
-          function: () {},
-        ),
-        MyBaeMinShadowH(),
-        MyBaeMinTemplate(
-          leftFontMargin: _leftFontMargin,
-          title: '선물하기',
-          function: () {},
-        ),
-        MyBaeMinShadowH(),
-        MyBaeMinTemplate(
-          leftFontMargin: _leftFontMargin,
-          title: '공지사항',
-          function: () {},
-        ),
-        MyBaeMinShadowH(),
-        MyBaeMinTemplate(
-          leftFontMargin: _leftFontMargin,
-          title: '배민커넥트 지원',
-          function: () {},
-        ),
-        MyBaeMinShadowH(),
-        MyBaeMinTemplate(
-          leftFontMargin: _leftFontMargin,
-          title: '이벤트',
-          function: () {},
-        ),
-        MyBaeMinShadowH(),
-        MyBaeMinTemplate(
-          leftFontMargin: _leftFontMargin,
-          title: '고객센터',
-          function: () {},
-        ),
-        MyBaeMinShadowH(),
-        MyBaeMinTemplate(
-          leftFontMargin: _leftFontMargin,
-          title: '환경설정',
-          function: () {},
-        ),
-        MyBaeMinShadowH(),
-        MyBaeMinTemplate(
-          leftFontMargin: _leftFontMargin,
-          title: '약관 및 정책',
-          function: () {},
-        ),
-        MyBaeMinShadowH(),
-        Container(
-          /// 현재 버전
-          height: (Platform.isIOS) ? _thisWidth * 0.15733333 : 59, // 59
-          color: Colors.white,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.fromLTRB(_leftFontMargin, 0, 0, 0),
-                child: Text(
-                  (Platform.isIOS) ? '현재 버전 10.21.0' : '현재 버전 10.21.1',
-                  textScaleFactor: 0.82,
-                  style: TextStyle(
-                    fontSize: 19,
+          MyBaeMinShadowH(),
+          MyBaeMinTemplateDes(
+            leftFontMargin: _leftFontMargin,
+            title: '가족계정 관리',
+            description: '결제수단을 공유해 우리 가족의 끼니를 챙겨주세요.',
+            function: () {},
+          ),
+          MyBaeMinShadowH(),
+          MyBaeMinTemplate(
+            leftFontMargin: _leftFontMargin,
+            title: '선물하기',
+            function: () {},
+          ),
+          MyBaeMinShadowH(),
+          MyBaeMinTemplate(
+            leftFontMargin: _leftFontMargin,
+            title: '공지사항',
+            function: () {},
+          ),
+          MyBaeMinShadowH(),
+          MyBaeMinTemplate(
+            leftFontMargin: _leftFontMargin,
+            title: '배민커넥트 지원',
+            function: () {},
+          ),
+          MyBaeMinShadowH(),
+          MyBaeMinTemplate(
+            leftFontMargin: _leftFontMargin,
+            title: '이벤트',
+            function: () {},
+          ),
+          MyBaeMinShadowH(),
+          MyBaeMinTemplate(
+            leftFontMargin: _leftFontMargin,
+            title: '고객센터',
+            function: () {},
+          ),
+          MyBaeMinShadowH(),
+          MyBaeMinTemplate(
+            leftFontMargin: _leftFontMargin,
+            title: '환경설정',
+            function: () {},
+          ),
+          MyBaeMinShadowH(),
+          MyBaeMinTemplate(
+            leftFontMargin: _leftFontMargin,
+            title: '약관 및 정책',
+            function: () {},
+          ),
+          MyBaeMinShadowH(),
+          Container(
+            /// 현재 버전
+            height: (Platform.isIOS) ? _thisWidth * 0.15733333 : 59, // 59
+            color: Colors.white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.fromLTRB(_leftFontMargin, 0, 0, 0),
+                  child: Text(
+                    (Platform.isIOS) ? '현재 버전 10.21.0' : '현재 버전 10.21.1',
+                    textScaleFactor: 0.82,
+                    style: TextStyle(
+                      fontSize: 19,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        Container(
-          height: 1,
-          color: Color(0x09000000),
-        ),
-        Container(
-          height: (Platform.isIOS) ? _thisWidth * 0.14133333 : 53, // 53
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'Copyright Woowa Brothers in Song-pa, All Rights Reserved.',
-                textScaleFactor: 0.82,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Color(0x70000000),
+          Container(
+            height: 1,
+            color: Color(0x09000000),
+          ),
+          Container(
+            height: (Platform.isIOS) ? _thisWidth * 0.14133333 : 53, // 53
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'Copyright Woowa Brothers in Song-pa, All Rights Reserved.',
+                  textScaleFactor: 0.82,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Color(0x70000000),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

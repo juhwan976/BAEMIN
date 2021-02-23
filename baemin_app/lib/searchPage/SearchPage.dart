@@ -748,7 +748,6 @@ class _SearchPageState extends State<SearchPage> {
     super.dispose();
 
     _cancelButtonStreamController.close();
-    //_searchHistoryStreamController.close();
   }
 
   @override
@@ -763,7 +762,13 @@ class _SearchPageState extends State<SearchPage> {
           toolbarHeight: _toolbarHeight,
           title: _buildTitle(),
         ),
-        body: (_searchResult) ? _buildResultPage() : _buildPage(),
+        body: NotificationListener<OverscrollIndicatorNotification>(
+          onNotification: (OverscrollIndicatorNotification overScroll) {
+            overScroll.disallowGlow();
+            return;
+          },
+          child: (_searchResult) ? _buildResultPage() : _buildPage(),
+        ),
       ),
     );
   }
