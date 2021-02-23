@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../../Store.dart';
 import '../ZZimBuildPage.dart';
@@ -6,7 +7,12 @@ import '../ZZimBuildPage.dart';
 class ZZimed extends StatelessWidget {
   const ZZimed({
     Key key,
+    @required this.buildContext,
+    @required this.scrollBehaviorSubject,
   }) : super(key: key);
+
+  final BuildContext buildContext;
+  final BehaviorSubject<bool> scrollBehaviorSubject;
 
   @override
   Widget build(BuildContext context) {
@@ -132,6 +138,11 @@ class ZZimed extends StatelessWidget {
       ),
     ];
 
-    return ZZimBuildPage(_storeList, '찜한가게');
+    return ZZimBuildPage(
+      storeList: _storeList,
+      title: '찜한가게',
+      buildContext: buildContext,
+      scrollBehaviorSubject: scrollBehaviorSubject,
+    );
   }
 }

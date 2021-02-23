@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:rxdart/rxdart.dart';
 
 import '../Store.dart';
 import 'ZZimTemplate.dart';
 
-Widget ZZimBuildPage(List<Store> _storeList, String title) {
+// ignore: non_constant_identifier_names
+Widget ZZimBuildPage({
+  @required List<Store> storeList,
+  @required String title,
+  @required BuildContext buildContext,
+  @required BehaviorSubject<bool> scrollBehaviorSubject,
+}) {
   Widget returnWidget;
 
-  if (_storeList.isEmpty) {
+  if (storeList.isEmpty) {
     if (title == '찜한가게') {
       returnWidget = Center(
         child: Container(
@@ -88,7 +95,11 @@ Widget ZZimBuildPage(List<Store> _storeList, String title) {
       );
     }
   } else {
-    returnWidget = ZZimTemplate(storeList: _storeList);
+    returnWidget = ZZimTemplate(
+      storeList: storeList,
+      buildContext: buildContext,
+      scrollBehaviorSubject: scrollBehaviorSubject,
+    );
   }
 
   return Container(

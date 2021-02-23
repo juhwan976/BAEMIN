@@ -24,6 +24,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  #use main.dart
+  rxdart: ^0.25.0
+
   # use WhatEatPage
   flutter_staggered_grid_view: "^0.3.3"
   roller_list: ^0.6.1

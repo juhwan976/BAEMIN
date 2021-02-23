@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:rxdart/subjects.dart';
 
 import 'NavigationIcon.dart';
 import 'homePage/HomePage.dart';
@@ -45,22 +47,70 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  StreamController<bool> _searchPageStreamController = new BehaviorSubject();
+  StreamController<bool> _zzimPageStreamController = new BehaviorSubject();
+  StreamController<bool> _myBaeMinPageStreamController = new BehaviorSubject();
+
   int _selectedIndex = 0;
+
+  List<Widget> _pageList = new List<Widget>();
 
   void _onTaped(int index) {
     _selectedIndex = index;
+
+    switch(index) {
+      case 0:
+        _searchPageStreamController.sink.add(false);
+        _zzimPageStreamController.sink.add(false);
+        _myBaeMinPageStreamController.sink.add(false);
+        break;
+      case 1:
+        _searchPageStreamController.sink.add(true);
+        _zzimPageStreamController.sink.add(false);
+        _myBaeMinPageStreamController.sink.add(false);
+        break;
+      case 2:
+        _searchPageStreamController.sink.add(false);
+        _zzimPageStreamController.sink.add(true);
+        _myBaeMinPageStreamController.sink.add(false);
+        break;
+      case 3:
+        _searchPageStreamController.sink.add(false);
+        _zzimPageStreamController.sink.add(false);
+        _myBaeMinPageStreamController.sink.add(false);
+        break;
+      case 4:
+        _searchPageStreamController.sink.add(false);
+        _zzimPageStreamController.sink.add(false);
+        _myBaeMinPageStreamController.sink.add(true);
+        break;
+      default:
+        break;
+    }
+
     HapticFeedback.mediumImpact();
     setState(() {});
   }
 
-  List<Widget> _listWidget = <Widget>[
-    HomePage(),
-    //WhatEatPage(),
-    SearchPage(),
-    ZZimPage(fromAnotherPage: false),
-    OrderListPage(fromAnotherPage: false),
-    MyBaeMinPage(),
-  ];
+  @override
+  void initState() {
+    super.initState();
+
+    _pageList.add(HomePage());
+    _pageList.add(SearchPage(scrollStreamController: _searchPageStreamController));
+    _pageList.add(ZZimPage(scrollBehaviorSubject: _zzimPageStreamController, fromAnotherPage: false));
+    _pageList.add(OrderListPage(fromAnotherPage: false,));
+    _pageList.add(MyBaeMinPage(scrollStreamController: _myBaeMinPageStreamController));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    _searchPageStreamController.close();
+    _zzimPageStreamController.close();
+    _myBaeMinPageStreamController.close();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,10 +128,6 @@ class _MyHomePageState extends State<MyHomePage> {
         ((Platform.isAndroid) ? '안드로이드' : ((Platform.isIOS) ? 'iOS' : '알수없음')));
 
     return Scaffold(
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: _listWidget,
-      ),
       bottomNavigationBar: Container(
         height: (Platform.isIOS) ? 85 : 55,
         decoration: BoxDecoration(
@@ -112,20 +158,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 label: '',
               ),
-              /*
-              BottomNavigationBarItem(
-                icon: NavigationIcon(
-                  selectedIndex: _selectedIndex,
-                  compareIndex: 1,
-                  normalIcon:
-                  'assets/Navigation/ic_main_navigation_eatcast_normal.png',
-                  selectedIcon:
-                  'assets/Navigation/ic_main_navigation_eatcast_selected.png',
-                  title: '뭐먹지',
-                ),
-                label: '',
-              ),
-              */
               BottomNavigationBarItem(
                 icon: NavigationIcon(
                   selectedIndex: _selectedIndex,
@@ -182,6 +214,10 @@ class _MyHomePageState extends State<MyHomePage> {
             onTap: _onTaped,
           ),
         ),
+      ),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _pageList,
       ),
     );
   }

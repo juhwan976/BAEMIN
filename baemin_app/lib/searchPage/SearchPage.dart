@@ -23,7 +23,12 @@ import 'SearchPageTitle.dart';
 /// ****************************************************************************
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({Key key}) : super(key: key);
+  const SearchPage({
+    Key key,
+    this.scrollStreamController,
+  }) : super(key: key);
+
+  final StreamController<bool> scrollStreamController;
 
   @override
   _SearchPageState createState() => _SearchPageState();
@@ -235,7 +240,7 @@ class _SearchPageState extends State<SearchPage> {
                               _searchFocusNode.unfocus();
                               _searchController.text = '인덱스 ${index + 1}';
                               setState(
-                                    () {
+                                () {
                                   _visibleHistory = true;
                                   _searchResult = true;
                                   _removeSearchSuggestOverlay();
@@ -442,6 +447,7 @@ class _SearchPageState extends State<SearchPage> {
 
   /// 결과 페이지 빌드 메서드
   Widget _buildResultPage() {
+    /// 나중에 내용을 넣을 경우, ListView 의 controller 를 StreamBuilder 를 써서 만들 것.
     return Container(
       child: KeyboardActions(
         config: _buildConfig(context),
@@ -459,278 +465,291 @@ class _SearchPageState extends State<SearchPage> {
   Widget _buildPage() {
     return Container(
       color: Colors.white,
-      child: KeyboardActions(
-        config: _buildConfig(context),
-        tapOutsideToDismiss: false,
-        child: ListView(
-          controller: PrimaryScrollController.of(context),
-          children: <Widget>[
-            Visibility(
-              /// 검색기록
-              visible: _visibleHistory,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    height: 10,
-                    color: Color.fromARGB(255, 245, 245, 245),
-                  ),
-                  Container(
-                    color: Colors.white,
-                    height: 107,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          height: 20,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: StreamBuilder(
+        stream: widget.scrollStreamController.stream,
+        initialData: false,
+        builder: (BuildContext buildContext, AsyncSnapshot<bool> snapshot) {
+          return KeyboardActions(
+            config: _buildConfig(context),
+            child: ListView(
+              controller: snapshot.data
+                  ? PrimaryScrollController.of(context)
+                  : ScrollController(),
+              children: <Widget>[
+                Visibility(
+                  /// 검색기록
+                  visible: _visibleHistory,
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        height: 10,
+                        color: Color.fromARGB(255, 245, 245, 245),
+                      ),
+                      Container(
+                        color: Colors.white,
+                        height: 107,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            SearchPageTitle(
-                              title: '최근 검색어',
-                              leftMargin: _leftMargin,
-                            ),
                             Container(
-                              height: 25,
-                              width: 70,
-                              margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Color(0x09000000),
-                              ),
-                              child: CupertinoButton(
-                                padding: EdgeInsets.zero,
-                                child: Text(
-                                  '전체삭제',
-                                  textScaleFactor: 0.82,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 17,
+                              height: 20,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                SearchPageTitle(
+                                  title: '최근 검색어',
+                                  leftMargin: _leftMargin,
+                                ),
+                                Container(
+                                  height: 25,
+                                  width: 70,
+                                  margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Color(0x09000000),
+                                  ),
+                                  child: CupertinoButton(
+                                    padding: EdgeInsets.zero,
+                                    child: Text(
+                                      '전체삭제',
+                                      textScaleFactor: 0.82,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 17,
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      _searchHistory.clear();
+                                      //_searchHistoryStreamController.add(false);
+                                      setState(
+                                        () {
+                                          _visibleHistory = false;
+                                        },
+                                      );
+                                    },
                                   ),
                                 ),
-                                onPressed: () {
-                                  _searchHistory.clear();
-                                  //_searchHistoryStreamController.add(false);
-                                  setState(
-                                    () {
-                                      _visibleHistory = false;
-                                    },
-                                  );
+                              ],
+                            ),
+                            Container(
+                              /// 검색기록
+                              height: 50,
+                              padding: EdgeInsets.fromLTRB(0, 13, 0, 5),
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: _searchHistory.length + 2,
+                                itemBuilder: (BuildContext context, int index) {
+                                  int _lifoIndex =
+                                      _searchHistory.length - index;
+
+                                  if (index == 0) {
+                                    return Container(
+                                      width: 20,
+                                    );
+                                  } else if (index ==
+                                      _searchHistory.length + 1) {
+                                    return Container(
+                                      width: 15,
+                                    );
+                                  } else {
+                                    print(_searchHistory
+                                        .elementAt(_lifoIndex)
+                                        .length);
+                                    return Row(
+                                      children: <Widget>[
+                                        Container(
+                                          width: (_searchHistory
+                                                      .elementAt(_lifoIndex)
+                                                      .length *
+                                                  12.0) +
+                                              40,
+                                          decoration: BoxDecoration(
+                                            color: Color.fromARGB(
+                                                255, 239, 250, 250),
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Container(
+                                                //alignment: Alignment.center,
+                                                child: CupertinoButton(
+                                                  padding: EdgeInsets.zero,
+                                                  minSize: 0,
+                                                  child: Text(
+                                                    _searchHistory
+                                                        .elementAt(_lifoIndex),
+                                                    textScaleFactor: 0.82,
+                                                    style: TextStyle(
+                                                      fontSize: 17,
+                                                      color: Color.fromARGB(
+                                                          255, 42, 193, 188),
+                                                    ),
+                                                  ),
+                                                  onPressed: () {
+                                                    setState(
+                                                      () {
+                                                        _searchResult = true;
+                                                        _cancelButtonStreamController
+                                                            .sink
+                                                            .add(true);
+                                                        _searchController.text =
+                                                            _searchHistory
+                                                                .elementAt(
+                                                                    _lifoIndex);
+                                                        _searchHistory.removeAt(
+                                                            _lifoIndex);
+                                                        _searchHistory.add(
+                                                            _searchController
+                                                                .text);
+                                                      },
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                              Container(
+                                                width: 15,
+                                                child: CupertinoButton(
+                                                  padding: EdgeInsets.zero,
+                                                  child: Icon(
+                                                    Icons.clear,
+                                                    size: 15,
+                                                    color: Color.fromARGB(
+                                                        255, 42, 193, 188),
+                                                  ),
+                                                  onPressed: () {
+                                                    _searchHistory
+                                                        .removeAt(_lifoIndex);
+                                                    if (_searchHistory
+                                                        .isEmpty) {
+                                                      _visibleHistory = false;
+                                                    }
+                                                    setState(() {});
+                                                  },
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 5,
+                                        ),
+                                      ],
+                                    );
+                                  }
                                 },
                               ),
                             ),
                           ],
                         ),
-                        Container(
-                          /// 검색기록
-                          height: 50,
-                          padding: EdgeInsets.fromLTRB(0, 13, 0, 5),
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: _searchHistory.length + 2,
-                            itemBuilder: (BuildContext context, int index) {
-                              int _lifoIndex = _searchHistory.length - index;
-
-                              if (index == 0) {
-                                return Container(
-                                  width: 20,
-                                );
-                              } else if (index == _searchHistory.length + 1) {
-                                return Container(
-                                  width: 15,
-                                );
-                              } else {
-                                print(_searchHistory
-                                    .elementAt(_lifoIndex)
-                                    .length);
-                                return Row(
-                                  children: <Widget>[
-                                    Container(
-                                      width: (_searchHistory
-                                                  .elementAt(_lifoIndex)
-                                                  .length *
-                                              12.0) +
-                                          40,
-                                      decoration: BoxDecoration(
-                                        color:
-                                            Color.fromARGB(255, 239, 250, 250),
-                                        borderRadius: BorderRadius.circular(25),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          Container(
-                                            //alignment: Alignment.center,
-                                            child: CupertinoButton(
-                                              padding: EdgeInsets.zero,
-                                              minSize: 0,
-                                              child: Text(
-                                                _searchHistory
-                                                    .elementAt(_lifoIndex),
-                                                textScaleFactor: 0.82,
-                                                style: TextStyle(
-                                                  fontSize: 17,
-                                                  color: Color.fromARGB(
-                                                      255, 42, 193, 188),
-                                                ),
-                                              ),
-                                              onPressed: () {
-                                                setState(
-                                                  () {
-                                                    _searchResult = true;
-                                                    _cancelButtonStreamController
-                                                        .sink
-                                                        .add(true);
-                                                    _searchController.text =
-                                                        _searchHistory
-                                                            .elementAt(
-                                                                _lifoIndex);
-                                                    _searchHistory
-                                                        .removeAt(_lifoIndex);
-                                                    _searchHistory.add(
-                                                        _searchController.text);
-                                                  },
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                          Container(
-                                            width: 15,
-                                            child: CupertinoButton(
-                                              padding: EdgeInsets.zero,
-                                              child: Icon(
-                                                Icons.clear,
-                                                size: 15,
-                                                color: Color.fromARGB(
-                                                    255, 42, 193, 188),
-                                              ),
-                                              onPressed: () {
-                                                _searchHistory
-                                                    .removeAt(_lifoIndex);
-                                                if (_searchHistory.isEmpty) {
-                                                  _visibleHistory = false;
-                                                }
-                                                setState(() {});
-                                              },
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 5,
-                                    ),
-                                  ],
-                                );
-                              }
-                            },
-                          ),
-                        ),
-                      ],
+                      ),
+                      Container(
+                        height: 1,
+                        color: Color(0x1F000000),
+                      ),
+                    ],
+                  ),
+                ),
+                Stack(
+                  /// 실시간 랭킹 제목
+                  children: <Widget>[
+                    Container(
+                      height: 95,
+                      width: MediaQuery.of(context).size.width,
                     ),
-                  ),
-                  Container(
-                    height: 1,
-                    color: Color(0x1F000000),
-                  ),
-                ],
-              ),
-            ),
-            Stack(
-              /// 실시간 랭킹 제목
-              children: <Widget>[
-                Container(
-                  height: 95,
-                  width: MediaQuery.of(context).size.width,
-                ),
-                Positioned(
-                  child: Container(
-                    height: 10,
-                    width: MediaQuery.of(context).size.width,
-                    color: Color.fromARGB(255, 245, 245, 245),
-                  ),
-                ),
-                Positioned(
-                  top: 10,
-                  child: Container(
-                    height: 95,
-                    width: MediaQuery.of(context).size.width,
-                    color: Colors.white,
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          height: 95,
-                          color: Colors.white,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Container(
-                                height: 25,
-                              ),
-                              SearchPageTitle(
-                                leftMargin: _leftMargin,
-                                title: '가장 많이',
-                              ),
-                              SearchPageTitle(
-                                leftMargin: _leftMargin,
-                                title: '검색하고 있어요',
-                              ),
-                              Container(
-                                margin:
-                                    EdgeInsets.fromLTRB(_leftMargin, 1, 0, 0),
-                                child: Text(
-                                  _returnTime(),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black38,
+                    Positioned(
+                      child: Container(
+                        height: 10,
+                        width: MediaQuery.of(context).size.width,
+                        color: Color.fromARGB(255, 245, 245, 245),
+                      ),
+                    ),
+                    Positioned(
+                      top: 10,
+                      child: Container(
+                        height: 95,
+                        width: MediaQuery.of(context).size.width,
+                        color: Colors.white,
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              height: 95,
+                              color: Colors.white,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Container(
+                                    height: 25,
                                   ),
-                                ),
+                                  SearchPageTitle(
+                                    leftMargin: _leftMargin,
+                                    title: '가장 많이',
+                                  ),
+                                  SearchPageTitle(
+                                    leftMargin: _leftMargin,
+                                    title: '검색하고 있어요',
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.fromLTRB(
+                                        _leftMargin, 1, 0, 0),
+                                    child: Text(
+                                      _returnTime(),
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.black38,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                    Positioned(
+                      /// 사진이 조금더 내려가야함.
+                      right: 14,
+                      child: Container(
+                        width: 100,
+                        height: 100,
+                        child: Image.asset(
+                            'assets/Search/deco_popular_search.png'),
+                      ),
+                    ),
+                  ],
                 ),
-                Positioned(
-                  /// 사진이 조금더 내려가야함.
-                  right: 14,
-                  child: Container(
-                    width: 100,
-                    height: 100,
-                    child: Image.asset('assets/Search/deco_popular_search.png'),
+                Column(
+                  /// 실시간 랭킹 내용
+                  children: List.generate(
+                    _rankingList.length,
+                    (int index) {
+                      return Container(
+                        height: 55,
+                        color: Colors.white,
+                        child: (index < 3)
+                            ? SearchPageRankHigh(
+                                rank: index + 1,
+                                name: _rankingList.elementAt(index).name,
+                                info: _rankingList.elementAt(index).info,
+                              )
+                            : SearchPageRankLow(
+                                rank: index + 1,
+                                name: _rankingList.elementAt(index).name,
+                                info: _rankingList.elementAt(index).info,
+                              ),
+                      );
+                    },
                   ),
                 ),
               ],
             ),
-            Column(
-              /// 실시간 랭킹 내용
-              children: List.generate(
-                _rankingList.length,
-                (int index) {
-                  return Container(
-                    height: 55,
-                    color: Colors.white,
-                    child: (index < 3)
-                        ? SearchPageRankHigh(
-                            rank: index + 1,
-                            name: _rankingList.elementAt(index).name,
-                            info: _rankingList.elementAt(index).info,
-                          )
-                        : SearchPageRankLow(
-                            rank: index + 1,
-                            name: _rankingList.elementAt(index).name,
-                            info: _rankingList.elementAt(index).info,
-                          ),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -739,6 +758,7 @@ class _SearchPageState extends State<SearchPage> {
   void initState() {
     super.initState();
 
+    widget.scrollStreamController.sink.add(false);
     _initSearchSuggestOverlay(context);
   }
 
