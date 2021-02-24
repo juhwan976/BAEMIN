@@ -10,11 +10,14 @@ class SearchPageRankingName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      name,
-      textScaleFactor: 0.82,
-      style: TextStyle(
-        fontSize: 19,
+    return Container(
+      padding: EdgeInsets.fromLTRB(0, 3, 0, 0),
+      child: Text(
+        name,
+        textScaleFactor: 0.82,
+        style: TextStyle(
+          fontSize: 19,
+        ),
       ),
     );
   }

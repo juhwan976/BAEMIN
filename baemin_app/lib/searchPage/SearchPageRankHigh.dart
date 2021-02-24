@@ -9,13 +9,13 @@ class SearchPageRankHigh extends StatelessWidget {
     @required this.rank,
     @required this.name,
     @required this.info,
-    this.height,
+    this.bottomPadding = 0,
   }) : super(key: key);
 
   final int rank;
   final String name;
   final int info;
-  final double height;
+  final double bottomPadding;
 
   /// 랭킹 사진의 디렉토리명을 반환하는 메서드
   String _returnRankPicDirectory() {
@@ -61,18 +61,21 @@ class SearchPageRankHigh extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Container(
-          height: (height ?? 35),
-          margin: EdgeInsets.fromLTRB(13, 0, 5, 0),
-          child: Image.asset(_returnRankPicDirectory()),
-        ),
-        Expanded(
-          child: SearchPageRankingName(name: name),
-        ),
-        SearchPageInfo(directory: _returnInfoDirectory()),
-      ],
+    return Container(
+      padding: EdgeInsets.fromLTRB(0, 0, 0, bottomPadding),
+      child: Row(
+        children: <Widget>[
+          Container(
+            height: 35,
+            margin: EdgeInsets.fromLTRB(13, 0, 5, 0),
+            child: Image.asset(_returnRankPicDirectory()),
+          ),
+          Expanded(
+            child: SearchPageRankingName(name: name),
+          ),
+          SearchPageInfo(directory: _returnInfoDirectory()),
+        ],
+      ),
     );
   }
 }

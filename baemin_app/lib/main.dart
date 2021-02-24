@@ -93,17 +93,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
-  void initState() {
-    super.initState();
-
-    _pageList.add(HomePage());
-    _pageList.add(SearchPage(scrollStreamController: _searchPageStreamController));
-    _pageList.add(ZZimPage(scrollBehaviorSubject: _zzimPageStreamController, fromAnotherPage: false));
-    _pageList.add(OrderListPage(fromAnotherPage: false,));
-    _pageList.add(MyBaeMinPage(scrollStreamController: _myBaeMinPageStreamController));
-  }
-
-  @override
   void dispose() {
     super.dispose();
 
@@ -127,7 +116,18 @@ class _MyHomePageState extends State<MyHomePage> {
     print('플랫폼 : ' +
         ((Platform.isAndroid) ? '안드로이드' : ((Platform.isIOS) ? 'iOS' : '알수없음')));
 
+    _pageList.clear();
+    _pageList.add(HomePage());
+    _pageList.add(SearchPage(scrollStreamController: _searchPageStreamController));
+    _pageList.add(ZZimPage(scrollBehaviorSubject: _zzimPageStreamController, fromAnotherPage: false));
+    _pageList.add(OrderListPage(fromAnotherPage: false,));
+    _pageList.add(MyBaeMinPage(scrollStreamController: _myBaeMinPageStreamController));
+
     return Scaffold(
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _pageList,
+      ),
       bottomNavigationBar: Container(
         height: (Platform.isIOS) ? 85 : 55,
         decoration: BoxDecoration(
@@ -214,10 +214,6 @@ class _MyHomePageState extends State<MyHomePage> {
             onTap: _onTaped,
           ),
         ),
-      ),
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: _pageList,
       ),
     );
   }

@@ -62,6 +62,9 @@ class KeyboardActions extends StatefulWidget {
   /// If you are using [KeyboardActions] for just one textfield and don't need to scroll the content set this to `true`
   final bool disableScroll;
 
+  /// If you want to change [KeyboardAction]'s elevation, change this
+  final double elevation;
+
   const KeyboardActions({
     this.child,
     this.bottomAvoiderScrollPhysics,
@@ -72,6 +75,7 @@ class KeyboardActions extends StatefulWidget {
     @required this.config,
     this.overscroll = 12.0,
     this.disableScroll = false,
+    this.elevation,
   }) : assert(child != null && config != null);
 
   @override
@@ -306,7 +310,7 @@ class KeyboardActionstate extends State<KeyboardActions>
               ),
             Material(
               color: config.keyboardBarColor ?? Colors.grey[200],
-              elevation: 0, // default is 20, but i don't want elevation so i changed to 0.
+              elevation: widget.elevation ?? 20, // default is 20, but i don't want elevation so i changed to 0.
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[

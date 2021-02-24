@@ -24,7 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  #use main.dart
+  # use main.dart
   rxdart: ^0.25.0
 
   # use WhatEatPage
@@ -35,6 +35,9 @@ dependencies:
   keyboard_actions:
     path: packages/flutter_keyboard_actions-master/
   date_format: ^1.0.9
+
+  # use MyBaeMinPage
+  lottie: ^0.7.0+1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -59,6 +62,14 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/MyBaemin/
+    - assets/MyBaemin/mint/
+    - assets/MyBaemin/mint/images/
+    - assets/MyBaemin/bronze/
+    - assets/MyBaemin/bronze/images/
+    - assets/MyBaemin/silver/
+    - assets/MyBaemin/silver/images/
+    - assets/MyBaemin/gold/
+    - assets/MyBaemin/gold/images/
     - assets/Navigation/
     - assets/Search/
     - assets/ZZim/
