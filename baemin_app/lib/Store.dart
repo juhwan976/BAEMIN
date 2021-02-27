@@ -48,6 +48,9 @@ class Store {
   /// 배달 가능 여부
   bool canDelivery = false;
 
+  /// 준비중 인지 여부
+  bool isOpen = false;
+
   Store({
     int uniqueNum,
     int category,
@@ -66,6 +69,7 @@ class Store {
     bool canPickUp,
     bool showClean,
     bool canDelivery,
+    bool isOpen,
   }) {
     this.uniqueNum = uniqueNum;
     this.category = category;
@@ -84,5 +88,6 @@ class Store {
     this.canPickUp = canPickUp;
     this.showClean = showClean;
     this.canDelivery = canDelivery;
+    this.isOpen = isOpen;
   }
 }

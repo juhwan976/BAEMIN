@@ -27,14 +27,14 @@ class ZZimTemplate extends StatelessWidget {
   double _calculateHeight(int index) {
     double result;
 
-    if (_storeList.elementAt(index - 1).showClean &&
-        !_storeList.elementAt(index - 1).canDelivery) {
+    if (_storeList.elementAt(index).showClean &&
+        !_storeList.elementAt(index).canDelivery) {
       result = 119;
-    } else if (!_storeList.elementAt(index - 1).showClean &&
-        _storeList.elementAt(index - 1).canDelivery) {
+    } else if (!_storeList.elementAt(index).showClean &&
+        _storeList.elementAt(index).canDelivery) {
       result = 119;
-    } else if (_storeList.elementAt(index - 1).showClean &&
-        _storeList.elementAt(index - 1).canDelivery) {
+    } else if (_storeList.elementAt(index).showClean &&
+        _storeList.elementAt(index).canDelivery) {
       result = 139;
     } else {
       result = 99;
@@ -44,14 +44,14 @@ class ZZimTemplate extends StatelessWidget {
   }
 
   double _calculateBottomMargin(int index) {
-    if (_storeList.elementAt(index - 1).showClean) {
-      if (_storeList.elementAt(index - 1).canDelivery) {
+    if (_storeList.elementAt(index).showClean) {
+      if (_storeList.elementAt(index).canDelivery) {
         return 40;
       } else {
         return 20;
       }
     } else {
-      if (_storeList.elementAt(index - 1).canDelivery) {
+      if (_storeList.elementAt(index).canDelivery) {
         return 20;
       } else {
         return 0;
@@ -60,298 +60,362 @@ class ZZimTemplate extends StatelessWidget {
   }
 
   String _makeDeliverTipString(int index) {
-    if (_storeList.elementAt(index - 1).minDeliverTip ==
-        _storeList.elementAt(index - 1).maxDeliverTip) {
-      return '배달팁 ' + _storeList.elementAt(index - 1).minDeliverTip + '원';
+    if (_storeList.elementAt(index).minDeliverTip ==
+        _storeList.elementAt(index).maxDeliverTip) {
+      return '배달팁 ' + _storeList.elementAt(index).minDeliverTip + '원';
     } else {
       return '배달팁 ' +
-          _storeList.elementAt(index - 1).minDeliverTip +
+          _storeList.elementAt(index).minDeliverTip +
           '원~' +
-          _storeList.elementAt(index - 1).maxDeliverTip +
+          _storeList.elementAt(index).maxDeliverTip +
           '원';
     }
   }
 
   String _makeDurationNMinPriceString(int index) {
-    if (_storeList.elementAt(index - 1).canDelivery) {
-      return _storeList.elementAt(index - 1).minDuration +
+    if (_storeList.elementAt(index).canDelivery) {
+      return _storeList.elementAt(index).minDuration +
           '~' +
-          _storeList.elementAt(index - 1).maxDuration +
+          _storeList.elementAt(index).maxDuration +
           '분, 최소주문 ' +
-          _storeList.elementAt(index - 1).minPrice +
+          _storeList.elementAt(index).minPrice +
           '원';
     } else {
-      return '최소주문 ' + _storeList.elementAt(index - 1).minPrice + '원';
+      return '최소주문 ' + _storeList.elementAt(index).minPrice + '원';
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    ScrollController _scrollController = PrimaryScrollController.of(buildContext);
+    ScrollController _scrollController =
+        PrimaryScrollController.of(buildContext);
 
     return StreamBuilder(
-      stream: scrollBehaviorSubject.stream,
-      initialData: scrollBehaviorSubject.value ?? false,
-      builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-        return Scrollbar(
-          controller: _scrollController,
-          child: ListView.builder(
-            controller: snapshot.data ? _scrollController : ScrollController(),
-            itemCount: _storeList.length + 1,
-            itemBuilder: (BuildContext context, int index) {
-              if (index == 0) {
-                return Column(
-                  children: <Widget>[
-                    Container(
-                      height: 10,
-                    ),
-                    Container(
-                      height: 25,
-                      width: MediaQuery.of(context).size.width,
-                      color: Colors.white,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+        stream: scrollBehaviorSubject.stream,
+        initialData: scrollBehaviorSubject.value ?? false,
+        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+          return Scrollbar(
+            controller: _scrollController,
+            child: ListView.builder(
+              controller:
+                  snapshot.data ? _scrollController : ScrollController(),
+              itemCount: _storeList.length + 1,
+              itemBuilder: (BuildContext context, int index) {
+                if (index == 0) {
+                  return Column(
+                    children: <Widget>[
+                      Container(
+                        height: 10,
+                      ),
+                      Container(
+                        height: 25,
+                        width: MediaQuery.of(context).size.width,
+                        color: Colors.white,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.fromLTRB(14, 7, 0, 0),
+                              child: Text(
+                                '총 ${_storeList.length}개',
+                                textScaleFactor: 0.82,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                } else {
+                  return Column(
+                    children: [
+                      Stack(
                         children: <Widget>[
                           Container(
-                            margin: EdgeInsets.fromLTRB(14, 7, 0, 0),
-                            child: Text(
-                              '총 ${_storeList.length}개',
-                              textScaleFactor: 0.82,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
+                            height: _calculateHeight(index - 1),
+                            color: Colors.white,
+                            child: FlatButton(
+                              padding: EdgeInsets.zero,
+                              highlightColor: Colors.transparent,
+                              splashColor: Color(0x0D000000),
+                              child: Row(
+                                children: <Widget>[
+                                  Container(
+                                    height: 70,
+                                    width: 70,
+                                    margin: EdgeInsets.fromLTRB(15, 0, 0,
+                                        _calculateBottomMargin(index - 1)),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.circular(25.0),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        '이미지',
+                                        textScaleFactor: 0.82,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Row(
+                                          children: <Widget>[
+                                            Container(
+                                              /// 매장 이름
+                                              padding: EdgeInsets.fromLTRB(
+                                                  0, 17, 0, 3),
+                                              margin: EdgeInsets.fromLTRB(
+                                                  0, 0, 3, 0),
+                                              child: Text(
+                                                _storeList
+                                                    .elementAt(index - 1)
+                                                    .name,
+                                                textScaleFactor: 0.82,
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 19),
+                                              ),
+                                            ),
+                                            ZZimPin(
+                                              /// 신규
+                                              visible: _storeList
+                                                  .elementAt(index - 1)
+                                                  .isNew,
+                                              title: '신규',
+                                            ),
+                                            ZZimPin(
+                                              /// 쿠폰
+                                              visible: _storeList
+                                                  .elementAt(index - 1)
+                                                  .canCoupon,
+                                              title: '쿠폰',
+                                            ),
+                                            ZZimPin(
+                                              /// 포장
+                                              visible: _storeList
+                                                  .elementAt(index - 1)
+                                                  .canTakeOut,
+                                              title: '포장',
+                                            ),
+                                            ZZimPin(
+                                              /// 매장
+                                              visible: _storeList
+                                                  .elementAt(index - 1)
+                                                  .canPickUp,
+                                              title: '매장',
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: <Widget>[
+                                            Container(
+                                              child: Icon(
+                                                Icons.star,
+                                                color: Colors.yellow[700],
+                                                size: 14,
+                                              ),
+                                            ),
+                                            Container(
+                                              /// 매장 별점
+                                              padding: EdgeInsets.fromLTRB(
+                                                  1, 0, 2, 0),
+                                              child: Text(
+                                                _storeList
+                                                    .elementAt(index - 1)
+                                                    .star
+                                                    .toString(),
+                                                textScaleFactor: 0.82,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              /// 매장 리뷰 수
+                                              child: Text(
+                                                '(${_storeList.elementAt(index - 1).reviewNum}+)',
+                                                textScaleFactor: 0.82,
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              /// 매장 대표 메뉴
+                                              child: Text(
+                                                ' ' +
+                                                    _storeList
+                                                        .elementAt(index - 1)
+                                                        .description,
+                                                textScaleFactor: 0.82,
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.black45,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: <Widget>[
+                                            Visibility(
+                                              visible: _storeList
+                                                  .elementAt(index - 1)
+                                                  .canDelivery,
+                                              child: Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    0, 8, 0, 0),
+                                                child: Icon(
+                                                  Icons.timer,
+                                                  size: 15,
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              /// 소요시간 및 최소 주문 금액
+                                              margin: EdgeInsets.fromLTRB(
+                                                  0, 8, 0, 0),
+                                              child: Text(
+                                                _makeDurationNMinPriceString(
+                                                    index - 1),
+                                                textScaleFactor: 0.82,
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Visibility(
+                                          /// 배달팁
+                                          visible: _storeList
+                                              .elementAt(index - 1)
+                                              .canDelivery,
+                                          child: Container(
+                                            margin:
+                                                EdgeInsets.fromLTRB(0, 8, 0, 0),
+                                            child: Text(
+                                              _makeDeliverTipString(index - 1),
+                                              textScaleFactor: 0.82,
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Visibility(
+                                          /// 위생정보
+                                          visible: _storeList
+                                              .elementAt(index - 1)
+                                              .showClean,
+                                          child: Container(
+                                            margin:
+                                                EdgeInsets.fromLTRB(0, 6, 0, 0),
+                                            width: 43,
+                                            height: 17,
+                                            decoration: BoxDecoration(
+                                              color: Color(0x0A000000),
+                                              borderRadius:
+                                                  BorderRadius.circular(2),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                '위생정보',
+                                                textScaleFactor: 0.82,
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => StoreDetailPage(
+                                      store: _storeList.elementAt(index - 1),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+
+                          /// 가게가 준비중일 때 비활성으로 보이게 할 컨테이너
+                          Visibility(
+                            visible: !_storeList.elementAt(index - 1).isOpen,
+                            child: Container(
+                              height: _calculateHeight(index - 1),
+                              child: Opacity(
+                                opacity: 0.5,
+                                child: Container(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          /// 가게가 준비중일 때 이미지 위에 준비중으로 보이게 할 컨테이너
+                          Visibility(
+                            visible: !_storeList.elementAt(index - 1).isOpen,
+                            child: Container(
+                              //height: _calculateHeight(index - 1),
+                              child: Opacity(
+                                opacity: 0.5,
+                                child: Container(
+                                  height: 70,
+                                  width: 70,
+                                  margin: EdgeInsets.fromLTRB(15, 15, 0,
+                                      _calculateBottomMargin(index - 1)),
+                                  decoration: BoxDecoration(
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.circular(25.0),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      '준비중',
+                                      textScaleFactor: 0.82,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
-                );
-              } else {
-                return Column(
-                  children: [
-                    Container(
-                      height: _calculateHeight(index),
-                      color: Colors.white,
-                      child: FlatButton(
-                        padding: EdgeInsets.zero,
-                        highlightColor: Colors.transparent,
-                        splashColor: Color(0x0D000000),
-                        child: Row(
-                          children: <Widget>[
-                            Container(
-                              height: 70,
-                              width: 70,
-                              margin: EdgeInsets.fromLTRB(
-                                  15, 0, 0, _calculateBottomMargin(index)),
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(25.0),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  '이미지',
-                                  textScaleFactor: 0.82,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Container(
-                                        /// 매장 이름
-                                        padding: EdgeInsets.fromLTRB(0, 17, 0, 3),
-                                        margin: EdgeInsets.fromLTRB(0, 0, 3, 0),
-                                        child: Text(
-                                          _storeList.elementAt(index - 1).name,
-                                          textScaleFactor: 0.82,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 19),
-                                        ),
-                                      ),
-                                      ZZimPin(
-                                        /// 신규
-                                        visible:
-                                        _storeList.elementAt(index - 1).isNew,
-                                        title: '신규',
-                                      ),
-                                      ZZimPin(
-                                        /// 쿠폰
-                                        visible: _storeList
-                                            .elementAt(index - 1)
-                                            .canCoupon,
-                                        title: '쿠폰',
-                                      ),
-                                      ZZimPin(
-                                        /// 포장
-                                        visible: _storeList
-                                            .elementAt(index - 1)
-                                            .canTakeOut,
-                                        title: '포장',
-                                      ),
-                                      ZZimPin(
-                                        /// 매장
-                                        visible: _storeList
-                                            .elementAt(index - 1)
-                                            .canPickUp,
-                                        title: '매장',
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      Container(
-                                        child: Icon(
-                                          Icons.star,
-                                          color: Colors.yellow[700],
-                                          size: 14,
-                                        ),
-                                      ),
-                                      Container(
-                                        /// 매장 별점
-                                        padding: EdgeInsets.fromLTRB(1, 0, 2, 0),
-                                        child: Text(
-                                          _storeList
-                                              .elementAt(index - 1)
-                                              .star
-                                              .toString(),
-                                          textScaleFactor: 0.82,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        /// 매장 리뷰 수
-                                        child: Text(
-                                          '(${_storeList.elementAt(index - 1).reviewNum}+)',
-                                          textScaleFactor: 0.82,
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        /// 매장 대표 메뉴
-                                        child: Text(
-                                          ' ' +
-                                              _storeList
-                                                  .elementAt(index - 1)
-                                                  .description,
-                                          textScaleFactor: 0.82,
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.black45,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      Visibility(
-                                        visible: _storeList
-                                            .elementAt(index - 1)
-                                            .canDelivery,
-                                        child: Container(
-                                          margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                                          child: Icon(
-                                            Icons.timer,
-                                            size: 15,
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        /// 소요시간 및 최소 주문 금액
-                                        margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                                        child: Text(
-                                          _makeDurationNMinPriceString(index),
-                                          textScaleFactor: 0.82,
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Visibility(
-                                    /// 배달팁
-                                    visible:
-                                    _storeList.elementAt(index - 1).canDelivery,
-                                    child: Container(
-                                      margin: EdgeInsets.fromLTRB(0, 8, 0, 0),
-                                      child: Text(
-                                        _makeDeliverTipString(index),
-                                        textScaleFactor: 0.82,
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Visibility(
-                                    /// 위생정보
-                                    visible:
-                                    _storeList.elementAt(index - 1).showClean,
-                                    child: Container(
-                                      margin: EdgeInsets.fromLTRB(0, 6, 0, 0),
-                                      width: 43,
-                                      height: 17,
-                                      decoration: BoxDecoration(
-                                        color: Color(0x0A000000),
-                                        borderRadius: BorderRadius.circular(2),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          '위생정보',
-                                          textScaleFactor: 0.82,
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => StoreDetailPage(
-                                store: _storeList.elementAt(index - 1),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    (index == _storeList.length)
-                        ? Container(
-                      height: 1.0,
-                      color: Colors.black12,
-                    )
-                        : ZZimShadowH(),
-                  ],
-                );
-              }
-            },
-          ),
-        );
-      }
-    );
+                      (index == _storeList.length)
+                          ? Container(
+                              height: 1.0,
+                              color: Colors.black12,
+                            )
+                          : ZZimShadowH(),
+                    ],
+                  );
+                }
+              },
+            ),
+          );
+        });
   }
 }

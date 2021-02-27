@@ -33,6 +33,7 @@ class ZZimed extends StatelessWidget {
         canPickUp: false,
         showClean: false,
         canDelivery: true,
+        isOpen: true,
       ),
       Store(
         name: '착한피자',
@@ -50,6 +51,7 @@ class ZZimed extends StatelessWidget {
         canPickUp: true,
         showClean: false,
         canDelivery: false,
+        isOpen: true,
       ),
       Store(
         name: '푸라닭 명륜점',
@@ -67,6 +69,7 @@ class ZZimed extends StatelessWidget {
         canPickUp: false,
         showClean: false,
         canDelivery: true,
+        isOpen: true,
       ),
       Store(
         name: '달랏 쌀국수',
@@ -84,6 +87,7 @@ class ZZimed extends StatelessWidget {
         canPickUp: false,
         showClean: false,
         canDelivery: false,
+        isOpen: true,
       ),
       Store(
         name: '맘스터치 동래명륜점',
@@ -101,6 +105,7 @@ class ZZimed extends StatelessWidget {
         canPickUp: true,
         showClean: true,
         canDelivery: true,
+        isOpen: false,
       ),
       Store(
         name: 'BHC 명륜점',
@@ -118,6 +123,7 @@ class ZZimed extends StatelessWidget {
         canPickUp: false,
         showClean: false,
         canDelivery: false,
+        isOpen: true,
       ),
       Store(
         name: '맥도날드 부산온천SKDT점',
@@ -135,6 +141,7 @@ class ZZimed extends StatelessWidget {
         canPickUp: false,
         showClean: true,
         canDelivery: false,
+        isOpen: false,
       ),
     ];
 
