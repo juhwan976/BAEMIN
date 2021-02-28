@@ -313,6 +313,17 @@ class _SearchPageState extends State<SearchPage> {
     return formatDate(_now, [mm, '.', dd, ' ', HH, ':00 기준']);
   }
 
+  void _onPressedRanking(int index) {
+    _searchHistory.add('${_rankingList.elementAt(index).name}');
+    _searchController.text = '${_rankingList.elementAt(index).name}';
+    setState(
+          () {
+        _visibleHistory = true;
+        _searchResult = true;
+      },
+    );
+  }
+
   /// 앱바 빌드 메서드
   Widget _buildTitle() {
     return Container(
@@ -384,7 +395,6 @@ class _SearchPageState extends State<SearchPage> {
                 }
               },
               onSubmitted: (String string) {
-                print('Submitted : ' + string);
                 if (string.length == 0) {
                   /* do nothing */
                 } else {
@@ -442,6 +452,7 @@ class _SearchPageState extends State<SearchPage> {
   /// 결과 페이지 빌드 메서드
   Widget _buildResultPage() {
     /// 나중에 내용을 넣을 경우, ListView 의 controller 를 StreamBuilder 를 써서 만들 것.
+    /// 상태바 터치하면 맨위로 올라가는 기능 때문에...
     return Container(
       child: KeyboardActions(
         config: _buildConfig(context),
@@ -553,9 +564,6 @@ class _SearchPageState extends State<SearchPage> {
                                         width: 15,
                                       );
                                     } else {
-                                      print(_searchHistory
-                                          .elementAt(_lifoIndex)
-                                          .length);
                                       return Row(
                                         children: <Widget>[
                                           Container(
@@ -741,16 +749,25 @@ class _SearchPageState extends State<SearchPage> {
                             name: _rankingList.elementAt(index).name,
                             info: _rankingList.elementAt(index).info,
                             bottomPadding: 5,
+                            onPressed: () {
+                              _onPressedRanking(index);
+                            },
                           )
                               : SearchPageRankHigh(
                             rank: index + 1,
                             name: _rankingList.elementAt(index).name,
                             info: _rankingList.elementAt(index).info,
+                            onPressed: () {
+                              _onPressedRanking(index);
+                            },
                           ))
                               : SearchPageRankLow(
                             rank: index + 1,
                             name: _rankingList.elementAt(index).name,
                             info: _rankingList.elementAt(index).info,
+                            onPressed: () {
+                              _onPressedRanking(index);
+                            },
                           ),
                         );
                       },
@@ -791,6 +808,13 @@ class _SearchPageState extends State<SearchPage> {
           elevation: 0.0,
           toolbarHeight: _toolbarHeight,
           title: _buildTitle(),
+          bottom: PreferredSize(
+            preferredSize: null,
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.00024631,
+              color: Colors.black26,
+            ),
+          ),
         ),
         body: NotificationListener<OverscrollIndicatorNotification>(
           onNotification: (OverscrollIndicatorNotification overScroll) {

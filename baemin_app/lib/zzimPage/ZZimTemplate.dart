@@ -7,9 +7,12 @@ import '../Store.dart';
 import 'ZZimPin.dart';
 import 'ZZimShadowH.dart';
 
-/*
- * 가게마다 현재 베달받을 장소에서 배달이 가능한지에 따라서 나오는 항목이 다름.
- */
+/// 가게마다 현재 베달받을 장소에서 배달이 가능한지에 따라서 나오는 항목이 다름.
+///
+/// 가게가 준비중 일 경우 배달 시간은 나오지 않음.
+/// 하지만 배달 팁은 출력
+///
+/// 배달이 불가능한 지역에 있을 때 그 가게가 준비중인 경우에 대한 데이터가 필요하다.
 
 class ZZimTemplate extends StatelessWidget {
   const ZZimTemplate({
@@ -73,7 +76,8 @@ class ZZimTemplate extends StatelessWidget {
   }
 
   String _makeDurationNMinPriceString(int index) {
-    if (_storeList.elementAt(index).canDelivery) {
+    if (_storeList.elementAt(index).canDelivery &&
+        _storeList.elementAt(index).isOpen) {
       return _storeList.elementAt(index).minDuration +
           '~' +
           _storeList.elementAt(index).maxDuration +
@@ -133,17 +137,19 @@ class ZZimTemplate extends StatelessWidget {
                 } else {
                   return Column(
                     children: [
-                      Stack(
-                        children: <Widget>[
-                          Container(
-                            height: _calculateHeight(index - 1),
-                            color: Colors.white,
-                            child: FlatButton(
-                              padding: EdgeInsets.zero,
-                              highlightColor: Colors.transparent,
-                              splashColor: Color(0x0D000000),
-                              child: Row(
+                      Container(
+                        height: _calculateHeight(index - 1),
+                        color: Colors.white,
+                        child: FlatButton(
+                          padding: EdgeInsets.zero,
+                          highlightColor: Colors.transparent,
+                          splashColor: Color(0x0D000000),
+                          child: Stack(
+                            children: <Widget>[
+                              /// 내용
+                              Row(
                                 children: <Widget>[
+                                  /// 매장 대표이미지
                                   Container(
                                     height: 70,
                                     width: 70,
@@ -171,8 +177,8 @@ class ZZimTemplate extends StatelessWidget {
                                       children: <Widget>[
                                         Row(
                                           children: <Widget>[
+                                            /// 매장 이름
                                             Container(
-                                              /// 매장 이름
                                               padding: EdgeInsets.fromLTRB(
                                                   0, 17, 0, 3),
                                               margin: EdgeInsets.fromLTRB(
@@ -187,29 +193,33 @@ class ZZimTemplate extends StatelessWidget {
                                                     fontSize: 19),
                                               ),
                                             ),
+
+                                            /// 신규
                                             ZZimPin(
-                                              /// 신규
                                               visible: _storeList
                                                   .elementAt(index - 1)
                                                   .isNew,
                                               title: '신규',
                                             ),
+
+                                            /// 쿠폰
                                             ZZimPin(
-                                              /// 쿠폰
                                               visible: _storeList
                                                   .elementAt(index - 1)
                                                   .canCoupon,
                                               title: '쿠폰',
                                             ),
+
+                                            /// 포장
                                             ZZimPin(
-                                              /// 포장
                                               visible: _storeList
                                                   .elementAt(index - 1)
                                                   .canTakeOut,
                                               title: '포장',
                                             ),
+
+                                            /// 매장
                                             ZZimPin(
-                                              /// 매장
                                               visible: _storeList
                                                   .elementAt(index - 1)
                                                   .canPickUp,
@@ -226,8 +236,9 @@ class ZZimTemplate extends StatelessWidget {
                                                 size: 14,
                                               ),
                                             ),
+
+                                            /// 매장 별점
                                             Container(
-                                              /// 매장 별점
                                               padding: EdgeInsets.fromLTRB(
                                                   1, 0, 2, 0),
                                               child: Text(
@@ -242,8 +253,9 @@ class ZZimTemplate extends StatelessWidget {
                                                 ),
                                               ),
                                             ),
+
+                                            /// 매장 리뷰 수
                                             Container(
-                                              /// 매장 리뷰 수
                                               child: Text(
                                                 '(${_storeList.elementAt(index - 1).reviewNum}+)',
                                                 textScaleFactor: 0.82,
@@ -252,8 +264,9 @@ class ZZimTemplate extends StatelessWidget {
                                                 ),
                                               ),
                                             ),
+
+                                            /// 매장 대표 메뉴
                                             Container(
-                                              /// 매장 대표 메뉴
                                               child: Text(
                                                 ' ' +
                                                     _storeList
@@ -270,21 +283,25 @@ class ZZimTemplate extends StatelessWidget {
                                         ),
                                         Row(
                                           children: <Widget>[
+                                            /// 타이머 아이콘
                                             Visibility(
                                               visible: _storeList
-                                                  .elementAt(index - 1)
-                                                  .canDelivery,
+                                                      .elementAt(index - 1)
+                                                      .canDelivery &&
+                                                  _storeList
+                                                      .elementAt(index - 1)
+                                                      .isOpen,
                                               child: Container(
                                                 margin: EdgeInsets.fromLTRB(
                                                     0, 8, 0, 0),
-                                                child: Icon(
-                                                  Icons.timer,
-                                                  size: 15,
-                                                ),
+                                                height: 15,
+                                                child: Image.asset(
+                                                    'assets/ZZim/icon_14_time.png'),
                                               ),
                                             ),
+
+                                            /// 소요시간 및 최소 주문 금액
                                             Container(
-                                              /// 소요시간 및 최소 주문 금액
                                               margin: EdgeInsets.fromLTRB(
                                                   0, 8, 0, 0),
                                               child: Text(
@@ -298,8 +315,9 @@ class ZZimTemplate extends StatelessWidget {
                                             ),
                                           ],
                                         ),
+
+                                        /// 배달팁
                                         Visibility(
-                                          /// 배달팁
                                           visible: _storeList
                                               .elementAt(index - 1)
                                               .canDelivery,
@@ -311,12 +329,18 @@ class ZZimTemplate extends StatelessWidget {
                                               textScaleFactor: 0.82,
                                               style: TextStyle(
                                                 fontSize: 16,
+                                                color: (!_storeList
+                                                        .elementAt(index - 1)
+                                                        .isOpen)
+                                                    ? Colors.black45
+                                                    : null,
                                               ),
                                             ),
                                           ),
                                         ),
+
+                                        /// 위생정보
                                         Visibility(
-                                          /// 위생정보
                                           visible: _storeList
                                               .elementAt(index - 1)
                                               .showClean,
@@ -346,63 +370,64 @@ class ZZimTemplate extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => StoreDetailPage(
-                                      store: _storeList.elementAt(index - 1),
+
+                              /// 가게가 준비중일 때 비활성으로 보이게 할 컨테이너
+                              Visibility(
+                                visible:
+                                    !_storeList.elementAt(index - 1).isOpen,
+                                child: Container(
+                                  child: Opacity(
+                                    opacity: 0.5,
+                                    child: Container(
+                                      color: Colors.white,
                                     ),
                                   ),
-                                );
-                              },
-                            ),
-                          ),
-
-                          /// 가게가 준비중일 때 비활성으로 보이게 할 컨테이너
-                          Visibility(
-                            visible: !_storeList.elementAt(index - 1).isOpen,
-                            child: Container(
-                              height: _calculateHeight(index - 1),
-                              child: Opacity(
-                                opacity: 0.5,
-                                child: Container(
-                                  color: Colors.white,
                                 ),
                               ),
-                            ),
-                          ),
 
-                          /// 가게가 준비중일 때 이미지 위에 준비중으로 보이게 할 컨테이너
-                          Visibility(
-                            visible: !_storeList.elementAt(index - 1).isOpen,
-                            child: Container(
-                              //height: _calculateHeight(index - 1),
-                              child: Opacity(
-                                opacity: 0.5,
+                              /// 가게가 준비중일 때 이미지 위에 준비중으로 보이게 할 컨테이너
+                              Visibility(
+                                visible:
+                                    !_storeList.elementAt(index - 1).isOpen,
                                 child: Container(
-                                  height: 70,
-                                  width: 70,
-                                  margin: EdgeInsets.fromLTRB(15, 15, 0,
-                                      _calculateBottomMargin(index - 1)),
-                                  decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.circular(25.0),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      '준비중',
-                                      textScaleFactor: 0.82,
-                                      style: TextStyle(
-                                        color: Colors.white,
+                                  child: Opacity(
+                                    opacity: 0.5,
+                                    child: Container(
+                                      height: 70,
+                                      width: 70,
+                                      margin: EdgeInsets.fromLTRB(15, 15, 0,
+                                          _calculateBottomMargin(index - 1)),
+                                      decoration: BoxDecoration(
+                                        color: Colors.black,
+                                        borderRadius:
+                                            BorderRadius.circular(25.0),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          '준비중',
+                                          textScaleFactor: 0.82,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => StoreDetailPage(
+                                  store: _storeList.elementAt(index - 1),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                       ),
                       (index == _storeList.length)
                           ? Container(
