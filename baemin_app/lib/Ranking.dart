@@ -8,6 +8,7 @@ class Ranking {
   /// 0 -> new
   /// 1 -> up
   /// 2 -> down
+  /// 3 -> keep
   int info;
 
   Ranking({

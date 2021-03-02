@@ -54,6 +54,9 @@ class SearchPageRankHigh extends StatelessWidget {
       case 2:
         _info = 'dropdown';
         break;
+      case 3:
+        _info = 'keep';
+        break;
       default:
         break;
     }

@@ -140,10 +140,7 @@ class ZZimTemplate extends StatelessWidget {
                       Container(
                         height: _calculateHeight(index - 1),
                         color: Colors.white,
-                        child: FlatButton(
-                          padding: EdgeInsets.zero,
-                          highlightColor: Colors.transparent,
-                          splashColor: Color(0x0D000000),
+                        child: GestureDetector(
                           child: Stack(
                             children: <Widget>[
                               /// 내용
@@ -417,7 +414,7 @@ class ZZimTemplate extends StatelessWidget {
                               ),
                             ],
                           ),
-                          onPressed: () {
+                          onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
