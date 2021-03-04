@@ -134,7 +134,7 @@ class _SearchPageState extends State<SearchPage> {
     ),
     Ranking(
       name: '메가커피',
-      info: 2,
+      info: 3,
     ),
     Ranking(
       name: '설빙',
@@ -785,6 +785,7 @@ class _SearchPageState extends State<SearchPage> {
   @override
   void initState() {
     super.initState();
+
 
     widget.scrollStreamController.sink.add(false);
     _initSearchSuggestOverlay(context);

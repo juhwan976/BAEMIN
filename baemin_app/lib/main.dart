@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -58,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _onTaped(int index) {
     _selectedIndex = index;
 
-    switch(index) {
+    switch (index) {
       case 0:
         _searchPageStreamController.sink.add(false);
         _zzimPageStreamController.sink.add(false);
@@ -93,6 +94,42 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    /// page 들 추가
+    _pageList.clear();
+    _pageList.add(HomePage());
+    _pageList
+        .add(SearchPage(scrollStreamController: _searchPageStreamController));
+    _pageList.add(
+      ZZimPage(
+        scrollBehaviorSubject: _zzimPageStreamController,
+        fromAnotherPage: false,
+      ),
+    );
+    _pageList.add(
+      OrderListPage(
+        fromAnotherPage: false,
+      ),
+    );
+    _pageList.add(
+        MyBaeMinPage(scrollStreamController: _myBaeMinPageStreamController));
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    /// 이미지 미리 불러오기
+    precacheImage(AssetImage('assets/Navigation/ic_main_navigation_home_selected.png'), context);
+    precacheImage(AssetImage('assets/Navigation/ic_main_navigation_favorite_selected.png'), context);
+    precacheImage(AssetImage('assets/Navigation/ic_main_navigation_order_history_selected.png'), context);
+    precacheImage(AssetImage('assets/Navigation/ic_main_navigation_my_baemin_selected.png'), context);
+    precacheImage(AssetImage('assets/Navigation/icon_30_tabbar_search_select.png'), context);
+  }
+
+  @override
   void dispose() {
     super.dispose();
 
@@ -103,30 +140,25 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    print('높이 : ' +
+    log('높이 : ' +
         MediaQuery.of(context).size.height.toString() +
-        ' 너비 : ' +
-        MediaQuery.of(context).size.width.toString());
-    print('상태바 높이 : ' + MediaQuery.of(context).padding.top.toString());
-    print('화면 시작높이 : ' +
+        ', 너비 : ' +
+        MediaQuery.of(context).size.width.toString() +
+        ', 상태바 높이 : ' +
+        MediaQuery.of(context).padding.top.toString() +
+        ', 화면 실제 높이 : ' +
         (MediaQuery.of(context).size.height -
                 MediaQuery.of(context).padding.top)
-            .toString());
-    print('textFactor : ' + MediaQuery.of(context).textScaleFactor.toString());
-    print('플랫폼 : ' +
+            .toString() +
+        ', textScaleFactor : ' +
+        MediaQuery.of(context).textScaleFactor.toString() +
+        ', 플랫폼 : ' +
         ((Platform.isAndroid) ? '안드로이드' : ((Platform.isIOS) ? 'iOS' : '알수없음')));
-
-    _pageList.clear();
-    _pageList.add(HomePage());
-    _pageList.add(SearchPage(scrollStreamController: _searchPageStreamController));
-    _pageList.add(ZZimPage(scrollBehaviorSubject: _zzimPageStreamController, fromAnotherPage: false));
-    _pageList.add(OrderListPage(fromAnotherPage: false,));
-    _pageList.add(MyBaeMinPage(scrollStreamController: _myBaeMinPageStreamController));
 
     return Scaffold(
       body: IndexedStack(
-        index: _selectedIndex,
         children: _pageList,
+        index: _selectedIndex,
       ),
       bottomNavigationBar: Container(
         height: (Platform.isIOS) ? 85 : 55,

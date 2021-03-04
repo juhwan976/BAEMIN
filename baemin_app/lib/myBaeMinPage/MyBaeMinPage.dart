@@ -36,10 +36,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
   bool isFirst = false;
 
   /// 백엔드를 사용하지 않으므로 임의로 유저 클래스를 선언
-  User user = new User(
-    name: '이름',
-    grade: 0,
-  );
+  User user;
 
   /// 유저 등급에 따라서 표시되는 구문을 다르게 하는 메서드
   String _returnGradeString(int grade) {
@@ -98,6 +95,11 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
     final double _leftFontMargin = _leftMargin + _thisWidth * 0.008; // 3
 
     ScrollController _scrollController = PrimaryScrollController.of(context);
+
+    user = new User(
+    name: '이름',
+    grade: 0,
+    );
 
     return NotificationListener<OverscrollIndicatorNotification>(
       onNotification: (OverscrollIndicatorNotification overScroll) {
@@ -483,6 +485,9 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
     super.initState();
 
     widget.scrollStreamController.sink.add(false);
+
+    /// initState 가 실행될 때 한번만 실행되게 해서 이 페이지에서 다른 페이지를 호출할 때
+    /// PrimaryScrollController 를 항상 활성화하게 한다.
     _zzimScrollStreamController.sink.add(true);
   }
 
