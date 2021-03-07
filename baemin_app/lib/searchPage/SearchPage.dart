@@ -12,20 +12,44 @@ import 'SearchPageRankHigh.dart';
 import 'SearchPageRankLow.dart';
 import 'SearchPageTitle.dart';
 
-/// ****************************************************************************
-/// 버그있음.
-/// 검색기록이 보이는 상태에서 아래로 끝까지 갔다가 올라오면 검색기록이 보이지 않는다.
-/// 화면이 새로 빌드 되는듯
-/// 일단은 수동으로 setState((){}) 를 사용하는 쪽으로 변경했다.
+///*****************************************************************************
 ///
-/// 검색한 문자열의 길이가 0 일때 검색버튼이 비활성화 되는 기능 필요
-/// 임시로 문자열의 길이가 0 일때 검색기록에 안남도록 해야할듯
-/// ****************************************************************************
-
+/// 검색 페이지를 빌드하는 위젯
+///
+/// @ 매개변수
+///             Key                          key
+/// @required   StreamScrollController<bool> scrollStreamController
+///
+/// [scrollStreamController]는 아이폰에서 statusBar 를 터치할 경우
+/// 스크롤을 가장 위로 옮기는 기능을 구현하기 위해서 사용했다.
+///
+/// @ 메서드
+/// void                  _initSearchSuggestOverlay(BuildContext context)
+/// void                  _showSearchSuggestOverlay()
+/// void                  _removeSearchSuggestOverlay()
+/// OverlayEntry          _buildSearchSuggestOverlayEntry()
+///
+/// KeyboardActionsConfig _buildConfig(BuildContext context)
+///
+/// String                _returnTime()
+/// void                  _onPressedRanking(int index)
+/// Widget                _buildTitle()
+/// Widget                _buildResultPage()
+/// Widget                _buildPage()
+///
+/// void                  initState()
+/// void                  dispose()
+/// Widget                build(BuildContext context)
+///
+/// 추천검색어를 위한 [Overlay] 사용.
+/// iOS 에서 검색할 때를 위한  [KeyboardActions] 패키지 사용.
+///
+///*****************************************************************************
+///
 class SearchPage extends StatefulWidget {
   const SearchPage({
     Key key,
-    this.scrollStreamController,
+    @required this.scrollStreamController,
   }) : super(key: key);
 
   final StreamController<bool> scrollStreamController;
@@ -313,6 +337,7 @@ class _SearchPageState extends State<SearchPage> {
     return formatDate(_now, [mm, '.', dd, ' ', HH, ':00 기준']);
   }
 
+  /// 실시간 검색어에 있는 항목을 터치했을 경우 실행될 메서드
   void _onPressedRanking(int index) {
     _searchHistory.add('${_rankingList.elementAt(index).name}');
     _searchController.text = '${_rankingList.elementAt(index).name}';

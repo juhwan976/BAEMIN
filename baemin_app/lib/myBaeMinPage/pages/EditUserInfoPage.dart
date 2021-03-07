@@ -3,6 +3,12 @@ import 'package:flutter/material.dart';
 
 import '../../User.dart';
 
+///*****************************************************************************
+///
+/// my배민 페이지에서 내 정보 수정 페이지를 출력하는 위젯
+///
+///*****************************************************************************
+///
 class EditUserInfoPage extends StatefulWidget {
   const EditUserInfoPage({
     Key key,

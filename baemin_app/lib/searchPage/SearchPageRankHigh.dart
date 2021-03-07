@@ -3,6 +3,26 @@ import 'package:flutter/material.dart';
 import 'SearchPageInfo.dart';
 import 'SearchPageRankingName.dart';
 
+///*****************************************************************************
+///
+/// 검색 페이지의 실시간 검색어 중 1 ~ 3위에 해당하는 항목을 빌드하는 위젯
+///
+/// @ 매개변수
+///             Key       key
+/// @required   int       rank            : 해당 항목의 순위
+/// @required   String    name            : 해당 항목의 이름
+/// @required   int       info            : 해당 항목의 순위 변동 정보
+///             double    bottomPadding   : 중간을 맞추기 위해 넣은  padding
+/// @required   Function  onPressed       : 해당 항목을 터치했을 경우 실행될 함수
+///
+/// @ 메서드
+/// String    _returnRankPicDirectory()
+/// String    _returnInfoDirectory()
+///
+/// Widget    build(BuildContext context)
+///
+///*****************************************************************************
+///
 class SearchPageRankHigh extends StatelessWidget {
   const SearchPageRankHigh({
     Key key,
