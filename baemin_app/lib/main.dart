@@ -56,9 +56,20 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Widget> _pageList = new List<Widget>();
 
+  /// 네이게이션을 터치했을 경우 실행될 메서드
   void _onTaped(int index) {
     _selectedIndex = index;
 
+    /// IndexedStack 을 사용함으로써 발생하는 문제점을 해결하기 위한 해결법 (iOS 만 해당)
+    /// IndexedStack 은 모든 화면이 출력중인 상태이므로 현재 보고있는 화면에서
+    /// statusBar 를 터치할 경우, 모든 페이지의 스크롤이 가장 위로 이동하게 된다.
+    /// 이를 해결하고자 출력중인 페이지를 인식해서 statusBar 를 터치할 경우 그 페이지의 스크롤만
+    /// 가장 위로 올리기 위해서 Stream 을 이용해서 구현했다.
+    ///
+    /// BehaviorSubject 를 쓴 이유
+    /// 들어있는 값들 중 가장 마지막에 추가된 값을 알고싶어서 사용.
+    /// 하지만, StreamBuilder 를 사용했기 때문에
+    /// StreamController 를 사용해도 큰 문제가 없을 것 같다.
     switch (index) {
       case 0:
         _searchPageStreamController.sink.add(false);
@@ -89,6 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
         break;
     }
 
+    /// 진동기능 테스트할겸 추가
     HapticFeedback.mediumImpact();
     setState(() {});
   }
@@ -140,6 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    /// 기기 정보 출력 구문
     log('높이 : ' +
         MediaQuery.of(context).size.height.toString() +
         ', 너비 : ' +

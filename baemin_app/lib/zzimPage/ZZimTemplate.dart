@@ -7,13 +7,40 @@ import '../Store.dart';
 import 'ZZimPin.dart';
 import 'ZZimShadowH.dart';
 
-/// 가게마다 현재 베달받을 장소에서 배달이 가능한지에 따라서 나오는 항목이 다름.
+///*****************************************************************************
 ///
-/// 가게가 준비중 일 경우 배달 시간은 나오지 않음.
-/// 하지만 배달 팁은 출력
+/// 찜한가게 페이지에서 가게 리스트를 출력할 템플릿을 빌드하는 위젯
+///
+/// @ 매개변수
+///             Key                     key
+/// @required   List<Store>             storeList
+/// @required   BuildContext            buildContext
+/// @required   BehaviorSubject<bool>   scrollBehaviorSubject
+///
+/// [storeList] : 출력할 가게들이 들어있는 리스트
+/// [buildContext] : PrimaryScrollController 를 위해 가져온 ZZimPage 의 BuildContext
+/// [scrollStreamController] :  아이폰에서 statusBar 를 터치할 경우
+///                             스크롤을 가장 위로 옮기는 기능을 구현하기 위해서 사용
+///
+/// @ 매서드
+/// double    _calculateHeight(int index)
+/// double    _calculateBottomMargin(int index)
+/// String    _makeDeliverTipString(int index)
+/// String    _makeDurationNMinPriceString(int index)
+///
+/// Widget    build(BuildContext context)
+///
+///
+/// @ 기타
+/// 가게마다 현재 배달받을 장소에서 배달이 가능한지에 따라서 나오는 항목이 다르다.
+///
+/// 가게가 준비중일 경우 배달 시간은 나오지 않는다. 하지만 배달팁은 출력
 ///
 /// 배달이 불가능한 지역에 있을 때 그 가게가 준비중인 경우에 대한 데이터가 필요하다.
-
+/// -> 최소 주문 금액만 출력
+///
+///*****************************************************************************
+///
 class ZZimTemplate extends StatelessWidget {
   const ZZimTemplate({
     Key key,
@@ -27,6 +54,7 @@ class ZZimTemplate extends StatelessWidget {
   final BuildContext buildContext;
   final BehaviorSubject<bool> scrollBehaviorSubject;
 
+  /// 표시될 항목들의 개수에 따라서 한 칸의 높이를 계산하는 메서드
   double _calculateHeight(int index) {
     double result;
 
@@ -46,6 +74,7 @@ class ZZimTemplate extends StatelessWidget {
     return result;
   }
 
+  /// 표시될 항목들의 개수에 따라서 한 칸의 아래쪽 마진을 계산하는 메서드
   double _calculateBottomMargin(int index) {
     if (_storeList.elementAt(index).showClean) {
       if (_storeList.elementAt(index).canDelivery) {
@@ -62,6 +91,7 @@ class ZZimTemplate extends StatelessWidget {
     }
   }
 
+  /// 배달팁의 범위에 따라서 표시될 배달팁 구문을 만드는 메서드
   String _makeDeliverTipString(int index) {
     if (_storeList.elementAt(index).minDeliverTip ==
         _storeList.elementAt(index).maxDeliverTip) {
@@ -75,6 +105,7 @@ class ZZimTemplate extends StatelessWidget {
     }
   }
 
+  /// 가게의 상황에 따라서 소요시간 및 최소 주문 금액 구문을 만드는 메서드
   String _makeDurationNMinPriceString(int index) {
     if (_storeList.elementAt(index).canDelivery &&
         _storeList.elementAt(index).isOpen) {

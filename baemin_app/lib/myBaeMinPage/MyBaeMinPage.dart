@@ -26,8 +26,8 @@ import 'pages/EditUserInfoPage.dart';
 ///             Key                    key
 /// @required   StreamController<bool> scrollStreamController
 ///
-/// [scrollStreamController]는 아이폰에서 statusBar 를 터치할 경우
-/// 스크롤을 가장 위로 옮기는 기능을 구현하기 위해서 사용했다.
+/// [scrollStreamController] :  아이폰에서 statusBar 를 터치할 경우
+///                             스크롤을 가장 위로 옮기는 기능을 구현하기 위해서 사용
 ///
 /// @ 메서드
 /// String    _returnGradeString(int grade)

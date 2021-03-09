@@ -2,6 +2,23 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
+///*****************************************************************************
+///
+/// main.dart 에서 네비게이션에 표시될 아이콘을 빌드하는 위젯
+///
+/// @ 매개변수
+///             Key       key
+/// @required   int       selectedIndex : 현재 네비게이션에서 선택된 index
+/// @required   int       compareIndex : 아이콘이 표시될 위치의 index
+/// @required   String    normalIcon : 선택되지 않았을 경우 표시될 아이콘 이미지의 위치
+/// @required   String    selectedIcon : 선택되었을 경우 표시될 아이콘 이미지의 위치
+/// @required   String    title : 아이콘과 함께 표시될 이름
+///
+/// @ 메서드
+/// Widget    build(BuildContext context)
+///
+///*****************************************************************************
+///
 class NavigationIcon extends StatelessWidget {
   const NavigationIcon({
     Key key,

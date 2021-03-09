@@ -4,6 +4,12 @@ import 'package:rxdart/rxdart.dart';
 import '../../Store.dart';
 import '../ZZimBuildPage.dart';
 
+///*****************************************************************************
+///
+/// 찜한가게 페이지의 바로결제 탭
+///
+///*****************************************************************************
+///
 class Rightnow extends StatelessWidget {
   const Rightnow({
     Key key,

@@ -4,6 +4,25 @@ import 'package:rxdart/rxdart.dart';
 import '../Store.dart';
 import 'ZZimTemplate.dart';
 
+///*****************************************************************************
+///
+/// 찜한가게 페이지에서 페이지를 빌드하게 하는 메서드
+///
+/// @ 반환값 : Widget
+///
+/// @ 매개변수
+/// @required   List<Store>             storeList
+/// @required   String                  title
+/// @required   BuildContext            context
+/// @required   BehaviorSubject<bool>   scrollBehaviorSubject
+///
+/// [storeList] : 찜한가게, 바로결제, 전화주문 페이지에 표시할 가게들이 있는 리스트
+/// [title] : 찜한가게, 바로결제, 전화주문 총 3 개 중 하나
+/// [context] : ZZimTemplate 에서 사용될 BuildContext
+/// [scrollBehaviorSubject] : ZZimTemplate 에서 사용될 BehaviorSubject
+///
+///*****************************************************************************
+///
 // ignore: non_constant_identifier_names
 Widget ZZimBuildPage({
   @required List<Store> storeList,

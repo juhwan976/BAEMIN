@@ -4,6 +4,12 @@ import 'package:rxdart/rxdart.dart';
 import '../../Store.dart';
 import '../ZZimBuildPage.dart';
 
+///*****************************************************************************
+///
+/// 찜한가게 페이지의 전화주문 탭
+///
+///*****************************************************************************
+///
 class Call extends StatelessWidget {
   const Call({
     Key key,

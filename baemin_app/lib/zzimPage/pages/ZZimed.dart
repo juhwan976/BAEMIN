@@ -4,6 +4,12 @@ import 'package:rxdart/rxdart.dart';
 import '../../Store.dart';
 import '../ZZimBuildPage.dart';
 
+///*****************************************************************************
+///
+/// 찜한가게 페이지의 찜한가게 탭
+///
+///*****************************************************************************
+///
 class ZZimed extends StatelessWidget {
   const ZZimed({
     Key key,

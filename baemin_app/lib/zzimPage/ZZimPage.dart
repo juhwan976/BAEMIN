@@ -8,10 +8,35 @@ import 'pages/Call.dart';
 import 'pages/Rightnow.dart';
 import 'pages/ZZimed.dart';
 
+///*****************************************************************************
+///
+/// 찜한가게 페이지의 탭바를 구성하는 페이지를 빌드하는 위젯
+///
+/// @ 매개변수
+///             Key                     key
+/// @required   BehaviorSubject<bool>   scrollBehaviorSubject
+/// @required   bool                    fromAnotherPage
+///
+/// [scrollBehaviorSubject] : Call, Rightnow, ZZimed 페이지에서 사용될
+///                           BehaviorSubject
+/// [fromAnotherPage] : my배민 페이지에서 호출되었을 경우에 뒤로가기 버튼을 보여주기 위해서
+///                     넣은 매개변수
+///                     true  -> 뒤로가기 출력
+///                     flase -> 뒤로가기 출력 x
+///
+/// @ 매서드
+/// Widget    _buildTitle()
+/// void      _onTaped(int index)
+///
+/// void      initState()
+/// Widget    build(BuildContext context)
+///
+///*****************************************************************************
+///
 class ZZimPage extends StatefulWidget {
   ZZimPage({
     Key key,
-    this.scrollBehaviorSubject,
+    @required this.scrollBehaviorSubject,
     @required this.fromAnotherPage,
   }) : super(key: key);
 
@@ -26,6 +51,7 @@ class _ZZimPageState extends State<ZZimPage> with TickerProviderStateMixin {
   TabController _tabController;
   List<Widget> _tabTitleList = new List<Widget>();
 
+  /// 앱바를 빌드하는 메서드
   Widget _buildTitle() {
     return Container(
       child: Row(
@@ -76,6 +102,7 @@ class _ZZimPageState extends State<ZZimPage> with TickerProviderStateMixin {
     );
   }
 
+  /// 탭바를 터치했을 때 실행될 메서드
   void _onTaped(int index) {
     setState(() {
       _tabController.index = index;
