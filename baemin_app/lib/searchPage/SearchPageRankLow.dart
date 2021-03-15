@@ -72,6 +72,7 @@ class SearchPageRankLow extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(13, 0, 10, 0),
             child: Text(
               rank.toString(),
+              textScaleFactor: 0.82,
               style: TextStyle(
                 fontSize: 20,
                 color: Colors.black54,

@@ -60,8 +60,10 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
             primary: true,
             pinned: true,
             elevation: 0.0,
+            centerTitle: true,
             title: Text(
               widget.store.name,
+              textScaleFactor: 0.82,
             ),
             leading: _buildLeading(),
             actions: _buildAction(),

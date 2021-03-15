@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:date_format/date_format.dart';
@@ -59,8 +60,8 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  final double _toolbarHeight = 46; // 앱바 높이
-  final double _keyboardActionHeight = 45; // 키보드 액션 높이
+  final double _toolbarHeight = (Platform.isIOS) ? 46 : 53; // 앱바 높이
+  final double _keyboardActionHeight = (Platform.isIOS) ? 45 : 0; // 키보드 액션 높이
   final double _leftMargin = 15; // 페이지 왼쪽 마진
 
   StreamController<bool> _cancelButtonStreamController =

@@ -32,6 +32,7 @@ class SearchPageTitle extends StatelessWidget {
       margin: EdgeInsets.fromLTRB(leftMargin, 0, 0, 0),
       child: Text(
         title,
+        textScaleFactor: 0.82,
         style: TextStyle(
           fontSize: 19,
           fontWeight: FontWeight.bold,

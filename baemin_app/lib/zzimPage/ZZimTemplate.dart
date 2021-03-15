@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:baemin_app/storeDetailPage/StoreDetailPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -57,18 +59,57 @@ class ZZimTemplate extends StatelessWidget {
   /// 표시될 항목들의 개수에 따라서 한 칸의 높이를 계산하는 메서드
   double _calculateHeight(int index) {
     double result;
-
-    if (_storeList.elementAt(index).showClean &&
-        !_storeList.elementAt(index).canDelivery) {
-      result = 119;
-    } else if (!_storeList.elementAt(index).showClean &&
-        _storeList.elementAt(index).canDelivery) {
-      result = 119;
-    } else if (_storeList.elementAt(index).showClean &&
-        _storeList.elementAt(index).canDelivery) {
-      result = 139;
-    } else {
-      result = 99;
+    if(Platform.isIOS) {
+      if (_storeList
+          .elementAt(index)
+          .showClean &&
+          !_storeList
+              .elementAt(index)
+              .canDelivery) {
+        result = 119;
+      } else if (!_storeList
+          .elementAt(index)
+          .showClean &&
+          _storeList
+              .elementAt(index)
+              .canDelivery) {
+        result = 119;
+      } else if (_storeList
+          .elementAt(index)
+          .showClean &&
+          _storeList
+              .elementAt(index)
+              .canDelivery) {
+        result = 139;
+      } else {
+        result = 99;
+      }
+    }
+    else {
+      if (_storeList
+          .elementAt(index)
+          .showClean &&
+          !_storeList
+              .elementAt(index)
+              .canDelivery) {
+        result = 124;
+      } else if (!_storeList
+          .elementAt(index)
+          .showClean &&
+          _storeList
+              .elementAt(index)
+              .canDelivery) {
+        result = 124;
+      } else if (_storeList
+          .elementAt(index)
+          .showClean &&
+          _storeList
+              .elementAt(index)
+              .canDelivery) {
+        result = 149;
+      } else {
+        result = 99;
+      }
     }
 
     return result;
@@ -76,17 +117,34 @@ class ZZimTemplate extends StatelessWidget {
 
   /// 표시될 항목들의 개수에 따라서 한 칸의 아래쪽 마진을 계산하는 메서드
   double _calculateBottomMargin(int index) {
-    if (_storeList.elementAt(index).showClean) {
-      if (_storeList.elementAt(index).canDelivery) {
-        return 40;
+    if(Platform.isIOS) {
+      if (_storeList.elementAt(index).showClean) {
+        if (_storeList.elementAt(index).canDelivery) {
+          return 40;
+        } else {
+          return 20;
+        }
       } else {
-        return 20;
+        if (_storeList.elementAt(index).canDelivery) {
+          return 20;
+        } else {
+          return 0;
+        }
       }
-    } else {
-      if (_storeList.elementAt(index).canDelivery) {
-        return 20;
+    }
+    else {
+      if (_storeList.elementAt(index).showClean) {
+        if (_storeList.elementAt(index).canDelivery) {
+          return 50;
+        } else {
+          return 25;
+        }
       } else {
-        return 0;
+        if (_storeList.elementAt(index).canDelivery) {
+          return 25;
+        } else {
+          return 0;
+        }
       }
     }
   }
@@ -217,8 +275,9 @@ class ZZimTemplate extends StatelessWidget {
                                                     .name,
                                                 textScaleFactor: 0.82,
                                                 style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 19),
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 19,
+                                                ),
                                               ),
                                             ),
 
