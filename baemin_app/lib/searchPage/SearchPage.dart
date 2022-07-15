@@ -72,7 +72,7 @@ class _SearchPageState extends State<SearchPage> {
 
   FocusNode _searchFocusNode = new FocusNode();
 
-  List<String> _searchHistory = new List<String>(); // 검색기록들을 저장 할 리스트
+  List<String> _searchHistory = []; // 검색기록들을 저장 할 리스트
   bool _visibleHistory = false; // 검색기록 보일 것인지 판별하는 변수
   bool _searchResult = false; // 검색결과창을 보여 줄 것인지 판별하는 변수
 
