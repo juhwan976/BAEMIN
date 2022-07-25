@@ -25,12 +25,12 @@ import 'SearchPageRankingName.dart';
 ///
 class SearchPageRankHigh extends StatelessWidget {
   const SearchPageRankHigh({
-    Key key,
-    @required this.rank,
-    @required this.name,
-    @required this.info,
+    Key? key,
+    required this.rank,
+    required this.name,
+    required this.info,
     this.bottomPadding = 0,
-    @required this.onPressed,
+    required this.onPressed,
   }) : super(key: key);
 
   final int rank;
@@ -41,7 +41,7 @@ class SearchPageRankHigh extends StatelessWidget {
 
   /// 랭킹 사진의 디렉토리명을 반환하는 메서드
   String _returnRankPicDirectory() {
-    String _rank;
+    late String _rank;
 
     switch (rank) {
       case 1:
@@ -62,7 +62,7 @@ class SearchPageRankHigh extends StatelessWidget {
 
   /// 상태 사진의 디렉토리명을 반환하는 메서드
   String _returnInfoDirectory() {
-    String _info;
+    late String _info;
 
     switch (info) {
       case 0:
@@ -102,7 +102,7 @@ class SearchPageRankHigh extends StatelessWidget {
             SearchPageInfo(directory: _returnInfoDirectory()),
           ],
         ),
-        onTap: onPressed,
+        onTap: onPressed as void Function()?,
       ),
     );
   }

@@ -20,10 +20,10 @@ import 'package:flutter/material.dart';
 ///
 class MyBaeMinSixButtons extends StatelessWidget {
   const MyBaeMinSixButtons({
-    Key key,
-    @required this.directory,
-    @required this.text,
-    @required this.function,
+    Key? key,
+    required this.directory,
+    required this.text,
+    required this.function,
   }) : super(key: key);
 
   final String directory;

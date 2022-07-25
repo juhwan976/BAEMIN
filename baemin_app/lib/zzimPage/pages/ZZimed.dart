@@ -12,9 +12,9 @@ import '../ZZimBuildPage.dart';
 ///
 class ZZimed extends StatelessWidget {
   const ZZimed({
-    Key key,
-    @required this.buildContext,
-    @required this.scrollBehaviorSubject,
+    Key? key,
+    required this.buildContext,
+    required this.scrollBehaviorSubject,
   }) : super(key: key);
 
   final BuildContext buildContext;

@@ -18,9 +18,9 @@ import 'package:flutter/material.dart';
 ///
 class SearchPageTitle extends StatelessWidget {
   const SearchPageTitle({
-    Key key,
-    @required this.title,
-    @required this.leftMargin,
+    Key? key,
+    required this.title,
+    required this.leftMargin,
   }) : super(key: key);
 
   final String title;

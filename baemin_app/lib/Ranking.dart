@@ -18,7 +18,7 @@ class Ranking {
   int info;
 
   Ranking({
-    @required this.name,
-    @required this.info,
+    required this.name,
+    required this.info,
   });
 }

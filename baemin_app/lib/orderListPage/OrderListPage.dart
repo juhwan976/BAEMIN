@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 class OrderListPage extends StatefulWidget {
   OrderListPage({
-    Key key,
-    @required this.fromAnotherPage,
+    Key? key,
+    required this.fromAnotherPage,
   }) : super(key: key);
 
   final bool fromAnotherPage;
@@ -42,7 +42,12 @@ class _OrderListPageState extends State<OrderListPage> {
         toolbarHeight: 46,
         leading: _buildLeading(),
         centerTitle: true,
-        title: Text('주문내역'),
+        title: Text(
+          '주문내역',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
       ),
       body: Center(
         child: Text('주문내역'),

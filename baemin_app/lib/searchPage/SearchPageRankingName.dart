@@ -17,8 +17,8 @@ import 'package:flutter/material.dart';
 ///
 class SearchPageRankingName extends StatelessWidget {
   const SearchPageRankingName({
-    Key key,
-    @required this.name,
+    Key? key,
+    required this.name,
   }) : super(key: key);
 
   final String name;

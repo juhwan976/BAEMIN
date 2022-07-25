@@ -15,8 +15,8 @@ import 'package:flutter/material.dart';
 ///
 class SearchPageInfo extends StatelessWidget {
   const SearchPageInfo({
-    Key key,
-    @required this.directory,
+    Key? key,
+    required this.directory,
   }) : super(key: key);
 
   final String directory;

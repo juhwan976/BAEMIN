@@ -49,8 +49,8 @@ import 'SearchPageTitle.dart';
 ///
 class SearchPage extends StatefulWidget {
   const SearchPage({
-    Key key,
-    @required this.scrollStreamController,
+    Key? key,
+    required this.scrollStreamController,
   }) : super(key: key);
 
   final StreamController<bool> scrollStreamController;
@@ -78,8 +78,8 @@ class _SearchPageState extends State<SearchPage> {
 
   ///*********************** 오버레이 관련 변수 *************************************
 
-  OverlayEntry _overlayEntry;
-  OverlayState _overlayState;
+  late OverlayEntry _overlayEntry;
+  OverlayState? _overlayState;
   bool _visibleOverlay = false; // 오버레이를 보일 것인지 판별하는 변수
 
   ///*********************** 데이터 **********************************************
@@ -180,7 +180,7 @@ class _SearchPageState extends State<SearchPage> {
 
     _overlayEntry = _buildSearchSuggestOverlayEntry();
 
-    _overlayState.insert(_overlayEntry);
+    _overlayState!.insert(_overlayEntry);
   }
 
   /// 오버레이를 숨기는 메서드
@@ -442,7 +442,7 @@ class _SearchPageState extends State<SearchPage> {
               stream: _cancelButtonStreamController.stream,
               initialData: false,
               builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                if (!snapshot.data) {
+                if (!snapshot.data!) {
                   return Container(
                     width: 1,
                     height: 1,
@@ -494,7 +494,7 @@ class _SearchPageState extends State<SearchPage> {
 
   /// 일반 페이지 빌드 메서드
   Widget _buildPage() {
-    ScrollController _scrollController = PrimaryScrollController.of(context);
+    ScrollController? _scrollController = PrimaryScrollController.of(context);
 
     return Container(
       color: Colors.white,
@@ -506,9 +506,8 @@ class _SearchPageState extends State<SearchPage> {
             controller: _scrollController,
             child: KeyboardActions(
               config: _buildConfig(context),
-              elevation: 0,
               child: ListView(
-                controller: snapshot.data
+                controller: snapshot.data!
                     ? _scrollController
                     : ScrollController(),
                 children: <Widget>[
@@ -830,13 +829,13 @@ class _SearchPageState extends State<SearchPage> {
       data: ThemeData(),
       child: Scaffold(
         appBar: AppBar(
-          brightness: Brightness.light,
+          //brightness: Brightness.light,
           backgroundColor: Colors.white,
           elevation: 0.0,
           toolbarHeight: _toolbarHeight,
           title: _buildTitle(),
           bottom: PreferredSize(
-            preferredSize: null,
+            preferredSize: Size.zero,
             child: Container(
               height: MediaQuery.of(context).size.height * 0.00024631,
               color: Colors.black26,
@@ -846,8 +845,8 @@ class _SearchPageState extends State<SearchPage> {
         body: NotificationListener<OverscrollIndicatorNotification>(
           onNotification: (OverscrollIndicatorNotification overScroll) {
             overScroll.disallowGlow();
-            return;
-          },
+            return true;
+          }, //as bool Function(OverscrollIndicatorNotification)?,
           child: (_searchResult) ? _buildResultPage() : _buildPage(),
         ),
       ),

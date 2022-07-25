@@ -23,11 +23,11 @@ import 'SearchPageRankingName.dart';
 ///
 class SearchPageRankLow extends StatelessWidget {
   const SearchPageRankLow({
-    Key key,
-    @required this.rank,
-    @required this.name,
-    @required this.info,
-    @required this.onPressed,
+    Key? key,
+    required this.rank,
+    required this.name,
+    required this.info,
+    required this.onPressed,
   }) : super(key: key);
 
   final int rank;
@@ -37,7 +37,7 @@ class SearchPageRankLow extends StatelessWidget {
 
   /// 상태 사진의 디렉토리명을 반환하는 메서드
   String _returnInfoDirectory() {
-    String _info;
+    late String _info;
 
     switch (info) {
       case 0:
@@ -85,7 +85,7 @@ class SearchPageRankLow extends StatelessWidget {
           SearchPageInfo(directory: _returnInfoDirectory()),
         ],
       ),
-      onTap: onPressed,
+      onTap: onPressed as void Function()?,
     );
   }
 }

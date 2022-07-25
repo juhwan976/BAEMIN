@@ -12,9 +12,9 @@ import '../ZZimBuildPage.dart';
 ///
 class Call extends StatelessWidget {
   const Call({
-    Key key,
-    @required this.buildContext,
-    @required this.scrollBehaviorSubject,
+    Key? key,
+    required this.buildContext,
+    required this.scrollBehaviorSubject,
   }) : super(key: key);
 
   final BuildContext buildContext;
@@ -22,7 +22,7 @@ class Call extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Store> _storeList = new List<Store>();
+    List<Store> _storeList = List<Store>.empty();
 
     return ZZimBuildPage(
       storeList: _storeList,

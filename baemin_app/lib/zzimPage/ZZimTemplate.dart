@@ -45,10 +45,10 @@ import 'ZZimShadowH.dart';
 ///
 class ZZimTemplate extends StatelessWidget {
   const ZZimTemplate({
-    Key key,
-    @required List<Store> storeList,
-    @required this.buildContext,
-    @required this.scrollBehaviorSubject,
+    Key? key,
+    required List<Store> storeList,
+    required this.buildContext,
+    required this.scrollBehaviorSubject,
   })  : _storeList = storeList,
         super(key: key);
 
@@ -62,24 +62,24 @@ class ZZimTemplate extends StatelessWidget {
     if(Platform.isIOS) {
       if (_storeList
           .elementAt(index)
-          .showClean &&
+          .showClean! &&
           !_storeList
               .elementAt(index)
-              .canDelivery) {
+              .canDelivery!) {
         result = 119;
       } else if (!_storeList
           .elementAt(index)
-          .showClean &&
+          .showClean! &&
           _storeList
               .elementAt(index)
-              .canDelivery) {
+              .canDelivery!) {
         result = 119;
       } else if (_storeList
           .elementAt(index)
-          .showClean &&
+          .showClean! &&
           _storeList
               .elementAt(index)
-              .canDelivery) {
+              .canDelivery!) {
         result = 139;
       } else {
         result = 99;
@@ -88,24 +88,24 @@ class ZZimTemplate extends StatelessWidget {
     else {
       if (_storeList
           .elementAt(index)
-          .showClean &&
+          .showClean! &&
           !_storeList
               .elementAt(index)
-              .canDelivery) {
+              .canDelivery!) {
         result = 124;
       } else if (!_storeList
           .elementAt(index)
-          .showClean &&
+          .showClean! &&
           _storeList
               .elementAt(index)
-              .canDelivery) {
+              .canDelivery!) {
         result = 124;
       } else if (_storeList
           .elementAt(index)
-          .showClean &&
+          .showClean! &&
           _storeList
               .elementAt(index)
-              .canDelivery) {
+              .canDelivery!) {
         result = 149;
       } else {
         result = 99;
@@ -118,14 +118,14 @@ class ZZimTemplate extends StatelessWidget {
   /// 표시될 항목들의 개수에 따라서 한 칸의 아래쪽 마진을 계산하는 메서드
   double _calculateBottomMargin(int index) {
     if(Platform.isIOS) {
-      if (_storeList.elementAt(index).showClean) {
-        if (_storeList.elementAt(index).canDelivery) {
+      if (_storeList.elementAt(index).showClean!) {
+        if (_storeList.elementAt(index).canDelivery!) {
           return 40;
         } else {
           return 20;
         }
       } else {
-        if (_storeList.elementAt(index).canDelivery) {
+        if (_storeList.elementAt(index).canDelivery!) {
           return 20;
         } else {
           return 0;
@@ -133,14 +133,14 @@ class ZZimTemplate extends StatelessWidget {
       }
     }
     else {
-      if (_storeList.elementAt(index).showClean) {
-        if (_storeList.elementAt(index).canDelivery) {
+      if (_storeList.elementAt(index).showClean!) {
+        if (_storeList.elementAt(index).canDelivery!) {
           return 50;
         } else {
           return 25;
         }
       } else {
-        if (_storeList.elementAt(index).canDelivery) {
+        if (_storeList.elementAt(index).canDelivery!) {
           return 25;
         } else {
           return 0;
@@ -153,45 +153,45 @@ class ZZimTemplate extends StatelessWidget {
   String _makeDeliverTipString(int index) {
     if (_storeList.elementAt(index).minDeliverTip ==
         _storeList.elementAt(index).maxDeliverTip) {
-      return '배달팁 ' + _storeList.elementAt(index).minDeliverTip + '원';
+      return '배달팁 ' + _storeList.elementAt(index).minDeliverTip! + '원';
     } else {
       return '배달팁 ' +
-          _storeList.elementAt(index).minDeliverTip +
+          _storeList.elementAt(index).minDeliverTip! +
           '원~' +
-          _storeList.elementAt(index).maxDeliverTip +
+          _storeList.elementAt(index).maxDeliverTip! +
           '원';
     }
   }
 
   /// 가게의 상황에 따라서 소요시간 및 최소 주문 금액 구문을 만드는 메서드
   String _makeDurationNMinPriceString(int index) {
-    if (_storeList.elementAt(index).canDelivery &&
-        _storeList.elementAt(index).isOpen) {
-      return _storeList.elementAt(index).minDuration +
+    if (_storeList.elementAt(index).canDelivery! &&
+        _storeList.elementAt(index).isOpen!) {
+      return _storeList.elementAt(index).minDuration! +
           '~' +
-          _storeList.elementAt(index).maxDuration +
+          _storeList.elementAt(index).maxDuration! +
           '분, 최소주문 ' +
-          _storeList.elementAt(index).minPrice +
+          _storeList.elementAt(index).minPrice! +
           '원';
     } else {
-      return '최소주문 ' + _storeList.elementAt(index).minPrice + '원';
+      return '최소주문 ' + _storeList.elementAt(index).minPrice! + '원';
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    ScrollController _scrollController =
+    ScrollController? _scrollController =
         PrimaryScrollController.of(buildContext);
 
     return StreamBuilder(
         stream: scrollBehaviorSubject.stream,
-        initialData: scrollBehaviorSubject.value ?? false,
+        initialData: scrollBehaviorSubject.value,
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           return Scrollbar(
             controller: _scrollController,
             child: ListView.builder(
               controller:
-                  snapshot.data ? _scrollController : ScrollController(),
+                  snapshot.data! ? _scrollController : ScrollController(),
               itemCount: _storeList.length + 1,
               itemBuilder: (BuildContext context, int index) {
                 if (index == 0) {
@@ -272,7 +272,7 @@ class ZZimTemplate extends StatelessWidget {
                                               child: Text(
                                                 _storeList
                                                     .elementAt(index - 1)
-                                                    .name,
+                                                    .name!,
                                                 textScaleFactor: 0.82,
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
@@ -358,7 +358,7 @@ class ZZimTemplate extends StatelessWidget {
                                                 ' ' +
                                                     _storeList
                                                         .elementAt(index - 1)
-                                                        .description,
+                                                        .description!,
                                                 textScaleFactor: 0.82,
                                                 style: TextStyle(
                                                   fontSize: 16,
@@ -374,10 +374,10 @@ class ZZimTemplate extends StatelessWidget {
                                             Visibility(
                                               visible: _storeList
                                                       .elementAt(index - 1)
-                                                      .canDelivery &&
+                                                      .canDelivery! &&
                                                   _storeList
                                                       .elementAt(index - 1)
-                                                      .isOpen,
+                                                      .isOpen!,
                                               child: Container(
                                                 margin: EdgeInsets.fromLTRB(
                                                     0, 8, 0, 0),
@@ -407,7 +407,7 @@ class ZZimTemplate extends StatelessWidget {
                                         Visibility(
                                           visible: _storeList
                                               .elementAt(index - 1)
-                                              .canDelivery,
+                                              .canDelivery!,
                                           child: Container(
                                             margin:
                                                 EdgeInsets.fromLTRB(0, 8, 0, 0),
@@ -418,7 +418,7 @@ class ZZimTemplate extends StatelessWidget {
                                                 fontSize: 16,
                                                 color: (!_storeList
                                                         .elementAt(index - 1)
-                                                        .isOpen)
+                                                        .isOpen!)
                                                     ? Colors.black45
                                                     : null,
                                               ),
@@ -430,7 +430,7 @@ class ZZimTemplate extends StatelessWidget {
                                         Visibility(
                                           visible: _storeList
                                               .elementAt(index - 1)
-                                              .showClean,
+                                              .showClean!,
                                           child: Container(
                                             margin:
                                                 EdgeInsets.fromLTRB(0, 6, 0, 0),
@@ -461,7 +461,7 @@ class ZZimTemplate extends StatelessWidget {
                               /// 가게가 준비중일 때 비활성으로 보이게 할 컨테이너
                               Visibility(
                                 visible:
-                                    !_storeList.elementAt(index - 1).isOpen,
+                                    !_storeList.elementAt(index - 1).isOpen!,
                                 child: Container(
                                   child: Opacity(
                                     opacity: 0.5,
@@ -475,7 +475,7 @@ class ZZimTemplate extends StatelessWidget {
                               /// 가게가 준비중일 때 이미지 위에 준비중으로 보이게 할 컨테이너
                               Visibility(
                                 visible:
-                                    !_storeList.elementAt(index - 1).isOpen,
+                                    !_storeList.elementAt(index - 1).isOpen!,
                                 child: Container(
                                   child: Opacity(
                                     opacity: 0.5,

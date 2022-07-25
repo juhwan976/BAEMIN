@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 ///
 class MyBaeMinShadowV extends StatelessWidget {
   const MyBaeMinShadowV({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

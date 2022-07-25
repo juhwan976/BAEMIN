@@ -5,10 +5,10 @@ import '../Store.dart';
 
 class StoreDetailPage extends StatefulWidget {
   StoreDetailPage({
-    Key key,
+    Key? key,
     this.store,
   }) : super(key: key);
-  final Store store;
+  final Store? store;
 
   _StoreDetailPageState createState() => _StoreDetailPageState();
 }
@@ -29,22 +29,20 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
   }
 
   List<Widget> _buildAction() {
-    List<Widget> _widgetList = new List<Widget>();
+    List<Widget> _widgetList = new List<Widget>.empty();
 
-    _widgetList.add(
-      Container(
-        child: FlatButton(
-          padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
-          highlightColor: Colors.transparent,
-          splashColor: Colors.transparent,
-          child: Icon(
-            Icons.search,
-            color: Colors.black,
-          ),
-          onPressed: () {},
+    _widgetList = [..._widgetList, Container(
+      child: FlatButton(
+        padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        child: Icon(
+          Icons.search,
+          color: Colors.black,
         ),
-      ),
-    );
+        onPressed: () {},
+      )
+    )];
 
     return _widgetList;
   }
@@ -62,8 +60,9 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
             elevation: 0.0,
             centerTitle: true,
             title: Text(
-              widget.store.name,
+              widget.store!.name!,
               textScaleFactor: 0.82,
+              style: TextStyle(color: Colors.black),
             ),
             leading: _buildLeading(),
             actions: _buildAction(),

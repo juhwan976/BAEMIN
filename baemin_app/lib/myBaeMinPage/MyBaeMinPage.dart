@@ -47,8 +47,8 @@ import 'pages/EditUserInfoPage.dart';
 ///
 class MyBaeMinPage extends StatefulWidget {
   MyBaeMinPage({
-    Key key,
-    @required this.scrollStreamController,
+    Key? key,
+    required this.scrollStreamController,
   }) : super(key: key);
 
   final StreamController<bool> scrollStreamController;
@@ -63,31 +63,26 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
   bool isFirst = false;
 
   /// 백엔드를 사용하지 않으므로 임의로 유저 클래스를 선언
-  User user;
+  User? user;
 
   /// 유저 등급에 따라서 표시되는 구문을 다르게 하는 메서드
-  String _returnGradeString(int grade) {
+  String _returnGradeString(int? grade) {
     switch (grade) {
       case 0:
         return '고마운분,';
-        break;
       case 1:
         return '귀한분,';
-        break;
       case 2:
         return '더귀한분,';
-        break;
       case 3:
         return '천생연분,';
-        break;
       default:
         return '';
-        break;
     }
   }
 
   /// Lottie Animation 에 사용될 파일 위치를 반환하는 메서드
-  String _returnLottieAsset(int grade) {
+  String _returnLottieAsset(int? grade) {
     String _string;
 
     switch (grade) {
@@ -121,7 +116,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
     final double _leftMargin = _thisWidth * 0.02666667; // 10
     final double _leftFontMargin = _leftMargin + _thisWidth * 0.008; // 3
 
-    ScrollController _scrollController = PrimaryScrollController.of(context);
+    ScrollController? _scrollController = PrimaryScrollController.of(context);
 
     user = new User(
       name: '이름',
@@ -131,13 +126,13 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
     return NotificationListener<OverscrollIndicatorNotification>(
       onNotification: (OverscrollIndicatorNotification overScroll) {
         overScroll.disallowGlow();
-        return;
-      },
+        return true;
+      }, // as bool Function(OverscrollIndicatorNotification),
       child: StreamBuilder(
         stream: widget.scrollStreamController.stream,
         initialData: false,
         builder: (BuildContext streamContext, AsyncSnapshot<bool> snapshot) {
-          if (!isFirst && snapshot.data) {
+          if (!isFirst && snapshot.data!) {
             isFirst = true;
           }
 
@@ -145,7 +140,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
             controller: _scrollController,
             child: ListView(
               controller:
-                  snapshot.data ? _scrollController : ScrollController(),
+                  snapshot.data! ? _scrollController : ScrollController(),
               children: <Widget>[
                 Container(
                     height: (Platform.isIOS) ? _thisWidth * 0.01866667 : 10),
@@ -172,7 +167,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                             ),
                             Container(
                               child: Text(
-                                _returnGradeString(user.grade),
+                                _returnGradeString(user!.grade),
                                 textScaleFactor: 0.82,
                                 style: TextStyle(
                                   fontSize: 25.0,
@@ -182,7 +177,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                             ),
                             Container(
                               child: Text(
-                                user.name,
+                                user!.name!,
                                 textScaleFactor: 0.82,
                                 style: TextStyle(
                                   fontSize: 25.0,
@@ -206,7 +201,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                       if (result == null) {
                         /* do nothing */
                       } else {
-                        user.name = result;
+                        user!.name = result;
                         setState(() {});
                       }
                     },
@@ -226,7 +221,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
                       /// 등급별 애니메이션
                       Container(
                         child: Lottie.asset(
-                          _returnLottieAsset(user.grade),
+                          _returnLottieAsset(user!.grade),
                           animate: isFirst,
                           repeat: false,
                         ),
@@ -538,7 +533,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
         appBar: AppBar(
           brightness: Brightness.light,
           bottom: PreferredSize(
-            preferredSize: null,
+            preferredSize: Size.zero,
             child: Container(
               height: 0.5,
               color: Colors.black12,
@@ -554,6 +549,7 @@ class _MyBaeMinPageState extends State<MyBaeMinPage> {
             textScaleFactor: 0.82,
             style: TextStyle(
               fontSize: 20,
+              color: Colors.black,
             ),
           ),
         ),

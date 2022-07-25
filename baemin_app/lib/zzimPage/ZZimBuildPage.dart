@@ -25,10 +25,10 @@ import 'ZZimTemplate.dart';
 ///
 // ignore: non_constant_identifier_names
 Widget ZZimBuildPage({
-  @required List<Store> storeList,
-  @required String title,
-  @required BuildContext buildContext,
-  @required BehaviorSubject<bool> scrollBehaviorSubject,
+  required List<Store> storeList,
+  required String title,
+  required BuildContext buildContext,
+  required BehaviorSubject<bool> scrollBehaviorSubject,
 }) {
   Widget returnWidget;
 

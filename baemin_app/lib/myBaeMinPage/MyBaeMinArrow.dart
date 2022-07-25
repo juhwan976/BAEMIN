@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 ///
 class MyBaeMinArrow extends StatelessWidget {
   const MyBaeMinArrow({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

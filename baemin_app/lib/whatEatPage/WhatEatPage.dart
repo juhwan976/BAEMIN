@@ -9,7 +9,7 @@ import 'package:roller_list/roller_list.dart';
 import 'WhatEatTitle.dart';
 
 class WhatEatPage extends StatefulWidget {
-  WhatEatPage({Key key}) : super(key: key);
+  WhatEatPage({Key? key}) : super(key: key);
 
   @override
   _WhatEatPageState createState() => _WhatEatPageState();
@@ -36,7 +36,7 @@ class _WhatEatPageState extends State<WhatEatPage>
 
   final whatEatRoller = new GlobalKey<RollerListState>();
   Random _random = new Random();
-  Timer rotater;
+  Timer? rotater;
   int _currentIndex = 0;
   bool _visibleIcon = true;
 
@@ -76,7 +76,7 @@ class _WhatEatPageState extends State<WhatEatPage>
   }
 
   List<Widget> _generateMenu() {
-    List<Widget> _widgetList = new List<Widget>();
+    List<Widget> _widgetList = List<Widget>.empty();
 
     for (int i = 0; i < _menus.length; i++) {
       _widgetList.add(
@@ -96,7 +96,7 @@ class _WhatEatPageState extends State<WhatEatPage>
         _random.nextInt(_menus.length) + _menus.length;
     _currentIndex += whatEatRotationTarget;
 
-    whatEatRoller.currentState.smoothScrollToIndex(
+    whatEatRoller.currentState!.smoothScrollToIndex(
       _currentIndex,
       curve: Curves.linear,
       duration: Duration(milliseconds: 500),
@@ -165,10 +165,10 @@ class _WhatEatPageState extends State<WhatEatPage>
                     WhatEatTitle(title: '어때요'),
                   ],
                 ),
-              ),
+              ),/*
               Container(
                 height: _calculateHeight(_heights),
-                child: StaggeredGridView.countBuilder(
+                child: StaggeredGridTile.count(
                   physics: NeverScrollableScrollPhysics(),
                   crossAxisCount: 4,
                   itemCount: _heights.length,
@@ -190,7 +190,7 @@ class _WhatEatPageState extends State<WhatEatPage>
                   mainAxisSpacing: _mainAxisSpace,
                   crossAxisSpacing: _crossAxisSpace,
                 ),
-              ),
+              ),*/
               Container(
                 height: 80,
               ),

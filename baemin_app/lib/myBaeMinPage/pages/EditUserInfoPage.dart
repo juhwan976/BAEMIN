@@ -11,11 +11,11 @@ import '../../User.dart';
 ///
 class EditUserInfoPage extends StatefulWidget {
   const EditUserInfoPage({
-    Key key,
-    @required this.user,
+    Key? key,
+    required this.user,
   }) : super(key: key);
 
-  final User user;
+  final User? user;
 
   _EditUserInfoPageState createState() => _EditUserInfoPageState();
 }
@@ -184,7 +184,7 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
   @override
   Widget build(BuildContext context) {
     TextEditingController _nameController =
-        new TextEditingController(text: widget.user.name);
+        new TextEditingController(text: widget.user!.name);
 
     return Scaffold(
       appBar: AppBar(
@@ -196,7 +196,7 @@ class _EditUserInfoPageState extends State<EditUserInfoPage> {
         leading: null,
         automaticallyImplyLeading: false,
         bottom: PreferredSize(
-          preferredSize: null,
+          preferredSize: Size.zero,
           child: Container(
             height: 0.5,
             color: Colors.black12,

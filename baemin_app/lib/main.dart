@@ -39,9 +39,9 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, this.title}) : super(key: key);
 
-  final String title;
+  final String? title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   int _selectedIndex = 0;
 
-  List<Widget> _pageList = new List<Widget>();
+  List<Widget> _pageList = List<Widget>.empty();
 
   /// 네이게이션을 터치했을 경우 실행될 메서드
   void _onTaped(int index) {
@@ -109,24 +109,21 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
 
+    _searchPageStreamController.sink.add(false);
+    _zzimPageStreamController.sink.add(false);
+    _myBaeMinPageStreamController.sink.add(false);
+
     /// page 들 추가
-    _pageList.clear();
-    _pageList.add(HomePage());
-    _pageList
-        .add(SearchPage(scrollStreamController: _searchPageStreamController));
-    _pageList.add(
-      ZZimPage(
-        scrollBehaviorSubject: _zzimPageStreamController,
-        fromAnotherPage: false,
-      ),
-    );
-    _pageList.add(
-      OrderListPage(
-        fromAnotherPage: false,
-      ),
-    );
-    _pageList.add(
-        MyBaeMinPage(scrollStreamController: _myBaeMinPageStreamController));
+    _pageList = [..._pageList, HomePage()];
+    _pageList = [..._pageList, SearchPage(scrollStreamController: _searchPageStreamController)];
+    _pageList = [..._pageList, ZZimPage(
+      scrollBehaviorSubject: _zzimPageStreamController as BehaviorSubject<bool>,
+      fromAnotherPage: false,
+    )];
+    _pageList = [..._pageList, OrderListPage(
+      fromAnotherPage: false,
+    )];
+    _pageList = [..._pageList, MyBaeMinPage(scrollStreamController: _myBaeMinPageStreamController)];
   }
 
   @override
@@ -167,7 +164,7 @@ class _MyHomePageState extends State<MyHomePage> {
         MediaQuery.of(context).textScaleFactor.toString() +
         ', 플랫폼 : ' +
         ((Platform.isAndroid) ? '안드로이드' : ((Platform.isIOS) ? 'iOS' : '알수없음')));
-
+        log(_pageList.toString());
     return Scaffold(
       body: IndexedStack(
         children: _pageList,

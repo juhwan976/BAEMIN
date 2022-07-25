@@ -26,11 +26,11 @@ import 'MyBaeMinButton.dart';
 ///
 class MyBaeMinTemplateDes extends StatelessWidget {
   const MyBaeMinTemplateDes({
-    Key key,
-    @required double leftFontMargin,
-    @required this.title,
-    @required this.description,
-    @required this.function,
+    Key? key,
+    required double leftFontMargin,
+    required this.title,
+    required this.description,
+    required this.function,
   })  : _leftFontMargin = leftFontMargin,
         super(key: key);
 

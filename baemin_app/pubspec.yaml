@@ -18,31 +18,30 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
 
   # use main.dart
-  rxdart: ^0.25.0
+  rxdart: ^0.27.5
 
   # use WhatEatPage
-  flutter_staggered_grid_view: "^0.3.3"
-  roller_list: ^0.6.1
+  flutter_staggered_grid_view: ^0.6.2
+  roller_list: ^1.0.2
 
   # use SearchPage
-  keyboard_actions:
-    path: packages/flutter_keyboard_actions-master/
-  date_format: ^1.0.9
+  keyboard_actions: ^4.0.1
+  date_format: ^2.0.6
 
   # use MyBaeMinPage
-  lottie: ^0.7.0+1
+  lottie: ^1.3.0
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.0
+  cupertino_icons: ^1.0.5
 
 dev_dependencies:
   flutter_test:

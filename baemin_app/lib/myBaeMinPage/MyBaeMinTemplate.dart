@@ -23,10 +23,10 @@ import 'MyBaeMinButton.dart';
 ///
 class MyBaeMinTemplate extends StatelessWidget {
   const MyBaeMinTemplate({
-    Key key,
-    @required double leftFontMargin,
-    @required this.title,
-    @required this.function,
+    Key? key,
+    required double leftFontMargin,
+    required this.title,
+    required this.function,
   })  : _leftFontMargin = leftFontMargin,
         super(key: key);
 

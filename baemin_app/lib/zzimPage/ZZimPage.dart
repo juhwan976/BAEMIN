@@ -35,9 +35,9 @@ import 'pages/ZZimed.dart';
 ///
 class ZZimPage extends StatefulWidget {
   ZZimPage({
-    Key key,
-    @required this.scrollBehaviorSubject,
-    @required this.fromAnotherPage,
+    Key? key,
+    required this.scrollBehaviorSubject,
+    required this.fromAnotherPage,
   }) : super(key: key);
 
   final BehaviorSubject<bool> scrollBehaviorSubject;
@@ -48,8 +48,8 @@ class ZZimPage extends StatefulWidget {
 }
 
 class _ZZimPageState extends State<ZZimPage> with TickerProviderStateMixin {
-  TabController _tabController;
-  List<Widget> _tabTitleList = new List<Widget>();
+  TabController? _tabController;
+  List<Widget> _tabTitleList = List<Widget>.empty();
 
   /// 앱바를 빌드하는 메서드
   Widget _buildTitle() {
@@ -81,6 +81,7 @@ class _ZZimPageState extends State<ZZimPage> with TickerProviderStateMixin {
                 textScaleFactor: 0.82,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
+                  color: Colors.black,
                 ),
               ),
             ),
@@ -105,7 +106,7 @@ class _ZZimPageState extends State<ZZimPage> with TickerProviderStateMixin {
   /// 탭바를 터치했을 때 실행될 메서드
   void _onTaped(int index) {
     setState(() {
-      _tabController.index = index;
+      _tabController!.index = index;
     });
   }
 
@@ -113,9 +114,9 @@ class _ZZimPageState extends State<ZZimPage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    _tabTitleList.add(Text('찜한가게', textScaleFactor: 0.82));
-    _tabTitleList.add(Text('바로결제', textScaleFactor: 0.82));
-    _tabTitleList.add(Text('전화주문', textScaleFactor: 0.82));
+    _tabTitleList = [..._tabTitleList, Text('찜한가게', textScaleFactor: 0.82)];
+    _tabTitleList = [..._tabTitleList, Text('바로결제', textScaleFactor: 0.82)];
+    _tabTitleList = [..._tabTitleList, Text('전화주문', textScaleFactor: 0.82)];
 
     _tabController = new TabController(
       initialIndex: 0,
@@ -141,7 +142,7 @@ class _ZZimPageState extends State<ZZimPage> with TickerProviderStateMixin {
         elevation: 0.0,
         brightness: Brightness.light,
         bottom: PreferredSize(
-          preferredSize: null,
+          preferredSize: Size.zero,
           child: Theme(
             data: ThemeData(
               highlightColor: Colors.transparent,
@@ -179,8 +180,8 @@ class _ZZimPageState extends State<ZZimPage> with TickerProviderStateMixin {
       body: NotificationListener<OverscrollIndicatorNotification>(
         onNotification: (OverscrollIndicatorNotification overScroll) {
           overScroll.disallowGlow();
-          return;
-        },
+          return true;
+        }, //as bool Function(OverscrollIndicatorNotification),
         child: TabBarView(
           controller: _tabController,
           children: <Widget>[

@@ -22,9 +22,9 @@ import 'package:flutter/material.dart';
 ///
 class MyBaeMinButton extends StatefulWidget {
   const MyBaeMinButton({
-    Key key,
-    @required this.child,
-    @required this.function,
+    Key? key,
+    required this.child,
+    required this.function,
   }) : super(key: key);
 
   final Widget child;
@@ -56,7 +56,7 @@ class _MyBaeMinButtonState extends State<MyBaeMinButton> {
           );
         }
       ),
-      onTap: widget.function,
+      onTap: widget.function as void Function()?,
       onTapUp: (onClick) {
         _colorController.add(Colors.white);
       },

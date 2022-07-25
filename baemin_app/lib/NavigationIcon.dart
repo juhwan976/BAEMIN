@@ -21,12 +21,12 @@ import 'package:flutter/material.dart';
 ///
 class NavigationIcon extends StatelessWidget {
   const NavigationIcon({
-    Key key,
-    @required int selectedIndex,
-    @required this.compareIndex,
-    @required this.normalIcon,
-    @required this.selectedIcon,
-    @required this.title,
+    Key? key,
+    required int selectedIndex,
+    required this.compareIndex,
+    required this.normalIcon,
+    required this.selectedIcon,
+    required this.title,
   })  : _selectedIndex = selectedIndex,
         super(key: key);
 

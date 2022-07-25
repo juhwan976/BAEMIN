@@ -6,18 +6,18 @@
 ///
 class User {
   /// 사용자 아이디
-  String name;
+  String? name;
 
   /// 사용자 휴대폰 번호
-  String phoneNum;
+  String? phoneNum;
 
   /// vip 등급
-  int grade;
+  int? grade;
 
   User({
-    String name,
-    String phoneNum,
-    int grade,
+    String? name,
+    String? phoneNum,
+    int? grade,
   }) {
     this.name = name;
     this.phoneNum = phoneNum;
